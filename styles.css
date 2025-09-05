@@ -715,16 +715,16 @@ body {
     object-fit: cover;
 }
 
-.memorial-tower-slideshow {
+.memorial-tower-slideshow,
+.shakyo-slideshow {
     height: 200px;
     margin: 1rem 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.shakyo-slideshow {
+/* Home page service card slideshow height fix */
+.services-section .slideshow-container {
     height: 200px;
-    margin: 1rem 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Page Hero Section */
@@ -966,16 +966,23 @@ body {
     background: #f8f9fa;
 }
 
-.events-grid {
+/*
+  年間行事ページ (.events-page-body) に限定したスタイル
+  ----------------------------------------------------------
+*/
+
+/* 年間行事ページのグリッドを2列に設定 */
+.events-page-body .events-grid {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr); /* 2列レイアウト */
     gap: 2.5rem;
 }
 
-.event-gallery-card {
+/* 年間行事ページのカードスタイル */
+.events-page-body .event-gallery-card {
     display: grid;
-    grid-template-columns: 1fr 1.2fr; /* Image | Text */
-    align-items: stretch; /* Make columns equal height */
+    grid-template-columns: 1fr; /* カード内の画像を上、テキストを下に配置 */
+    align-items: stretch;
     background: var(--background-white);
     border-radius: 15px;
     overflow: hidden;
@@ -983,17 +990,26 @@ body {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.event-gallery-card:hover {
+.events-page-body .event-gallery-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 35px var(--shadow-medium);
 }
 
-.event-slideshow {
+/* カード内の画像コンテナのスタイル */
+.events-page-body .event-slideshow {
     position: relative;
-    height: 100%;
-    min-height: 400px;
+    height: 300px; /* 画像の高さを固定 */
     overflow: hidden;
+    border-radius: 15px 15px 0 0;
 }
+
+/* レスポンシブ対応: 画面幅が992px以下の場合は1列に戻す */
+@media (max-width: 992px) {
+    .events-page-body .events-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 
 .slideshow-container {
     position: relative;
