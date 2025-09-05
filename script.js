@@ -495,12 +495,12 @@ function initSlideshow() {
         initSlideshowContainer(kannonSlideshow, 'Kannon Hall');
     }
     
-    // Initialize Memorial Tower slideshow
-    const memorialSlideshow = document.querySelector('.memorial-tower-slideshow');
-    console.log('Memorial tower slideshow container found:', memorialSlideshow);
+    // Initialize Simple Memorial slideshow (photos only)
+    const simpleMemorialSlideshow = document.querySelector('.simple-memorial-slideshow');
+    console.log('Simple memorial slideshow container found:', simpleMemorialSlideshow);
     
-    if (memorialSlideshow) {
-        initSlideshowContainer(memorialSlideshow, 'Memorial Tower');
+    if (simpleMemorialSlideshow) {
+        initSimpleSlideshow(simpleMemorialSlideshow);
     }
     
     // Initialize Shakyo slideshow
@@ -602,6 +602,50 @@ function initSlideshowContainerWithDescription(container, name) {
         }, 4000); // Switch every 4 seconds for detailed view
     } else {
         console.log(`${name} Not enough images for slideshow or description element not found`);
+    }
+}
+
+function initSimpleSlideshow(container) {
+    const slides = container.querySelectorAll('.memorial-slide');
+    const descriptionElement = document.getElementById('simple-memorial-description');
+    console.log('Found simple memorial slides:', slides.length);
+    
+    if (slides.length > 1) {
+        let currentIndex = 0;
+        
+        // Reset all slides and set initial description
+        slides.forEach((slide, index) => {
+            slide.classList.remove('active');
+            if (index === 0) {
+                slide.classList.add('active');
+                const description = slide.getAttribute('data-description');
+                if (description && descriptionElement) {
+                    descriptionElement.textContent = description;
+                }
+            }
+        });
+        
+        console.log('Starting simple memorial slideshow with descriptions');
+        
+        const slideInterval = setInterval(() => {
+            // Remove active from current slide
+            slides[currentIndex].classList.remove('active');
+            
+            // Move to next slide
+            currentIndex = (currentIndex + 1) % slides.length;
+            
+            // Add active to next slide and update description
+            const nextSlide = slides[currentIndex];
+            nextSlide.classList.add('active');
+            
+            const description = nextSlide.getAttribute('data-description');
+            if (description && descriptionElement) {
+                descriptionElement.textContent = description;
+            }
+            
+        }, 10000); // Switch every 10 seconds
+    } else {
+        console.log('Not enough slides for simple slideshow');
     }
 }
 
