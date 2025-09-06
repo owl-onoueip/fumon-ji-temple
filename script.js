@@ -503,6 +503,14 @@ function initSlideshow() {
         initSimpleSlideshow(simpleMemorialSlideshow);
     }
     
+    // Initialize Simple Kannon slideshow (photos only)
+    const simpleKannonSlideshow = document.querySelector('.simple-kannon-slideshow');
+    console.log('Simple kannon slideshow container found:', simpleKannonSlideshow);
+    
+    if (simpleKannonSlideshow) {
+        initSimpleKannonSlideshow(simpleKannonSlideshow);
+    }
+    
     // Initialize Shakyo slideshow
     const shakyoSlideshow = document.querySelector('.shakyo-slideshow');
     console.log('Shakyo slideshow container found:', shakyoSlideshow);
@@ -646,6 +654,50 @@ function initSimpleSlideshow(container) {
         }, 10000); // Switch every 10 seconds
     } else {
         console.log('Not enough slides for simple slideshow');
+    }
+}
+
+function initSimpleKannonSlideshow(container) {
+    const slides = container.querySelectorAll('.kannon-slide');
+    const descriptionElement = document.getElementById('kannon-description');
+    console.log('Found simple kannon slides:', slides.length);
+    
+    if (slides.length > 1) {
+        let currentIndex = 0;
+        
+        // Reset all slides and set initial description
+        slides.forEach((slide, index) => {
+            slide.classList.remove('active');
+            if (index === 0) {
+                slide.classList.add('active');
+                const description = slide.getAttribute('data-description');
+                if (description && descriptionElement) {
+                    descriptionElement.textContent = description;
+                }
+            }
+        });
+        
+        console.log('Starting simple kannon slideshow with descriptions');
+        
+        const slideInterval = setInterval(() => {
+            // Remove active from current slide
+            slides[currentIndex].classList.remove('active');
+            
+            // Move to next slide
+            currentIndex = (currentIndex + 1) % slides.length;
+            
+            // Add active to next slide and update description
+            const nextSlide = slides[currentIndex];
+            nextSlide.classList.add('active');
+            
+            const description = nextSlide.getAttribute('data-description');
+            if (description && descriptionElement) {
+                descriptionElement.textContent = description;
+            }
+            
+        }, 6000); // Switch every 6 seconds
+    } else {
+        console.log('Not enough slides for simple kannon slideshow');
     }
 }
 
