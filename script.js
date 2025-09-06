@@ -250,56 +250,8 @@ function playVideo(videoId) {
     `;
 }
 
-// Initialize museum slideshows
-function initializeMuseumSlideshows() {
-    const slideshows = document.querySelectorAll('.museum-slideshow .slideshow-container');
-    slideshows.forEach(container => {
-        const eventName = container.getAttribute('data-event');
-        if (eventName && !slideIndex[eventName]) {
-            slideIndex[eventName] = 1;
-            showSlide(eventName, 1);
-        }
-    });
-}
-
-// Mobile menu functionality
-function initializeMobileMenu() {
-    const mobileToggle = document.querySelector('.mobile-menu-toggle');
-    const mobileNav = document.querySelector('.mobile-nav');
-    
-    if (mobileToggle && mobileNav) {
-        mobileToggle.addEventListener('click', function() {
-            mobileToggle.classList.toggle('active');
-            mobileNav.classList.toggle('active');
-        });
-        
-        // Close mobile menu when clicking on a link
-        const mobileLinks = mobileNav.querySelectorAll('a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                mobileToggle.classList.remove('active');
-                mobileNav.classList.remove('active');
-            });
-        });
-        
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!mobileToggle.contains(event.target) && !mobileNav.contains(event.target)) {
-                mobileToggle.classList.remove('active');
-                mobileNav.classList.remove('active');
-            }
-        });
-    }
-}
-
 // Add click handlers for video placeholders
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize mobile menu
-    initializeMobileMenu();
-    
-    // Initialize museum slideshows
-    initializeMuseumSlideshows();
-    
     const videoPlaceholders = document.querySelectorAll('.video-placeholder');
     videoPlaceholders.forEach(placeholder => {
         placeholder.addEventListener('click', function() {
@@ -543,20 +495,12 @@ function initSlideshow() {
         initSlideshowContainer(kannonSlideshow, 'Kannon Hall');
     }
     
-    // Initialize Simple Memorial slideshow (photos only)
-    const simpleMemorialSlideshow = document.querySelector('.simple-memorial-slideshow');
-    console.log('Simple memorial slideshow container found:', simpleMemorialSlideshow);
+    // Initialize Memorial Tower slideshow
+    const memorialSlideshow = document.querySelector('.memorial-tower-slideshow');
+    console.log('Memorial tower slideshow container found:', memorialSlideshow);
     
-    if (simpleMemorialSlideshow) {
-        initSimpleSlideshow(simpleMemorialSlideshow);
-    }
-    
-    // Initialize Simple Kannon slideshow (photos only)
-    const simpleKannonSlideshow = document.querySelector('.simple-kannon-slideshow');
-    console.log('Simple kannon slideshow container found:', simpleKannonSlideshow);
-    
-    if (simpleKannonSlideshow) {
-        initSimpleKannonSlideshow(simpleKannonSlideshow);
+    if (memorialSlideshow) {
+        initSlideshowContainer(memorialSlideshow, 'Memorial Tower');
     }
     
     // Initialize Shakyo slideshow
@@ -655,97 +599,9 @@ function initSlideshowContainerWithDescription(container, name) {
             
             console.log(`${name} switched to image ${currentIndex} with description`);
             
-        }, 4000); // Switch every 4 seconds for detailed view
+        }, 10000); // Switch every 10 seconds for detailed view (GUIDE memorial)
     } else {
         console.log(`${name} Not enough images for slideshow or description element not found`);
-    }
-}
-
-function initSimpleSlideshow(container) {
-    const slides = container.querySelectorAll('.memorial-slide');
-    const descriptionElement = document.getElementById('simple-memorial-description');
-    console.log('Found simple memorial slides:', slides.length);
-    
-    if (slides.length > 1) {
-        let currentIndex = 0;
-        
-        // Reset all slides and set initial description
-        slides.forEach((slide, index) => {
-            slide.classList.remove('active');
-            if (index === 0) {
-                slide.classList.add('active');
-                const description = slide.getAttribute('data-description');
-                if (description && descriptionElement) {
-                    descriptionElement.textContent = description;
-                }
-            }
-        });
-        
-        console.log('Starting simple memorial slideshow with descriptions');
-        
-        const slideInterval = setInterval(() => {
-            // Remove active from current slide
-            slides[currentIndex].classList.remove('active');
-            
-            // Move to next slide
-            currentIndex = (currentIndex + 1) % slides.length;
-            
-            // Add active to next slide and update description
-            const nextSlide = slides[currentIndex];
-            nextSlide.classList.add('active');
-            
-            const description = nextSlide.getAttribute('data-description');
-            if (description && descriptionElement) {
-                descriptionElement.textContent = description;
-            }
-            
-        }, 10000); // Switch every 10 seconds
-    } else {
-        console.log('Not enough slides for simple slideshow');
-    }
-}
-
-function initSimpleKannonSlideshow(container) {
-    const slides = container.querySelectorAll('.kannon-slide');
-    const descriptionElement = document.getElementById('kannon-description');
-    console.log('Found simple kannon slides:', slides.length);
-    
-    if (slides.length > 1) {
-        let currentIndex = 0;
-        
-        // Reset all slides and set initial description
-        slides.forEach((slide, index) => {
-            slide.classList.remove('active');
-            if (index === 0) {
-                slide.classList.add('active');
-                const description = slide.getAttribute('data-description');
-                if (description && descriptionElement) {
-                    descriptionElement.textContent = description;
-                }
-            }
-        });
-        
-        console.log('Starting simple kannon slideshow with descriptions');
-        
-        const slideInterval = setInterval(() => {
-            // Remove active from current slide
-            slides[currentIndex].classList.remove('active');
-            
-            // Move to next slide
-            currentIndex = (currentIndex + 1) % slides.length;
-            
-            // Add active to next slide and update description
-            const nextSlide = slides[currentIndex];
-            nextSlide.classList.add('active');
-            
-            const description = nextSlide.getAttribute('data-description');
-            if (description && descriptionElement) {
-                descriptionElement.textContent = description;
-            }
-            
-        }, 6000); // Switch every 6 seconds
-    } else {
-        console.log('Not enough slides for simple kannon slideshow');
     }
 }
 

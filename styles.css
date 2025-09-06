@@ -47,8 +47,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 0;
-    min-height: 80px;
+    padding: 15px 0;
 }
 
 .logo {
@@ -140,92 +139,6 @@ body {
 
 .mobile-menu-toggle {
     display: none;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 30px;
-    height: 30px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-}
-
-.mobile-menu-toggle span {
-    display: block;
-    height: 3px;
-    width: 100%;
-    background-color: var(--primary-color);
-    border-radius: 3px;
-    transition: all 0.3s ease;
-}
-
-.mobile-menu-toggle.active span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-}
-
-.mobile-menu-toggle.active span:nth-child(2) {
-    opacity: 0;
-}
-
-.mobile-menu-toggle.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(7px, -6px);
-}
-
-.mobile-nav {
-    display: none;
-    position: fixed;
-    top: 80px;
-    left: 0;
-    right: 0;
-    background: white;
-    box-shadow: 0 2px 10px var(--shadow-light);
-    z-index: 999;
-    padding: 20px 0;
-}
-
-.mobile-nav.active {
-    display: block;
-}
-
-.mobile-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.mobile-nav li {
-    border-bottom: 1px solid #eee;
-}
-
-.mobile-nav li:last-child {
-    border-bottom: none;
-}
-
-.mobile-nav a {
-    display: block;
-    padding: 15px 20px;
-    color: var(--text-dark);
-    text-decoration: none;
-    font-weight: 500;
-    transition: background-color 0.3s ease;
-}
-
-.mobile-nav a:hover,
-.mobile-nav a.active {
-    background-color: var(--bg-light);
-    color: var(--primary-color);
-}
-
-.mobile-nav .facebook-nav {
-    color: var(--primary-color);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.mobile-nav .nav-facebook-icon {
-    width: 16px;
-    height: 16px;
 }
 
 /* Hero Section */
@@ -381,6 +294,17 @@ body {
 
 .notice-link:hover {
     color: var(--secondary-color);
+}
+
+/* Link-style button (blue) */
+.btn-link.blue {
+    color: #1877f2;
+    text-decoration: none;
+    font-weight: 600;
+}
+.btn-link.blue:hover {
+    color: #166fe5;
+    text-decoration: underline;
 }
 
 /* Main Content */
@@ -782,6 +706,23 @@ body {
     height: 400px;
 }
 
+/* Ensure Kannon Hall slideshow is always visible */
+.kannon-section .image-slideshow {
+    position: relative;
+    min-height: 360px;
+}
+.kannon-section .slideshow-image {
+    position: absolute;
+    inset: 0;
+    display: block;
+}
+.kannon-section .slideshow-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .slideshow-image {
     position: absolute;
     top: 0;
@@ -820,12 +761,6 @@ body {
     color: white;
     padding: 120px 0 60px;
     text-align: center;
-}
-
-/* Specific adjustments for museum and contact pages */
-.museum-page .page-hero,
-.contact-page .page-hero {
-    padding: 80px 0 60px;
 }
 
 .page-hero-content h1 {
@@ -910,79 +845,62 @@ body {
     text-align: center;
 }
 
-/* Simple Memorial Slideshow - Photos Only */
-.simple-memorial-slideshow {
+.memorial-tower-slideshow-detailed {
+    height: 350px !important; /* compact horizontal size (increased by ~1/3) */
+    max-width: 480px !important;
     width: 100%;
-    height: 400px;
-    position: relative;
+    margin: 0 auto 16px auto;
+    border-radius: 12px;
     overflow: hidden;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px var(--shadow-light);
-    margin-bottom: 20px;
-    background: #f5f5f5;
 }
 
-.memorial-slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
+/* Ensure the container column stretches and displays content */
+.memorial-image {
+    align-self: stretch;
 }
-
-.memorial-slide.active {
+.memorial-image .slideshow-container {
+    display: block;
+    height: 100% !important;
+}
+/* Fallback: show first slide if JS doesn't toggle */
+.memorial-tower-slideshow-detailed .slideshow-image:first-child {
     opacity: 1;
 }
 
-.memorial-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+/* Ensure images keep aspect ratio nicely inside the compact box */
+.memorial-tower-slideshow-detailed .slideshow-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
 }
 
-/* Simple Kannon Slideshow - Same as Memorial */
-.simple-kannon-slideshow {
-    width: 100%;
-    height: 300px;
-    position: relative;
-    overflow: hidden;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px var(--shadow-light);
-    margin-bottom: 20px;
-    background: #f5f5f5;
+/* Responsive tweak for small screens */
+@media (max-width: 768px) {
+  .memorial-tower-slideshow-detailed {
+      height: 300px !important;
+      max-width: 100% !important;
+  }
 }
 
-.kannon-slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
+/* Keep description width aligned under the compact slideshow */
+.memorial-image .slideshow-description {
+  max-width: 480px;
+  margin: 0 auto 20px auto;
 }
 
-.kannon-slide.active {
-    opacity: 1;
+/* Increase specificity to ensure compact size is applied in GUIDE */
+.memorial-content .memorial-image .slideshow-container.memorial-tower-slideshow-detailed {
+  height: 350px !important;
+  max-width: 480px !important;
+  width: 100% !important;
+  margin: 0 auto 16px auto !important;
+  border-radius: 12px;
+  overflow: hidden;
 }
-
-.kannon-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.kannon-description {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    font-size: 0.9rem;
-    line-height: 1.6;
-    color: var(--text-light);
+.memorial-content .memorial-image .slideshow-container.memorial-tower-slideshow-detailed .slideshow-image img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
 }
 
 .slideshow-description {
@@ -1304,13 +1222,7 @@ body {
 .event-info h3 {
     font-family: 'Noto Serif JP', serif;
     color: var(--primary-color);
-    font-size: 1.3rem;
-    line-height: 1.4;
-    text-align: center;
-    min-height: 2.6rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-size: 1.5rem;
     margin: 0;
 }
 
@@ -1337,22 +1249,22 @@ body {
 }
 
 .details-toggle {
-    background: linear-gradient(135deg, #4a90e2, #357abd);
+    background: #1877f2; /* unify to blue */
     color: white;
     border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 25px;
+    padding: 0.75rem 1.2rem;
+    border-radius: 22px;
     cursor: pointer;
     font-weight: 600;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     margin-top: 1rem;
-    align-self: flex-start; /* Aligns button to the start of the flex container */
+    align-self: flex-start;
 }
 
 .details-toggle:hover {
-    background: linear-gradient(135deg, #357abd, #2968a3);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
+    background: #166fe5;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 12px rgba(24, 119, 242, 0.35);
 }
 
 .event-details-expanded {
@@ -1405,21 +1317,6 @@ body {
     .event-gallery-card {
         grid-template-columns: 1fr; /* Stack on smaller screens */
     }
-    
-    /* Image adjustments for tablet */
-    .slideshow-container,
-    .memorial-slideshow,
-    .kannon-slideshow {
-        height: 300px;
-    }
-    
-    .slideshow-image img,
-    .memorial-slide img,
-    .kannon-slide img,
-    .slide-image img {
-        height: 300px;
-    }
-    
     .event-slideshow {
         min-height: 300px;
         border-radius: 15px 15px 0 0;
@@ -1450,28 +1347,15 @@ body {
     box-shadow: 0 5px 20px var(--shadow-light);
 }
 
-.contact-form-container {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
 .form-group {
     margin-bottom: 20px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
     font-weight: 600;
     color: var(--text-dark);
-    font-size: 1rem;
 }
 
 .form-group input,
@@ -1482,7 +1366,6 @@ body {
     border: 2px solid var(--border-color);
     border-radius: 8px;
     font-size: 1rem;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form-group input:focus,
@@ -1490,66 +1373,6 @@ body {
 .form-group textarea:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
-}
-
-.required {
-    color: #e74c3c;
-    font-weight: bold;
-}
-
-.form-privacy {
-    margin: 30px 0;
-}
-
-.privacy-checkbox {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    line-height: 1.5;
-}
-
-.privacy-checkbox input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    margin: 0;
-    flex-shrink: 0;
-    margin-top: 2px;
-}
-
-.privacy-link {
-    color: var(--primary-color);
-    text-decoration: underline;
-}
-
-.privacy-link:hover {
-    color: var(--accent-color);
-}
-
-.form-submit {
-    text-align: center;
-    margin-top: 30px;
-}
-
-.form-message {
-    margin-top: 20px;
-    padding: 15px;
-    border-radius: 8px;
-    text-align: center;
-}
-
-.form-message.success {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-}
-
-.form-message.error {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
 }
 
 .submit-btn {
@@ -1574,51 +1397,6 @@ body {
     border-radius: 15px;
 }
 
-.contact-info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    margin-bottom: 60px;
-}
-
-.contact-card {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px var(--shadow-light);
-    text-align: center;
-    transition: transform 0.3s ease;
-}
-
-.contact-card:hover {
-    transform: translateY(-5px);
-}
-
-.contact-icon {
-    font-size: 3rem;
-    margin-bottom: 15px;
-    display: block;
-}
-
-.contact-card h3 {
-    font-family: 'Noto Serif JP', serif;
-    color: var(--primary-color);
-    margin-bottom: 15px;
-    font-size: 1.2rem;
-}
-
-.contact-detail {
-    font-weight: 600;
-    color: var(--text-dark);
-    margin-bottom: 8px;
-    font-size: 1.1rem;
-}
-
-.contact-note {
-    color: var(--text-light);
-    font-size: 0.9rem;
-}
-
 .contact-info h3 {
     font-family: 'Noto Serif JP', serif;
     color: var(--primary-color);
@@ -1632,12 +1410,66 @@ body {
     }
     .main-nav {
         display: none;
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        background: var(--background-white);
+        box-shadow: 0 6px 20px var(--shadow-light);
+        border-radius: 12px;
+        padding: 12px 16px;
+        z-index: 1001;
+    }
+    /* show when toggled */
+    .main-nav.active {
+        display: block;
+    }
+    .main-nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .main-nav a {
+        display: block;
+        padding: 10px 12px;
+        border-radius: 8px;
     }
     .mobile-menu-toggle {
         display: flex;
+        width: 42px;
+        height: 36px;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 5px;
+        background: transparent;
+        border: 2px solid rgba(0,0,0,0.08);
+        border-radius: 8px;
+        cursor: pointer;
+    }
+    .mobile-menu-toggle span {
+        display: block;
+        width: 22px;
+        height: 2px;
+        background: var(--text-dark);
+        transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+    /* animated state */
+    .mobile-menu-toggle.active span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+    .mobile-menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+    .mobile-menu-toggle.active span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
     }
     .hero-title {
         font-size: 2.2rem;
+    }
+    /* Smaller height for slideshows on mobile */
+    .image-slideshow,
+    .kannon-section .image-slideshow {
+        height: 260px;
+        min-height: 260px;
     }
     .hero-subtitle {
         font-size: 1rem;
@@ -1655,89 +1487,6 @@ body {
         grid-template-columns: 1fr;
         gap: 40px;
     }
-    
-    .contact-form-section {
-        padding: 40px 0;
-    }
-    
-    .contact-form {
-        padding: 20px;
-        margin: 0 10px;
-    }
-    
-    .form-row {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-    
-    .form-group {
-        margin-bottom: 25px;
-    }
-    
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-        padding: 15px 12px;
-        font-size: 16px; /* Prevents zoom on iOS */
-        border-radius: 10px;
-        border: 2px solid #e0e0e0;
-        transition: border-color 0.3s ease;
-    }
-    
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
-    }
-    
-    .form-group textarea {
-        min-height: 120px;
-        resize: vertical;
-    }
-    
-    .btn {
-        width: 100%;
-        padding: 18px;
-        font-size: 1.1rem;
-        border-radius: 10px;
-        margin-top: 10px;
-    }
-    
-    .contact-info-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-        margin-bottom: 40px;
-    }
-    
-    .contact-card {
-        padding: 20px;
-        text-align: center;
-    }
-    
-    .contact-icon {
-        font-size: 2rem;
-        margin-bottom: 10px;
-    }
-    
-    .form-privacy {
-        margin: 25px 0;
-    }
-    
-    .privacy-checkbox {
-        display: flex;
-        align-items: flex-start;
-        gap: 10px;
-        cursor: pointer;
-        font-size: 0.9rem;
-        line-height: 1.4;
-    }
-    
-    .privacy-checkbox input[type="checkbox"] {
-        width: auto;
-        margin: 0;
-        flex-shrink: 0;
-    }
     .services-grid,
     .heritage-grid,
     .footer-content,
@@ -1746,59 +1495,6 @@ body {
     .grounds-grid,
     .info-grid {
         grid-template-columns: 1fr;
-    }
-    
-    /* Image optimization for mobile */
-    img {
-        max-width: 100%;
-        height: auto;
-    }
-    
-    .slideshow-image img,
-    .memorial-slide img,
-    .kannon-slide img,
-    .slide-image img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        border-radius: 8px;
-    }
-    
-    .hero-image img {
-        height: 250px;
-        object-fit: cover;
-    }
-    
-    .service-card img,
-    .event-card img,
-    .museum-card img {
-        height: 180px;
-        object-fit: cover;
-        border-radius: 8px 8px 0 0;
-    }
-    
-    .about-image img {
-        height: 200px;
-        object-fit: cover;
-        border-radius: 10px;
-    }
-    
-    /* Slideshow container adjustments */
-    .slideshow-container,
-    .memorial-slideshow,
-    .kannon-slideshow {
-        height: 200px;
-        margin-bottom: 20px;
-    }
-    
-    .slideshow-dots {
-        margin-top: 15px;
-        gap: 8px;
-    }
-    
-    .dot {
-        width: 8px;
-        height: 8px;
     }
     .footer-content {
         text-align: center;
@@ -1809,218 +1505,6 @@ body {
     .timeline-item {
         grid-template-columns: 1fr;
         gap: 15px;
-    }
-}
-
-/* Museum Styles */
-.segaki-records-section {
-    padding: 4rem 0;
-    background: var(--bg-light);
-}
-
-.year-record {
-    margin-bottom: 4rem;
-    background: white;
-    border-radius: 15px;
-    padding: 2rem;
-    box-shadow: 0 5px 20px var(--shadow-light);
-}
-
-.year-header {
-    margin-bottom: 2rem;
-    text-align: center;
-}
-
-.year-header h3 {
-    font-family: 'Noto Serif JP', serif;
-    color: var(--primary-color);
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-}
-
-.year-description {
-    color: var(--text-light);
-    line-height: 1.7;
-    font-size: 1.1rem;
-}
-
-.media-gallery {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.video-section {
-    background: var(--bg-light);
-    padding: 1.5rem;
-    border-radius: 10px;
-}
-
-.photo-section {
-    background: var(--bg-light);
-    padding: 1.5rem;
-    border-radius: 10px;
-}
-
-.video-section h4, .photo-section h4 {
-    font-family: 'Noto Serif JP', serif;
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-    font-size: 1.3rem;
-}
-
-.museum-slideshow {
-    position: relative;
-    max-width: 100%;
-    margin: auto;
-}
-
-.museum-slideshow .slideshow-container {
-    position: relative;
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 3px 10px var(--shadow-light);
-}
-
-.museum-slideshow .slide {
-    display: none;
-    position: relative;
-}
-
-.museum-slideshow .slide.active {
-    display: block;
-}
-
-.museum-slideshow .slide-image {
-    width: 100%;
-    height: 250px;
-    overflow: hidden;
-}
-
-.museum-slideshow .slide-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.museum-slideshow .slide-prev,
-.museum-slideshow .slide-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0,0,0,0.5);
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-size: 1.2rem;
-    border-radius: 3px;
-    transition: background 0.3s ease;
-}
-
-.museum-slideshow .slide-prev {
-    left: 10px;
-}
-
-.museum-slideshow .slide-next {
-    right: 10px;
-}
-
-.museum-slideshow .slide-prev:hover,
-.museum-slideshow .slide-next:hover {
-    background: rgba(0,0,0,0.8);
-}
-
-.museum-slideshow .slide-dots {
-    text-align: center;
-    padding: 20px 15px;
-    background: transparent;
-    position: relative;
-    bottom: 0;
-    left: 0;
-    transform: none;
-    width: 100%;
-}
-
-.museum-slideshow .dot {
-    height: 8px;
-    width: 8px;
-    margin: 0 6px;
-    background-color: rgba(139, 69, 19, 0.3);
-    border-radius: 50%;
-    display: inline-block;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-    position: relative;
-}
-
-.museum-slideshow .dot:hover {
-    background-color: rgba(139, 69, 19, 0.6);
-    transform: scale(1.2);
-}
-
-.museum-slideshow .dot.active {
-    background-color: var(--primary-color);
-    transform: scale(1.3);
-    box-shadow: 0 0 10px rgba(139, 69, 19, 0.4);
-}
-
-.museum-slideshow .dot.active::after {
-    content: '';
-    position: absolute;
-    top: -4px;
-    left: -4px;
-    right: -4px;
-    bottom: -4px;
-    border: 1px solid var(--primary-color);
-    border-radius: 50%;
-    opacity: 0.5;
-}
-
-.segaki-info {
-    margin-top: 3rem;
-    background: white;
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px var(--shadow-light);
-}
-
-.segaki-info h3 {
-    font-family: 'Noto Serif JP', serif;
-    color: var(--primary-color);
-    font-size: 1.6rem;
-    margin-bottom: 1.5rem;
-    text-align: center;
-}
-
-.segaki-description p {
-    color: var(--text-light);
-    line-height: 1.8;
-    margin-bottom: 1rem;
-    font-size: 1.1rem;
-}
-
-@media (max-width: 768px) {
-    .media-gallery {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-    
-    .year-record {
-        padding: 1.5rem;
-        margin-bottom: 2rem;
-    }
-    
-    .year-header h3 {
-        font-size: 1.5rem;
-    }
-    
-    .museum-slideshow .slide-image {
-        height: 200px;
     }
     .timeline-year {
         text-align: left;

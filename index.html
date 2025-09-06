@@ -50,24 +50,6 @@
                 </button>
             </div>
         </div>
-        
-        <!-- Mobile Navigation -->
-        <nav class="mobile-nav">
-            <ul>
-                <li><a href="index.html" class="nav-link active">HOME</a></li>
-                <li><a href="guide.html" class="nav-link">ご案内</a></li>
-                <li><a href="events.html" class="nav-link">年間行事</a></li>
-                <li><a href="index.html#services" class="nav-link">護摩祈祷</a></li>
-                <li><a href="museum.html" class="nav-link">資料館</a></li>
-                <li><a href="contact.html" class="nav-link">お問合せ</a></li>
-                <li><a href="#social" class="nav-link facebook-nav">
-                    <svg class="nav-facebook-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                    </svg>
-                    Facebook
-                </a></li>
-            </ul>
-        </nav>
     </header>
 
     <!-- Hero Section -->
@@ -135,7 +117,26 @@
             <div class="container">
                 <div class="kannon-grid">
                     <div class="kannon-image">
-                        <img src="images/kannon-hall.jpg" alt="普門寺 観音堂" class="temple-image">
+                        <div class="slideshow-container image-slideshow">
+                            <div class="slideshow-image active">
+                                <img src="images/kannon-hall.jpg" alt="普門寺 観音堂" class="temple-image">
+                            </div>
+                            <div class="slideshow-image">
+                                <img src="images/kannon-hall-signboard.jpg" alt="普門寺 観音堂 看板" class="temple-image">
+                            </div>
+                            <div class="slideshow-image">
+                                <img src="images/kannon-hall-2.jpg" alt="普門寺 観音堂 内部" class="temple-image">
+                            </div>
+                            <div class="slideshow-image">
+                                <img src="images/kannon-hall-3.jpg" alt="普門寺 観音堂 屋根" class="temple-image">
+                            </div>
+                            <div class="slideshow-image">
+                                <img src="images/kannon-hall-4.jpg" alt="普門寺 観音堂 扁額" class="temple-image">
+                            </div>
+                            <div class="slideshow-image">
+                                <img src="images/kannon-hall-5.jpg" alt="普門寺 観音堂 内陣" class="temple-image">
+                            </div>
+                        </div>
                     </div>
                     <div class="kannon-text">
                         <h3>観音堂</h3>
@@ -154,7 +155,7 @@
             <div class="container">
                 <div class="section-header">
                     <h2>法要・行事のご案内</h2>
-                    <p class="section-subtitle">Ceremonies & Events</p>
+                    <p class="section-subtitle">Services & Events</p>
                 </div>
                 <div class="services-grid">
                     <div class="service-card">
@@ -205,19 +206,13 @@
                             <div class="slideshow-image active">
                                 <img src="images/memorial-tower-1.jpg" alt="永代供養塔 外観">
                             </div>
-                            <div class="slideshow-image">
-                                <img src="images/memorial-tower-2.jpg" alt="永代供養塔 正面">
-                            </div>
-                            <div class="slideshow-image">
-                                <img src="images/memorial-tower-3.jpg" alt="永代供養塔 側面">
-                            </div>
-                            <div class="slideshow-image">
-                                <img src="images/memorial-tower-4.jpg" alt="永代供養塔 詳細">
-                            </div>
                         </div>
                         <p>永代供養塔が完成いたしました。ご先祖様の永代にわたる供養をお受けしております。</p>
                         <div class="service-details">
                             <strong>詳細：</strong> お気軽にお問い合わせください
+                        </div>
+                        <div class="service-actions" style="margin-top: 12px;">
+                            <a class="details-toggle" href="guide.html#memorial">詳細を見る</a>
                         </div>
                     </div>
                 </div>
@@ -316,7 +311,7 @@
                         <h3>普門寺の日々の様子</h3>
                         <p>Facebookページでは、寺院の日常や季節の行事、法要の様子などを随時お伝えしています。ぜひフォローして、普門寺の最新情報をご覧ください。</p>
                         <div class="recent-updates">
-                            <h4>定例行事のご案内</h4>
+                            <h4>寺院からのお知らせ</h4>
                             <div id="event-announcements">
                                 <!-- 動的に生成される行事案内がここに表示されます -->
                             </div>
