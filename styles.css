@@ -1211,7 +1211,13 @@ body {
 .event-info h3 {
     font-family: 'Noto Serif JP', serif;
     color: var(--primary-color);
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+    line-height: 1.4;
+    text-align: center;
+    min-height: 2.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 0;
 }
 
@@ -1238,7 +1244,7 @@ body {
 }
 
 .details-toggle {
-    background: linear-gradient(135deg, #d4a574, #c19653);
+    background: linear-gradient(135deg, #4a90e2, #357abd);
     color: white;
     border: none;
     padding: 0.75rem 1.5rem;
@@ -1251,9 +1257,9 @@ body {
 }
 
 .details-toggle:hover {
-    background: linear-gradient(135deg, #c19653, #b8874a);
+    background: linear-gradient(135deg, #357abd, #2968a3);
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(212, 165, 116, 0.4);
+    box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
 }
 
 .event-details-expanded {
@@ -1440,6 +1446,218 @@ body {
     .timeline-item {
         grid-template-columns: 1fr;
         gap: 15px;
+    }
+}
+
+/* Museum Styles */
+.segaki-records-section {
+    padding: 4rem 0;
+    background: var(--bg-light);
+}
+
+.year-record {
+    margin-bottom: 4rem;
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 5px 20px var(--shadow-light);
+}
+
+.year-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.year-header h3 {
+    font-family: 'Noto Serif JP', serif;
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.year-description {
+    color: var(--text-light);
+    line-height: 1.7;
+    font-size: 1.1rem;
+}
+
+.media-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.video-section {
+    background: var(--bg-light);
+    padding: 1.5rem;
+    border-radius: 10px;
+}
+
+.photo-section {
+    background: var(--bg-light);
+    padding: 1.5rem;
+    border-radius: 10px;
+}
+
+.video-section h4, .photo-section h4 {
+    font-family: 'Noto Serif JP', serif;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.museum-slideshow {
+    position: relative;
+    max-width: 100%;
+    margin: auto;
+}
+
+.museum-slideshow .slideshow-container {
+    position: relative;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px var(--shadow-light);
+}
+
+.museum-slideshow .slide {
+    display: none;
+    position: relative;
+}
+
+.museum-slideshow .slide.active {
+    display: block;
+}
+
+.museum-slideshow .slide-image {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+
+.museum-slideshow .slide-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.museum-slideshow .slide-prev,
+.museum-slideshow .slide-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    border-radius: 3px;
+    transition: background 0.3s ease;
+}
+
+.museum-slideshow .slide-prev {
+    left: 10px;
+}
+
+.museum-slideshow .slide-next {
+    right: 10px;
+}
+
+.museum-slideshow .slide-prev:hover,
+.museum-slideshow .slide-next:hover {
+    background: rgba(0,0,0,0.8);
+}
+
+.museum-slideshow .slide-dots {
+    text-align: center;
+    padding: 20px 15px;
+    background: transparent;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+}
+
+.museum-slideshow .dot {
+    height: 8px;
+    width: 8px;
+    margin: 0 6px;
+    background-color: rgba(139, 69, 19, 0.3);
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
+}
+
+.museum-slideshow .dot:hover {
+    background-color: rgba(139, 69, 19, 0.6);
+    transform: scale(1.2);
+}
+
+.museum-slideshow .dot.active {
+    background-color: var(--primary-color);
+    transform: scale(1.3);
+    box-shadow: 0 0 10px rgba(139, 69, 19, 0.4);
+}
+
+.museum-slideshow .dot.active::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 1px solid var(--primary-color);
+    border-radius: 50%;
+    opacity: 0.5;
+}
+
+.segaki-info {
+    margin-top: 3rem;
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px var(--shadow-light);
+}
+
+.segaki-info h3 {
+    font-family: 'Noto Serif JP', serif;
+    color: var(--primary-color);
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.segaki-description p {
+    color: var(--text-light);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+    .media-gallery {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .year-record {
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .year-header h3 {
+        font-size: 1.5rem;
+    }
+    
+    .museum-slideshow .slide-image {
+        height: 200px;
     }
     .timeline-year {
         text-align: left;

@@ -250,8 +250,23 @@ function playVideo(videoId) {
     `;
 }
 
+// Initialize museum slideshows
+function initializeMuseumSlideshows() {
+    const slideshows = document.querySelectorAll('.museum-slideshow .slideshow-container');
+    slideshows.forEach(container => {
+        const eventName = container.getAttribute('data-event');
+        if (eventName && !slideIndex[eventName]) {
+            slideIndex[eventName] = 1;
+            showSlide(eventName, 1);
+        }
+    });
+}
+
 // Add click handlers for video placeholders
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize museum slideshows
+    initializeMuseumSlideshows();
+    
     const videoPlaceholders = document.querySelectorAll('.video-placeholder');
     videoPlaceholders.forEach(placeholder => {
         placeholder.addEventListener('click', function() {
