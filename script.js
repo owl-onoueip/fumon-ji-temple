@@ -78,6 +78,40 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(el);
     });
 
+    // Cache-busting for local images: append same ?v= from script tag if present
+    try {
+        const currentScripts = Array.from(document.querySelectorAll('script[src]'));
+        // Prefer the script tag that loaded this file
+        const selfScript = currentScripts.reverse().find(s => /script\.js(\?|$)/.test(s.getAttribute('src')));
+        let ver = '';
+        if (selfScript) {
+            const url = new URL(selfScript.src, window.location.origin);
+            ver = url.searchParams.get('v') || '';
+        }
+        if (ver) {
+            const imgs = Array.from(document.images);
+            imgs.forEach(img => {
+                // Only process local images (relative or same-origin) under images/
+                const srcAttr = img.getAttribute('src') || '';
+                if (!srcAttr) return;
+                // Skip external URLs
+                if (/^https?:\/\//i.test(srcAttr)) {
+                    const u = new URL(srcAttr);
+                    if (u.origin !== window.location.origin) return;
+                }
+                // Must target images folder
+                if (!srcAttr.includes('images/')) return;
+                // Avoid double-appending
+                if (srcAttr.includes('v=')) return;
+                const sep = srcAttr.includes('?') ? '&' : '?';
+                const newSrc = `${srcAttr}${sep}v=${ver}`;
+                img.setAttribute('src', newSrc);
+            });
+        }
+    } catch (e) {
+        console.warn('Image cache-busting skipped:', e);
+    }
+
     // Function to set the active navigation link based on the current page URL
     function setActiveNavLink() {
         const allNavLinks = document.querySelectorAll('.main-nav .nav-link');
@@ -217,12 +251,39 @@ function toggleDetails(detailsId) {
     
     if (!details || !button) return;
     
-    if (details.classList.contains('expanded')) {
-        details.classList.remove('expanded');
+    // Capture the button's preferred viewport anchor before layout change
+    const desiredTop = window.scrollY + button.getBoundingClientRect().top - 120; // 120px margin from top
+
+    // Close any other opened details in the same events grid to avoid large layout jumps
+    const allDetails = document.querySelectorAll('.event-details-expanded.show');
+    allDetails.forEach(el => {
+        if (el !== details) {
+            const btn = document.querySelector(`[onclick="toggleDetails('${el.id}')"]`);
+            el.classList.remove('show');
+            if (btn) btn.textContent = '詳細を見る';
+        }
+    });
+
+    if (details.classList.contains('show')) {
+        // Closing
+        details.classList.remove('show');
         button.textContent = '詳細を見る';
+        // After transition ends, keep the button near viewport to avoid feeling of "not returning"
+        const onTransitionEnd = () => {
+            details.removeEventListener('transitionend', onTransitionEnd);
+            window.scrollTo({ top: desiredTop, behavior: 'smooth' });
+        };
+        details.addEventListener('transitionend', onTransitionEnd);
     } else {
-        details.classList.add('expanded');
+        // Opening
+        details.classList.add('show');
         button.textContent = '詳細を閉じる';
+        // Keep context by ensuring the button remains in view (after expansion completes)
+        const onTransitionEndOpen = () => {
+            details.removeEventListener('transitionend', onTransitionEndOpen);
+            window.scrollTo({ top: desiredTop, behavior: 'smooth' });
+        };
+        details.addEventListener('transitionend', onTransitionEndOpen);
     }
 }
 

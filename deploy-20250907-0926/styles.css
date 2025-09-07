@@ -1079,7 +1079,6 @@ body {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* 2列レイアウト */
     gap: 2.5rem;
-    align-items: start; /* 伸びずに上揃えにする（隣カラムが引っ張られない） */
 }
 
 /* 年間行事ページのカードスタイル */
@@ -1087,8 +1086,7 @@ body {
 .events-section .event-gallery-card {
     display: grid;
     grid-template-columns: 1fr; /* カード内の画像を上、テキストを下に配置 */
-    align-items: stretch; /* カード内のレイアウトは維持 */
-    align-self: start; /* グリッド行の高さに合わせて伸びないようにする */
+    align-items: stretch;
     background: var(--background-white);
     border-radius: 15px;
     overflow: hidden;

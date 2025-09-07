@@ -1,0 +1,46 @@
+【AIへの前提指示テンプレート（ガードレール）】
+
+■ 前提
+- 静的Webサイト（HTML/CSS/JS）を作成・運用する。Netlifyにデプロイする。
+- 既存ページのレイアウトを壊さず、ページごとに安全に拡張・変更する。
+
+■ CSS/レイアウトのガードレール
+- ページ単位のスコープを必須化すること。
+  - 各ページは body に専用クラスを付与（例: events-page-body / museum-page-body / guide-page-body）。
+  - ページ専用のCSSは必ずこの body クラス配下（またはセクション親）に限定して記述する。
+    - 例: .events-page-body .events-grid { ... } と .events-section .events-grid { ... }
+- 共通クラス（.slideshow-container / .slide / .dot 等）へのグローバル上書きを禁止。
+  - 親スコープとセットで指定する。悪い例: .slideshow-container { height:300px }
+  - 良い例: .museum-page-body .museum-slideshow .slideshow-container { height:300px }
+- !important は最小限。まずは親セレクタ追加で詳細度を上げる。
+- 埋め込み動画の固定高さでは、内側の比率ボックスと iframe も上書きする。
+  - 例: .video-container { height:300px } / .video-container > div { padding:0!important; height:100%!important } / .video-container iframe { width:100%!important; height:100%!important }
+
+■ JSのガードレール
+- 機能は「コンテナ単位」で初期化し、その配下だけを操作する。
+- ドットなど補助DOMは「存在しなければコンテナ内に生成」する。
+- タイマー・イベントの重複初期化を避ける（初期化ガード）。
+
+■ デプロイ運用のガードレール
+- すべての CSS/JS 読み込みにキャッシュバスター（?v=YYYYMMDD-HHmm）を付与する。
+- デプロイは日時付きフォルダ（deploy-YYYYMMDD-HHmm）を新規作成してアップする。古いフォルダは後で削除。
+
+■ 本番チェック（抜粋）
+- events: PCで2列→<=992pxで1列、カードは「画像上＋本文下」、青ボタン統一。
+- museum: 年度ごとの「動画記録」「写真記録」の高さ一致（PC300px / SP240px）。
+- guide: 永代供養スライド横長・10秒切替・ドット表示/同期。
+- 各ページが ?v= を付けた CSS/JS を読み込んでいる。
+
+■ トラブルシュート
+- 崩れ時は DevTools で Styles/Computed を確認。高さ・余白・overflow・position を重点チェック。
+- 取り消し線の CSS があれば原因セレクタを特定。ページスコープで上書きする。
+- 動画の空白は比率ボックスの上書き不足を疑う（> div, iframe を 100% に）。
+- 反映されない場合は ?v= を更新し、キャッシュ無効で再読み込み。
+
+■ コーディング規約（簡易）
+- 「ページスコープ + セクション親 + 要素」で命名してユニーク化。
+- レイアウト系プロパティ（高さ・余白・overflow）は必ずスコープ化して指定。
+- 画像は images/ に配置し相対パスで参照。
+- 変更点には「影響ページ」をコメントに明記。
+
+（このテンプレートを、プロジェクト開始時・各改修時にAIへ貼り付けて遵守させること）
