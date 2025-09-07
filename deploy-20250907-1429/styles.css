@@ -161,6 +161,7 @@ body {
     right: 0;
     bottom: 0;
     background: url('images/temple-main-hall.jpg?v=20250907-1346') no-repeat center center/cover;
+    background: url('images/temple-main-hall.jpg?v=20250907-1345') no-repeat center center/cover;
     filter: brightness(0.6);
 }
 
@@ -761,18 +762,8 @@ body {
 .page-hero {
     background: var(--gradient-primary);
     color: white;
+    padding: 120px 0 60px;
     text-align: center;
-    /* Standardized height and centering */
-    height: 240px; /* fixed height to unify across pages */
-    display: flex;
-    align-items: center;
-    margin-top: 80px; /* avoid overlap with fixed header */
-    overflow: hidden; /* cut extra lines from bottom to match height */
-}
-
-.page-hero .page-hero-content {
-    width: 100%;
-    padding: 40px 0; /* reduced to keep content within fixed height */
 }
 
 /* Guide page: center memorial section headings */
@@ -780,10 +771,6 @@ body {
     text-align: center;
 }
 .memorial-tower-section .feature-item h4 {
-    text-align: center;
-}
-/* Guide page: center '永代供養について' heading */
-.memorial-tower-section .memorial-purpose h3 {
     text-align: center;
 }
 
@@ -851,12 +838,6 @@ body {
     letter-spacing: 2px;
 }
 
-.page-description {
-    font-size: 0.95rem;
-    opacity: 0.95;
-    margin-bottom: 20px;
-}
-
 .breadcrumb {
     font-size: 0.9rem;
     opacity: 0.8;
@@ -865,14 +846,6 @@ body {
 .breadcrumb a {
     color: white;
     text-decoration: none;
-}
-
-/* Consistent spacing from hero to the first content section (robust even if <main> is in between) */
-.page-hero + * {
-    padding-top: 48px; /* apply to the next element (usually <main>) */
-}
-.page-hero + * > *:first-child {
-    margin-top: 0; /* reset the first child (usually first <section>) margin-top */
 }
 
 .breadcrumb a:hover {

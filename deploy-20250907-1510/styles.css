@@ -782,10 +782,6 @@ body {
 .memorial-tower-section .feature-item h4 {
     text-align: center;
 }
-/* Guide page: center '永代供養について' heading */
-.memorial-tower-section .memorial-purpose h3 {
-    text-align: center;
-}
 
 /* Museum page: center '大施餓鬼会について' heading */
 .museum-page-body .segaki-info h3 {
@@ -867,12 +863,9 @@ body {
     text-decoration: none;
 }
 
-/* Consistent spacing from hero to the first content section (robust even if <main> is in between) */
-.page-hero + * {
-    padding-top: 48px; /* apply to the next element (usually <main>) */
-}
-.page-hero + * > *:first-child {
-    margin-top: 0; /* reset the first child (usually first <section>) margin-top */
+/* Consistent spacing from hero to the first content section */
+.page-hero + section {
+    padding-top: 48px;
 }
 
 .breadcrumb a:hover {
