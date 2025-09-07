@@ -160,8 +160,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('images/temple-main-hall.jpg?v=20250907-1346') no-repeat center center/cover;
-    background: url('images/temple-main-hall.jpg?v=20250907-1345') no-repeat center center/cover;
+    background: url('images/temple-main-hall.jpg') no-repeat center center/cover;
     filter: brightness(0.6);
 }
 
@@ -349,7 +348,6 @@ body {
     font-family: 'Noto Serif JP', serif;
     font-size: 1.8rem;
     color: var(--primary-color);
-    text-align: center;
     margin-bottom: 20px;
 }
 
@@ -382,7 +380,6 @@ body {
     font-family: 'Noto Serif JP', serif;
     font-size: 1.8rem;
     color: var(--primary-color);
-    text-align: center;
     margin-bottom: 20px;
 }
 
@@ -766,64 +763,6 @@ body {
     text-align: center;
 }
 
-/* Guide page: center memorial section headings */
-.memorial-tower-section .memorial-details h3 {
-    text-align: center;
-}
-.memorial-tower-section .feature-item h4 {
-    text-align: center;
-}
-
-/* Museum page: center '大施餓鬼会について' heading */
-.museum-page-body .segaki-info h3 {
-    text-align: center;
-}
-
-/* Museum page: year-by-year visual separation */
-.museum-page-body .segaki-records-section .year-record {
-    background: #ffffff;
-    border-radius: 14px;
-    border: 1px solid rgba(0,0,0,0.06);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-    padding: 24px;
-    margin: 28px 0;
-}
-
-.museum-page-body .segaki-records-section .year-record:nth-child(even) {
-    background: #fff9f3; /* subtle tint for alternating blocks */
-}
-
-.museum-page-body .segaki-records-section .year-header {
-    text-align: center;
-    margin-bottom: 16px;
-}
-
-.museum-page-body .segaki-records-section .year-header h3 {
-    display: inline-block;
-    padding: 8px 16px;
-    border-radius: 999px;
-    background: linear-gradient(135deg, rgba(212,165,116,0.15), rgba(193,150,83,0.15));
-    border: 1px solid rgba(212,165,116,0.35);
-}
-
-.museum-page-body .segaki-records-section .year-description {
-    text-align: center;
-    color: var(--text-light);
-}
-
-/* NEW badge for current year */
-.museum-page-body .year-badge-new {
-    display: inline-block;
-    margin-left: 10px;
-    padding: 2px 8px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: #fff;
-    background: #e53935; /* red */
-    border-radius: 999px;
-    vertical-align: middle;
-}
-
 .page-hero-content h1 {
     font-family: 'Noto Serif JP', serif;
     font-size: 2.5rem;
@@ -1028,11 +967,6 @@ body {
     background: var(--background-light);
 }
 
-/* Center titles under temple grounds items */
-.temple-grounds-section .ground-content h3 {
-    text-align: center;
-}
-
 .grounds-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -1160,11 +1094,6 @@ body {
     overflow: hidden;
     box-shadow: 0 10px 30px var(--shadow-light);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Center event titles within events cards */
-.events-section .event-info h3 {
-    text-align: center;
 }
 
 .events-page-body .event-gallery-card:hover {

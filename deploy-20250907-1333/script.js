@@ -112,29 +112,6 @@ document.addEventListener('DOMContentLoaded', function() {
         console.warn('Image cache-busting skipped:', e);
     }
 
-    // Museum page: auto-attach NEW badge to the current year's record header
-    try {
-        if (document.body.classList.contains('museum-page-body')) {
-            const currentYear = new Date().getFullYear();
-            const yearHeaders = document.querySelectorAll('.segaki-records-section .year-header h3');
-            yearHeaders.forEach(h3 => {
-                const text = h3.textContent || '';
-                // Extract western year like 2025 from "令和7年（2025年）8月16日"
-                const match = text.match(/(20\d{2})年/);
-                if (match && parseInt(match[1], 10) === currentYear) {
-                    if (!h3.querySelector('.year-badge-new')) {
-                        const badge = document.createElement('span');
-                        badge.className = 'year-badge-new';
-                        badge.textContent = 'NEW';
-                        h3.appendChild(badge);
-                    }
-                }
-            });
-        }
-    } catch (e) {
-        console.warn('NEW badge setup skipped:', e);
-    }
-
     // Function to set the active navigation link based on the current page URL
     function setActiveNavLink() {
         const allNavLinks = document.querySelectorAll('.main-nav .nav-link');
