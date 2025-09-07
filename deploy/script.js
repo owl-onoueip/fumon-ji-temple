@@ -562,37 +562,6 @@ function initSlideshowContainer(container, name) {
 function initSlideshowContainerWithDescription(container, name) {
     const slideshowImages = container.querySelectorAll('.slideshow-image');
     const descriptionElement = document.getElementById('memorial-description');
-    // Dots container (create if not present)
-    let dotsContainer = container.querySelector('.slideshow-dots');
-    if (!dotsContainer) {
-        dotsContainer = document.createElement('div');
-        dotsContainer.className = 'slideshow-dots';
-        container.appendChild(dotsContainer);
-    }
-    // Ensure dots match the number of slides
-    if (dotsContainer.children.length !== slideshowImages.length) {
-        dotsContainer.innerHTML = '';
-        slideshowImages.forEach((_, i) => {
-            const dot = document.createElement('span');
-            dot.className = 'dot' + (i === 0 ? ' active' : '');
-            dot.addEventListener('click', () => {
-                // Jump to slide i
-                // Remove active from current
-                const current = container.querySelector('.slideshow-image.active');
-                if (current) current.classList.remove('active');
-                const currentDot = dotsContainer.querySelector('.dot.active');
-                if (currentDot) currentDot.classList.remove('active');
-                // Set new index
-                currentIndex = i;
-                slideshowImages[currentIndex].classList.add('active');
-                dot.classList.add('active');
-                // Update description
-                const desc = slideshowImages[currentIndex].getAttribute('data-description');
-                if (desc && descriptionElement) descriptionElement.textContent = desc;
-            });
-            dotsContainer.appendChild(dot);
-        });
-    }
     console.log(`Found ${name} images:`, slideshowImages.length);
     
     if (slideshowImages.length > 1 && descriptionElement) {
@@ -610,13 +579,6 @@ function initSlideshowContainerWithDescription(container, name) {
             }
         });
         
-        // Initialize first dot active
-        const dots = dotsContainer.querySelectorAll('.dot');
-        if (dots.length) {
-            dots.forEach(d => d.classList.remove('active'));
-            if (dots[0]) dots[0].classList.add('active');
-        }
-
         console.log(`Starting ${name} slideshow with descriptions`);
         
         const slideInterval = setInterval(() => {
@@ -633,13 +595,6 @@ function initSlideshowContainerWithDescription(container, name) {
             const description = nextImage.getAttribute('data-description');
             if (description && descriptionElement) {
                 descriptionElement.textContent = description;
-            }
-            
-            // Update dots
-            if (dotsContainer) {
-                const dots = dotsContainer.querySelectorAll('.dot');
-                dots.forEach(d => d.classList.remove('active'));
-                if (dots[currentIndex]) dots[currentIndex].classList.add('active');
             }
             
             console.log(`${name} switched to image ${currentIndex} with description`);

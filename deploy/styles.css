@@ -903,27 +903,6 @@ body {
   object-fit: cover !important;
 }
 
-/* Dots under memorial detailed slideshow */
-.memorial-tower-slideshow-detailed .slideshow-dots {
-    position: absolute;
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 8px;
-    z-index: 5;
-}
-.memorial-tower-slideshow-detailed .slideshow-dots .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.6);
-    border: 1px solid rgba(0,0,0,0.1);
-}
-.memorial-tower-slideshow-detailed .slideshow-dots .dot.active {
-    background: var(--primary-color);
-}
-
 .slideshow-description {
     background: white;
     padding: 20px;
@@ -1117,59 +1096,6 @@ body {
     position: relative;
     width: 100%;
     height: 100%;
-}
-
-/* Museum page slideshow sizing (explicit height) */
-.museum-slideshow .slideshow-container {
-    height: 300px; /* desktop default */
-    border-radius: 12px; /* ensure rounded corners remain */
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-/* Museum yearly record layout: video left, photos right (desktop) */
-.segaki-records-section .media-gallery {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: start;
-}
-
-@media (max-width: 992px) {
-  .segaki-records-section .media-gallery {
-      grid-template-columns: 1fr; /* stack on small screens */
-      gap: 24px;
-  }
-}
-
-@media (max-width: 768px) {
-  .museum-slideshow .slideshow-container {
-      height: 240px; /* mobile compact */
-  }
-}
-
-/* Match heights between video and photo sections on museum page */
-.segaki-records-section .video-section .video-container {
-    height: 300px; /* match photo slideshow */
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    margin: 0 !important; /* remove extra blank line under video */
-}
-.segaki-records-section .video-section .video-container > div {
-    /* override embedded 56.25% padding box */
-    padding: 0 !important;
-    height: 100% !important;
-}
-.segaki-records-section .video-section .video-container iframe {
-    width: 100% !important;
-    height: 100% !important;
-}
-
-@media (max-width: 768px) {
-  .segaki-records-section .video-section .video-container {
-      height: 240px;
-  }
 }
 
 .slide {
