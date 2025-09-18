@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>資料ダウンロード | 真言宗智山派 熊野山 普門寺</title>
+    <meta name="description" content="普門寺の各種資料ダウンロードとオンライン申込フォーム（塔婆）をご利用いただけます。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=20250918-1447">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="temple-crest">
+                        <img src="images/2025-09-03 14-09-31.gif" alt="普門寺 家紋" class="crest-image">
+                    </div>
+                    <div class="temple-name">
+                        <h1>
+                            <span class="mountain-name">熊野山</span>
+                            <span class="temple-main-name">普門寺</span>
+                        </h1>
+                        <p class="temple-subtitle">真言宗智山派</p>
+                    </div>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="index.html" class="nav-link">HOME</a></li>
+                        <li><a href="guide.html" class="nav-link">ご案内</a></li>
+                        <li><a href="events.html" class="nav-link">年間行事</a></li>
+                        <li><a href="index.html#services" class="nav-link">護摩祈祷</a></li>
+                        <li><a href="museum.html" class="nav-link">資料館</a></li>
+                        <li><a href="downloads.html" class="nav-link active">資料</a></li>
+                        <li><a href="contact.html" class="nav-link">お問合せ</a></li>
+                        <li><a href="index.html#social" class="nav-link facebook-nav">
+                            <svg class="nav-facebook-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                            Facebook
+                        </a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-toggle" aria-label="メニュー">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <div class="page-hero-content">
+                <h1 class="page-title">資料ダウンロード</h1>
+                <p class="page-subtitle">Downloads & Online Forms</p>
+                <nav class="breadcrumb">
+                    <a href="index.html">HOME</a> > <span>資料</span>
+                </nav>
+            </div>
+        </div>
+    </section>
+
+    <main class="main-content">
+        <!-- Downloads Section -->
+        <section class="services-section" id="downloads">
+            <div class="container">
+                <div class="section-header">
+                    <h2>ダウンロード</h2>
+                    <p class="section-subtitle">PDF Downloads</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">📄</div>
+                        <h3>塔婆申込用紙（PDF）</h3>
+                        <p>塔婆のお申込みにご利用ください。印刷してご記入のうえ、寺務所へご提出ください（メール・FAXも可）。</p>
+                        <div class="service-details">
+                            <strong>提出先：</strong> メール・FAX・寺務所窓口<br>
+                            <strong>備考：</strong> 記入例は裏面をご参照ください
+                        </div>
+                        <div class="service-actions" style="margin-top: 12px; display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+                            <a class="btn btn-primary" href="docs/塔婆 申込用紙.pdf" target="_blank" rel="noopener" download>ダウンロード</a>
+                            <a class="btn btn-secondary" href="#toba-online">オンライン申込へ</a>
+                        </div>
+                    </div>
+                </div>
+                <p style="margin-top:12px; color: var(--text-light); text-align:center;">注: PDF名を変更したい場合はお知らせください。リンクを合わせて更新します。</p>
+            </div>
+        </section>
+
+        <!-- Online Form Section -->
+        <section class="contact-form-section" id="toba-online">
+            <div class="container">
+                <div class="section-header">
+                    <h2>オンライン塔婆申込</h2>
+                    <p>下記フォームからオンラインでお申込みいただけます。確認後、寺務所よりご連絡いたします。</p>
+                </div>
+                <div class="contact-form-container">
+                    <form class="contact-form" id="tobaForm">
+                        <!-- Honeypot -->
+                        <div class="hp-field" aria-hidden="true">
+                            <label for="toba_website">サイト</label>
+                            <input type="text" id="toba_website" name="website" tabindex="-1" autocomplete="off">
+                        </div>
+
+                        <div class="form-row" style="display:flex; gap:20px; flex-wrap:wrap;">
+                            <div class="form-group" style="flex:1; min-width:220px;">
+                                <label for="toba_name">申込者名 <span class="required">*</span></label>
+                                <input type="text" id="toba_name" name="name" required>
+                            </div>
+                            <div class="form-group" style="flex:1; min-width:220px;">
+                                <label for="toba_email">メール <span class="required">*</span></label>
+                                <input type="email" id="toba_email" name="email" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row" style="display:flex; gap:20px; flex-wrap:wrap;">
+                            <div class="form-group" style="flex:1; min-width:220px;">
+                                <label for="toba_phone">電話番号</label>
+                                <input type="tel" id="toba_phone" name="phone">
+                            </div>
+                            <div class="form-group" style="flex:2; min-width:220px;">
+                                <label for="toba_address">ご住所</label>
+                                <input type="text" id="toba_address" name="address" placeholder="郵送が必要な場合の宛先など">
+                            </div>
+                        </div>
+
+                        <div class="form-row" style="display:flex; gap:20px; flex-wrap:wrap;">
+                            <div class="form-group" style="flex:1; min-width:220px;">
+                                <label for="toba_quantity">枚数 <span class="required">*</span></label>
+                                <input type="number" id="toba_quantity" name="quantity" min="1" max="50" required>
+                            </div>
+                            <div class="form-group" style="flex:1; min-width:220px;">
+                                <label for="toba_date">希望日</label>
+                                <input type="date" id="toba_date" name="preferred_date">
+                            </div>
+                            <div class="form-group" style="flex:1; min-width:220px;">
+                                <label for="toba_for">塔婆の対象</label>
+                                <input type="text" id="toba_for" name="dedication" placeholder="施主名・回忌・戒名など">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="toba_message">備考</label>
+                            <textarea id="toba_message" name="message" rows="5" placeholder="読み仮名や詳細、連絡希望時間帯など"></textarea>
+                        </div>
+
+                        <div class="form-privacy">
+                            <label class="privacy-checkbox">
+                                <input type="checkbox" id="toba_privacy" name="privacy" required>
+                                <span class="checkmark"></span>
+                                <a href="contact.html#privacy-policy" class="privacy-link">プライバシーポリシー</a>に同意します
+                            </label>
+                        </div>
+
+                        <div class="form-submit">
+                            <button type="submit" class="btn btn-primary">申込を送信</button>
+                        </div>
+                    </form>
+
+                    <div id="toba-success" class="form-message success" style="display:none;">
+                        <p>お申込みありがとうございます。内容を確認のうえ、寺務所よりご連絡いたします。</p>
+                    </div>
+                    <div id="toba-error" class="form-message error" style="display:none;">
+                        <p>送信中にエラーが発生しました。お手数ですが、お電話にてお問い合わせください。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>真言宗智山派 熊野山 普門寺</h3>
+                    <p>〒334-0076 埼玉県川口市本蓮1-12-27</p>
+                    <p>TEL: 048-281-2210</p>
+                </div>
+                <div class="footer-links">
+                    <h4>サイトマップ</h4>
+                    <ul>
+                        <li><a href="index.html">HOME</a></li>
+                        <li><a href="guide.html">ご案内</a></li>
+                        <li><a href="events.html">年間行事</a></li>
+                        <li><a href="index.html#services">護摩祈祷</a></li>
+                        <li><a href="museum.html">資料館</a></li>
+                        <li><a href="downloads.html">資料ダウンロード</a></li>
+                        <li><a href="contact.html">お問合せ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 熊野山 普門寺 All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js?v=20250918-1447"></script>
+</body>
+</html>

@@ -1594,15 +1594,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* Honeypot (anti-spam) hidden field */
-.hp-field {
-    position: absolute !important;
-    left: -9999px !important;
-    width: 1px !important;
-    height: 1px !important;
-    overflow: hidden !important;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
     .header-content {

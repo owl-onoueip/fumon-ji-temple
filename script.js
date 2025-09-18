@@ -9,6 +9,95 @@ document.addEventListener('DOMContentLoaded', function() {
             mobileMenuToggle.classList.toggle('active');
         });
     }
+
+// Online Toba application form handler
+(function initEmailJS() {
+    const form = document.getElementById('tobaForm');
+    if (!form) return;
+    form.addEventListener('submit', async function(e){
+        e.preventDefault();
+
+        // Honeypot
+        const hp = form.querySelector('#toba_website');
+        if (hp && hp.value.trim()) {
+            console.warn('Toba honeypot triggered. Submission ignored.');
+            return;
+        }
+
+        // Rate limit per browser key
+        try {
+            const KEY = 'toba_last_submit_ts';
+            const WINDOW_SEC = 60;
+            const now = Date.now();
+            const last = parseInt(localStorage.getItem(KEY) || '0', 10);
+            if (!isNaN(last) && now - last < WINDOW_SEC * 1000) {
+                const remain = Math.ceil((WINDOW_SEC * 1000 - (now - last)) / 1000);
+                alert(`短時間での連続送信はできません。${remain}秒後にお試しください。`);
+                return;
+            }
+            localStorage.setItem(KEY, String(now));
+        } catch (err) {
+            console.warn('Toba ratelimit storage unavailable:', err);
+        }
+
+        // Basic validation
+        const name = form.toba_name?.value.trim();
+        const email = form.toba_email?.value.trim();
+        const phone = form.toba_phone?.value.trim();
+        const address = form.toba_address?.value.trim();
+        const quantity = parseInt(form.toba_quantity?.value || '0', 10);
+        const preferred_date = form.toba_date?.value.trim();
+        const dedication = form.toba_for?.value.trim();
+        const message = form.toba_message?.value.trim();
+        const privacy = form.toba_privacy?.checked;
+
+        const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+        if (!name) return alert('申込者名をご入力ください。');
+        if (!emailRe.test(email || '')) return alert('メールアドレスの形式が正しくありません。');
+        if (!quantity || quantity < 1 || quantity > 50) return alert('枚数は1〜50の範囲で入力してください。');
+        if (!privacy) return alert('プライバシーポリシーに同意してください。');
+        if (phone && !/^[0-9+\-()\s]{6,20}$/.test(phone)) return alert('電話番号の形式が正しくありません。');
+
+        // EmailJS availability
+        if (typeof emailjs === 'undefined') {
+            alert('送信機能の読み込みに失敗しました。時間をおいて再度お試しください。');
+            return;
+        }
+
+        const btn = form.querySelector('button[type="submit"]');
+        const old = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = '送信中...';
+
+        const templateParams = {
+            form_type: 'toba',
+            subject: 'オンライン塔婆申込',
+            name,
+            email,
+            phone,
+            address,
+            quantity,
+            preferred_date,
+            dedication,
+            message,
+            reply_to: email
+        };
+
+        try {
+            await emailjs.send('service_hug4h5d', 'template_pygnzri', templateParams);
+            document.getElementById('toba-success').style.display = 'block';
+            document.getElementById('toba-error').style.display = 'none';
+            form.reset();
+        } catch (err) {
+            console.error('Toba send failed', err);
+            document.getElementById('toba-success').style.display = 'none';
+            document.getElementById('toba-error').style.display = 'block';
+        } finally {
+            btn.disabled = false;
+            btn.textContent = old;
+        }
+    });
+})();
     
     // Smooth scrolling for navigation links
     const navLinks = document.querySelectorAll('a[href^="#"]');
@@ -379,6 +468,67 @@ document.addEventListener('DOMContentLoaded', function() {
 function handleContactForm(e) {
     e.preventDefault();
     console.log('Form submission initiated.');
+
+    // Honeypot check: if hidden field has any value, silently drop
+    const hpValue = e.target.website ? (e.target.website.value || '').trim() : '';
+    if (hpValue) {
+        console.warn('Honeypot triggered. Submission ignored.');
+        return; // Do not proceed
+    }
+
+    // Simple client-side rate limiting (per browser)
+    try {
+        const RATE_LIMIT_SECONDS = 60; // allow one submission per minute
+        const nowTs = Date.now();
+        const lastTs = parseInt(localStorage.getItem('contact_last_submit_ts') || '0', 10);
+        if (!isNaN(lastTs) && nowTs - lastTs < RATE_LIMIT_SECONDS * 1000) {
+            const remain = Math.ceil((RATE_LIMIT_SECONDS * 1000 - (nowTs - lastTs)) / 1000);
+            alert(`短時間での連続送信はできません。${remain}秒後にお試しください。`);
+            return;
+        }
+        // Store timestamp early to guard against rapid retries
+        localStorage.setItem('contact_last_submit_ts', String(nowTs));
+    } catch (err) {
+        console.warn('Rate limit storage not available:', err);
+    }
+
+    // Basic validation (defensive)
+    const name = (e.target.name?.value || '').trim();
+    const email = (e.target.email?.value || '').trim();
+    const phone = (e.target.phone?.value || '').trim();
+    const subject = (e.target.subject?.value || '').trim();
+    const message = (e.target.message?.value || '').trim();
+
+    // Name
+    if (!name || name.length > 100) {
+        alert('お名前を正しく入力してください（100文字以内）。');
+        return;
+    }
+    // Email
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (!emailRe.test(email)) {
+        alert('メールアドレスの形式が正しくありません。');
+        return;
+    }
+    // Subject
+    if (!subject) {
+        alert('件名を選択してください。');
+        return;
+    }
+    // Message length
+    if (message.length < 10) {
+        alert('お問い合わせ内容は10文字以上でご記入ください。');
+        return;
+    }
+    if (message.length > 5000) {
+        alert('お問い合わせ内容が長すぎます。5000文字以内にしてください。');
+        return;
+    }
+    // Optional phone: basic check if provided
+    if (phone && !/^[0-9+\-()\s]{6,20}$/.test(phone)) {
+        alert('電話番号の形式が正しくありません。数字と記号（+-()）のみを使用してください。');
+        return;
+    }
 
     // Check if EmailJS is available
     if (typeof emailjs === 'undefined') {
