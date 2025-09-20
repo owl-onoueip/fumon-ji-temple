@@ -17,6 +17,7 @@ INCLUDE_FILES = [
     'guide.html',
     'events.html',
     'museum.html',
+    'downloads.html',
     'contact.html',
     'styles.css',
     'script.js',
@@ -24,6 +25,7 @@ INCLUDE_FILES = [
 ]
 INCLUDE_DIRS = [
     'images',
+    'docs',
 ]
 
 # 検証: 必要ファイル/フォルダの存在をチェック
@@ -36,11 +38,12 @@ for d in INCLUDE_DIRS:
         missing.append(d + '/ (directory)')
 
 if missing:
-    sys.stderr.write('Missing required items:\n' + '\n'.join(' - ' + m for m in missing) + '\n')
+    sys.stderr.write('Missing required items (run this script from the project root?):\n' + '\n'.join(' - ' + m for m in missing) + '\n')
     sys.exit(1)
 
 # ZIP作成
-with zipfile.ZipFile(os.path.join(root, zip_name), 'w', compression=zipfile.ZIP_DEFLATED) as zf:
+out_path = os.path.join(root, zip_name)
+with zipfile.ZipFile(out_path, 'w', compression=zipfile.ZIP_DEFLATED) as zf:
     # ファイルを追加（arcnameは必ずPOSIXのスラッシュ）
     for f in INCLUDE_FILES:
         abs_path = os.path.join(root, f)
@@ -57,4 +60,4 @@ with zipfile.ZipFile(os.path.join(root, zip_name), 'w', compression=zipfile.ZIP_
                 arc = posixpath.join('', rel)
                 zf.write(abs_file, arc)
 
-print(zip_name)
+print(out_path)

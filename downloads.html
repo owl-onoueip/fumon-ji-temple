@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css?v=20250918-1447">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
     <!-- Header -->
@@ -29,14 +30,14 @@
                 </div>
                 <nav class="main-nav">
                     <ul>
-                        <li><a href="index.html" class="nav-link">HOME</a></li>
-                        <li><a href="guide.html" class="nav-link">ご案内</a></li>
-                        <li><a href="events.html" class="nav-link">年間行事</a></li>
-                        <li><a href="index.html#services" class="nav-link">護摩祈祷</a></li>
-                        <li><a href="museum.html" class="nav-link">資料館</a></li>
-                        <li><a href="downloads.html" class="nav-link active">資料</a></li>
-                        <li><a href="contact.html" class="nav-link">お問合せ</a></li>
-                        <li><a href="index.html#social" class="nav-link facebook-nav">
+                        <li><a class='nav-link' href='/'>HOME</a></li>
+                        <li><a class='nav-link' href='/guide'>ご案内</a></li>
+                        <li><a class='nav-link' href='/events'>年間行事</a></li>
+                        <li><a class='nav-link' href='/#services'>護摩祈祷</a></li>
+                        <li><a class='nav-link' href='/museum'>資料館</a></li>
+                        <li><a class='nav-link active' href='/downloads'>資料</a></li>
+                        <li><a class='nav-link' href='/contact'>お問合せ</a></li>
+                        <li><a class='nav-link facebook-nav' href='/#social'>
                             <svg class="nav-facebook-icon" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                             </svg>
@@ -60,7 +61,7 @@
                 <h1 class="page-title">資料ダウンロード</h1>
                 <p class="page-subtitle">Downloads & Online Forms</p>
                 <nav class="breadcrumb">
-                    <a href="index.html">HOME</a> > <span>資料</span>
+                    <a href='/'>HOME</a> > <span>資料</span>
                 </nav>
             </div>
         </div>
@@ -98,7 +99,7 @@
             <div class="container">
                 <div class="section-header">
                     <h2>オンライン塔婆申込</h2>
-                    <p>下記フォームからオンラインでお申込みいただけます。確認後、寺務所よりご連絡いたします。</p>
+                    <p>PDF申込書と同じ項目でオンライン申込ができます。確認後、寺務所よりご連絡いたします。</p>
                 </div>
                 <div class="contact-form-container">
                     <form class="contact-form" id="tobaForm">
@@ -108,58 +109,100 @@
                             <input type="text" id="toba_website" name="website" tabindex="-1" autocomplete="off">
                         </div>
 
+                        <!-- 檀家名（申込者）情報 -->
+                        <h3 style="margin-top:10px;">檀家名（申込者）</h3>
                         <div class="form-row" style="display:flex; gap:20px; flex-wrap:wrap;">
                             <div class="form-group" style="flex:1; min-width:220px;">
-                                <label for="toba_name">申込者名 <span class="required">*</span></label>
-                                <input type="text" id="toba_name" name="name" required>
+                                <label for="applicant_name">氏名 <span class="required">*</span></label>
+                                <input type="text" id="applicant_name" required>
                             </div>
                             <div class="form-group" style="flex:1; min-width:220px;">
-                                <label for="toba_email">メール <span class="required">*</span></label>
-                                <input type="email" id="toba_email" name="email" required>
+                                <label for="applicant_kana">よみがな</label>
+                                <input type="text" id="applicant_kana" placeholder="こいずみ たろうなど">
                             </div>
                         </div>
-
                         <div class="form-row" style="display:flex; gap:20px; flex-wrap:wrap;">
                             <div class="form-group" style="flex:1; min-width:220px;">
-                                <label for="toba_phone">電話番号</label>
-                                <input type="tel" id="toba_phone" name="phone">
+                                <label for="applicant_phone">電話番号 <span class="required">*</span></label>
+                                <input type="tel" id="applicant_phone" required>
+                            </div>
+                            <div class="form-group" style="flex:1; min-width:220px;">
+                                <label for="applicant_email">メール <span class="required">*</span></label>
+                                <input type="email" id="applicant_email" required>
                             </div>
                             <div class="form-group" style="flex:2; min-width:220px;">
-                                <label for="toba_address">ご住所</label>
-                                <input type="text" id="toba_address" name="address" placeholder="郵送が必要な場合の宛先など">
+                                <label for="applicant_address">ご住所</label>
+                                <input type="text" id="applicant_address">
                             </div>
                         </div>
 
+                        <!-- ご法要（ご希望日時） -->
+                        <h3>ご法要（ご希望日時）</h3>
+                        <div class="form-row" style="display:flex; gap:20px; flex-wrap:wrap;">
+                            <div class="form-group" style="flex:1; min-width:180px;">
+                                <label for="service_date">ご法要日</label>
+                                <input type="date" id="service_date">
+                            </div>
+                            <div class="form-group" style="flex:1; min-width:180px;">
+                                <label for="start_time">開式時間</label>
+                                <input type="time" id="start_time">
+                            </div>
+                            <div class="form-group" style="flex:1; min-width:180px;">
+                                <label for="attendees">今回の列席人数（おおよそ）</label>
+                                <input type="number" id="attendees" min="0" max="200" placeholder="名">
+                            </div>
+                        </div>
+
+                        <!-- 故人情報 -->
+                        <h3>故人情報</h3>
                         <div class="form-row" style="display:flex; gap:20px; flex-wrap:wrap;">
                             <div class="form-group" style="flex:1; min-width:220px;">
-                                <label for="toba_quantity">枚数 <span class="required">*</span></label>
-                                <input type="number" id="toba_quantity" name="quantity" min="1" max="50" required>
+                                <label for="deceased_zokumyo">俗名</label>
+                                <input type="text" id="deceased_zokumyo" placeholder="◯◯ 殿">
                             </div>
                             <div class="form-group" style="flex:1; min-width:220px;">
-                                <label for="toba_date">希望日</label>
-                                <input type="date" id="toba_date" name="preferred_date">
+                                <label for="deceased_kaimyo">戒名</label>
+                                <input type="text" id="deceased_kaimyo">
                             </div>
                             <div class="form-group" style="flex:1; min-width:220px;">
-                                <label for="toba_for">塔婆の対象</label>
-                                <input type="text" id="toba_for" name="dedication" placeholder="施主名・回忌・戒名など">
+                                <label for="deceased_meinichi">ご命日</label>
+                                <input type="date" id="deceased_meinichi">
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!-- 法事内容 -->
+                        <h3>法事内容</h3>
+                        <div class="form-row" style="display:flex; gap:16px; flex-wrap:wrap; align-items:center;">
+                            <label class="privacy-checkbox"><input type="checkbox" id="svc_49"> 49日</label>
+                            <label class="privacy-checkbox"><input type="checkbox" id="svc_isshu"> 一周忌</label>
+                            <span>／</span>
+                            <label>（<input type="number" id="svc_kaiki" min="2" max="100" style="width:80px;">）回忌</label>
+                            <label class="privacy-checkbox"><input type="checkbox" id="svc_sekito"> 石塔開眼</label>
+                            <label class="privacy-checkbox"><input type="checkbox" id="svc_noukotsu"> 納骨供養</label>
+                            <label class="privacy-checkbox"><input type="checkbox" id="svc_tsuizen"> 追善回向</label>
+                            <label class="privacy-checkbox"><input type="checkbox" id="svc_only_toba"> 卒塔婆回向のみ</label>
+                        </div>
+
+                        <!-- 施主リスト（繰り返し） -->
+                        <h3>施主（よみがな）</h3>
+                        <p style="color:var(--text-light); margin-top:-8px;">必要な行数を追加してください。※当日はこの順番でお呼びします。</p>
+                        <div id="tobaItems" style="display:flex; flex-direction:column; gap:12px;">
+                            <!-- rows inserted by JS -->
+                        </div>
+                        <div style="margin-top:8px; display:flex; gap:8px;">
+                            <button type="button" class="btn btn-secondary" id="addTobaRow">行を追加</button>
+                            <button type="button" class="btn" id="removeTobaRow">最後の行を削除</button>
+                        </div>
+
+                        <!-- 備考・同意 -->
+                        <div class="form-group" style="margin-top:16px;">
                             <label for="toba_message">備考</label>
-                            <textarea id="toba_message" name="message" rows="5" placeholder="読み仮名や詳細、連絡希望時間帯など"></textarea>
+                            <textarea id="toba_message" rows="4" placeholder="読み仮名の表記、連絡希望時間帯など"></textarea>
                         </div>
+                        <p style="color:var(--text-light);">※卒塔婆は1本5,000円です。5本以上は本フォームを複数回送信いただくか、PDFの用紙をコピーしてご利用ください。</p>
 
-                        <div class="form-privacy">
-                            <label class="privacy-checkbox">
-                                <input type="checkbox" id="toba_privacy" name="privacy" required>
-                                <span class="checkmark"></span>
-                                <a href="contact.html#privacy-policy" class="privacy-link">プライバシーポリシー</a>に同意します
-                            </label>
-                        </div>
-
-                        <div class="form-submit">
-                            <button type="submit" class="btn btn-primary">申込を送信</button>
+                        <div class="form-submit" style="text-align:center;">
+                            <button type="submit" class="btn btn-primary" aria-label="内容確認へ">確認へ</button>
                         </div>
                     </form>
 
@@ -170,7 +213,18 @@
                         <p>送信中にエラーが発生しました。お手数ですが、お電話にてお問い合わせください。</p>
                     </div>
                 </div>
-            </div>
+                <!-- Confirm Modal -->
+                <div id="tobaConfirmModal" class="modal" style="display:none;">
+                    <div class="modal-content">
+                        <h3 style="margin-top:0;">内容確認</h3>
+                        <div id="tobaConfirmBody" class="modal-body"></div>
+                        <div class="modal-actions">
+                            <button type="button" class="btn" id="tobaConfirmCancel">修正する</button>
+                            <button type="button" class="btn btn-primary" id="tobaConfirmSend">この内容で送信</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </section>
     </main>
 
@@ -186,13 +240,13 @@
                 <div class="footer-links">
                     <h4>サイトマップ</h4>
                     <ul>
-                        <li><a href="index.html">HOME</a></li>
-                        <li><a href="guide.html">ご案内</a></li>
-                        <li><a href="events.html">年間行事</a></li>
-                        <li><a href="index.html#services">護摩祈祷</a></li>
-                        <li><a href="museum.html">資料館</a></li>
-                        <li><a href="downloads.html">資料ダウンロード</a></li>
-                        <li><a href="contact.html">お問合せ</a></li>
+                        <li><a href='/'>HOME</a></li>
+                        <li><a href='/guide'>ご案内</a></li>
+                        <li><a href='/events'>年間行事</a></li>
+                        <li><a href='/#services'>護摩祈祷</a></li>
+                        <li><a href='/museum'>資料館</a></li>
+                        <li><a href='/downloads'>資料ダウンロード</a></li>
+                        <li><a href='/contact'>お問合せ</a></li>
                     </ul>
                 </div>
             </div>

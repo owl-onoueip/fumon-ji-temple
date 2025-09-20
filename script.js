@@ -11,9 +11,203 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 // Online Toba application form handler
-(function initEmailJS() {
+(function initTobaForm() {
     const form = document.getElementById('tobaForm');
     if (!form) return;
+    const itemsContainer = document.getElementById('tobaItems');
+    const btnAdd = document.getElementById('addTobaRow');
+    const btnRemove = document.getElementById('removeTobaRow');
+    // Confirmation modal elements
+    const modal = document.getElementById('tobaConfirmModal');
+    const modalBody = document.getElementById('tobaConfirmBody');
+    const modalCancel = document.getElementById('tobaConfirmCancel');
+    const modalSend = document.getElementById('tobaConfirmSend');
+    let confirmedOnce = false; // submit confirmation state
+
+    // Date constraints for inputs (UX):
+    try {
+        const svcDateEl = document.getElementById('service_date');
+        const meinichiEl = document.getElementById('deceased_meinichi');
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        const todayStr = `${yyyy}-${mm}-${dd}`;
+        if (svcDateEl) svcDateEl.setAttribute('min', todayStr); // 法要日は過去NG
+        if (meinichiEl) meinichiEl.setAttribute('max', todayStr); // ご命日は未来NG
+    } catch (e) {
+        console.warn('Date constraints not applied:', e);
+    }
+
+    // Helpers to manage rows
+    function createTobaRow(idx) {
+        const row = document.createElement('div');
+        row.className = 'toba-row';
+        row.style.display = 'grid';
+        row.style.gridTemplateColumns = 'auto 1fr 1fr';
+        row.style.gap = '10px';
+        row.style.alignItems = 'center';
+        const label = document.createElement('div');
+        label.textContent = idx.toString();
+        label.style.minWidth = '24px';
+        const nameWrap = document.createElement('div');
+        nameWrap.className = 'form-group';
+        const nameLabel = document.createElement('label');
+        nameLabel.textContent = '施主名';
+        const nameInput = document.createElement('input');
+        nameInput.type = 'text';
+        nameInput.className = 'toba-name';
+        nameWrap.appendChild(nameLabel);
+        nameWrap.appendChild(nameInput);
+        const kanaWrap = document.createElement('div');
+        kanaWrap.className = 'form-group';
+        const kanaLabel = document.createElement('label');
+        kanaLabel.textContent = 'よみがな';
+        const kanaInput = document.createElement('input');
+        kanaInput.type = 'text';
+        kanaInput.className = 'toba-kana';
+        kanaWrap.appendChild(kanaLabel);
+        kanaWrap.appendChild(kanaInput);
+        row.appendChild(label);
+        row.appendChild(nameWrap);
+        row.appendChild(kanaWrap);
+        return row;
+    }
+
+    function refreshRowIndices() {
+        const rows = itemsContainer.querySelectorAll('.toba-row');
+        rows.forEach((row, i) => {
+            const label = row.firstChild;
+            if (label) label.textContent = String(i + 1);
+        });
+    }
+
+    function addRow() {
+        const idx = itemsContainer.querySelectorAll('.toba-row').length + 1;
+        itemsContainer.appendChild(createTobaRow(idx));
+    }
+    function removeRow() {
+        const rows = itemsContainer.querySelectorAll('.toba-row');
+        if (rows.length > 0) {
+            itemsContainer.removeChild(rows[rows.length - 1]);
+        }
+    }
+
+    function clearTobaForm() {
+        // Reset all fields
+        form.reset();
+        // Rebuild items rows to default 5 empty rows
+        itemsContainer.innerHTML = '';
+        for (let i = 0; i < 5; i++) addRow();
+        refreshRowIndices();
+        // Hide success message after clearing
+        const ok = document.getElementById('toba-success');
+        if (ok) ok.style.display = 'none';
+        const ng = document.getElementById('toba-error');
+        if (ng) ng.style.display = 'none';
+    }
+
+    function openPrintSummary({
+        ticket_id,
+        applicant_name,
+        applicant_kana,
+        applicant_phone,
+        applicant_email,
+        applicant_address,
+        service_date,
+        start_time,
+        attendees,
+        deceased_zokumyo,
+        deceased_kaimyo,
+        deceased_meinichi,
+        services,
+        items,
+        message
+    }) {
+        const safe = s => (s || '').replace(/</g, '&lt;');
+        const itemsRows = items.map((it, i) => `<tr><td>${i+1}</td><td>${safe(it.name)}</td><td>${safe(it.kana)}</td></tr>`).join('');
+        const servicesText = services.join(', ');
+        try {
+            const sumWin = window.open('', '_blank');
+            if (sumWin && sumWin.document) {
+                const html = `<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>申込内容の控え | 普門寺</title>
+<style>
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Noto Sans JP','Hiragino Kaku Gothic ProN',Meiryo,sans-serif;color:#222;line-height:1.7;margin:20px}
+  .card{border:1px solid #e2d3b5;border-radius:10px;background:#fffaf2;padding:14px 16px;margin-bottom:16px}
+  h1{font-size:20px;margin:0 0 10px}
+  h2{font-size:16px;margin:18px 0 8px}
+  table{border-collapse:collapse;width:100%}
+  th,td{border:1px solid #ddd;padding:8px;text-align:left}
+  th{background:#f7f7f7}
+  .actions{margin-top:14px}
+  .btn{display:inline-block;padding:10px 16px;border:1px solid #c19653;border-radius:999px;color:#593b0b;text-decoration:none}
+  .btn-primary{background:#f5e7cf}
+  @media print {.actions{display:none}}
+</style></head>
+<body>
+  <div class="card">
+    <h1>お申込みありがとうございます</h1>
+    <p>内容を確認のうえ、寺務所よりご連絡いたします。</p>
+    <p>受付番号：<strong>${ticket_id}</strong></p>
+    <p style="color:#666">※受付番号はお問い合わせの際にお知らせください。迷惑メールフォルダもご確認ください。</p>
+  </div>
+
+  <h2>檀家名（申込者）</h2>
+  <table>
+    <tr><th>氏名</th><td>${safe(applicant_name)}</td></tr>
+    <tr><th>よみがな</th><td>${safe(applicant_kana)}</td></tr>
+    <tr><th>電話</th><td>${safe(applicant_phone)}</td></tr>
+    <tr><th>メール</th><td>${safe(applicant_email)}</td></tr>
+    <tr><th>住所</th><td>${safe(applicant_address)}</td></tr>
+  </table>
+
+  <h2>ご法要（ご希望日時）</h2>
+  <table>
+    <tr><th>ご法要日</th><td>${safe(service_date)}</td></tr>
+    <tr><th>開式時間</th><td>${safe(start_time)}</td></tr>
+    <tr><th>列席人数（目安）</th><td>${safe(attendees)}</td></tr>
+  </table>
+
+  <h2>故人情報</h2>
+  <table>
+    <tr><th>俗名</th><td>${safe(deceased_zokumyo)}</td></tr>
+    <tr><th>戒名</th><td>${safe(deceased_kaimyo)}</td></tr>
+    <tr><th>ご命日</th><td>${safe(deceased_meinichi)}</td></tr>
+  </table>
+
+  <h2>法事内容</h2>
+  <p>${safe(servicesText)}</p>
+
+  <h2>施主（順番どおり）</h2>
+  <table>
+    <thead><tr><th>#</th><th>施主名</th><th>よみがな</th></tr></thead>
+    <tbody>${itemsRows}</tbody>
+  </table>
+  <p>件数：${items.length}</p>
+
+  <h2>備考</h2>
+  <p>${safe(message)}</p>
+
+  <div class="actions">
+    <a href="#" class="btn btn-primary" onclick="window.print();return false;">この内容を印刷</a>
+  </div>
+</body></html>`;
+                sumWin.document.open();
+                sumWin.document.write(html);
+                sumWin.document.close();
+            }
+        } catch (e) {
+            console.warn('Summary window could not be opened:', e);
+        }
+    }
+
+    // Initialize with 5 rows
+    for (let i = 0; i < 5; i++) addRow();
+    btnAdd && btnAdd.addEventListener('click', () => { addRow(); refreshRowIndices(); });
+    btnRemove && btnRemove.addEventListener('click', () => { removeRow(); refreshRowIndices(); });
+
     form.addEventListener('submit', async function(e){
         e.preventDefault();
 
@@ -24,39 +218,136 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Rate limit per browser key
-        try {
-            const KEY = 'toba_last_submit_ts';
-            const WINDOW_SEC = 60;
-            const now = Date.now();
-            const last = parseInt(localStorage.getItem(KEY) || '0', 10);
-            if (!isNaN(last) && now - last < WINDOW_SEC * 1000) {
-                const remain = Math.ceil((WINDOW_SEC * 1000 - (now - last)) / 1000);
-                alert(`短時間での連続送信はできません。${remain}秒後にお試しください。`);
-                return;
+        // Rate limit per browser key: run ONLY when actually sending (after confirmation)
+        if (confirmedOnce) {
+            try {
+                const KEY = 'toba_last_submit_ts';
+                const WINDOW_SEC = 60;
+                const now = Date.now();
+                const last = parseInt(localStorage.getItem(KEY) || '0', 10);
+                if (!isNaN(last) && now - last < WINDOW_SEC * 1000) {
+                    const remain = Math.ceil((WINDOW_SEC * 1000 - (now - last)) / 1000);
+                    alert(`短時間での連続送信はできません。${remain}秒後にお試しください。`);
+                    return;
+                }
+                // Set timestamp right before sending
+                localStorage.setItem(KEY, String(now));
+            } catch (err) {
+                console.warn('Toba ratelimit storage unavailable:', err);
             }
-            localStorage.setItem(KEY, String(now));
-        } catch (err) {
-            console.warn('Toba ratelimit storage unavailable:', err);
         }
 
-        // Basic validation
-        const name = form.toba_name?.value.trim();
-        const email = form.toba_email?.value.trim();
-        const phone = form.toba_phone?.value.trim();
-        const address = form.toba_address?.value.trim();
-        const quantity = parseInt(form.toba_quantity?.value || '0', 10);
-        const preferred_date = form.toba_date?.value.trim();
-        const dedication = form.toba_for?.value.trim();
-        const message = form.toba_message?.value.trim();
-        const privacy = form.toba_privacy?.checked;
+        // Collect fields (PDF mirrored)
+        const applicant_name = document.getElementById('applicant_name')?.value.trim();
+        const applicant_kana = document.getElementById('applicant_kana')?.value.trim();
+        const applicant_phone = document.getElementById('applicant_phone')?.value.trim();
+        const applicant_email = document.getElementById('applicant_email')?.value.trim();
+        const applicant_address = document.getElementById('applicant_address')?.value.trim();
 
+        const service_date = document.getElementById('service_date')?.value.trim();
+        const start_time = document.getElementById('start_time')?.value.trim();
+        const attendees = document.getElementById('attendees')?.value.trim();
+
+        const deceased_zokumyo = document.getElementById('deceased_zokumyo')?.value.trim();
+        const deceased_kaimyo = document.getElementById('deceased_kaimyo')?.value.trim();
+        const deceased_meinichi = document.getElementById('deceased_meinichi')?.value.trim();
+
+        const svc_49 = document.getElementById('svc_49')?.checked;
+        const svc_isshu = document.getElementById('svc_isshu')?.checked;
+        const svc_kaiki = parseInt(document.getElementById('svc_kaiki')?.value || '0', 10);
+        const svc_sekito = document.getElementById('svc_sekito')?.checked;
+        const svc_noukotsu = document.getElementById('svc_noukotsu')?.checked;
+        const svc_tsuizen = document.getElementById('svc_tsuizen')?.checked;
+        const svc_only_toba = document.getElementById('svc_only_toba')?.checked;
+
+        const message = document.getElementById('toba_message')?.value.trim();
+
+        // Build services text
+        const services = [];
+        if (svc_49) services.push('49日');
+        if (svc_isshu) services.push('一周忌');
+        if (!isNaN(svc_kaiki) && svc_kaiki > 0) services.push(`${svc_kaiki}回忌`);
+        if (svc_sekito) services.push('石塔開眼');
+        if (svc_noukotsu) services.push('納骨供養');
+        if (svc_tsuizen) services.push('追善回向');
+        if (svc_only_toba) services.push('卒塔婆回向のみ');
+
+        // Collect items rows
+        const rows = Array.from(itemsContainer.querySelectorAll('.toba-row'));
+        const items = rows.map(r => ({
+            name: r.querySelector('.toba-name')?.value.trim() || '',
+            kana: r.querySelector('.toba-kana')?.value.trim() || ''
+        })).filter(it => it.name);
+
+        // Validation
         const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-        if (!name) return alert('申込者名をご入力ください。');
-        if (!emailRe.test(email || '')) return alert('メールアドレスの形式が正しくありません。');
-        if (!quantity || quantity < 1 || quantity > 50) return alert('枚数は1〜50の範囲で入力してください。');
-        if (!privacy) return alert('プライバシーポリシーに同意してください。');
-        if (phone && !/^[0-9+\-()\s]{6,20}$/.test(phone)) return alert('電話番号の形式が正しくありません。');
+        if (!applicant_name) return alert('代表者氏名をご入力ください。');
+        if (!emailRe.test(applicant_email || '')) return alert('メールアドレスの形式が正しくありません。');
+        if (!applicant_phone) return alert('電話番号は必須です。');
+        if (!/^[0-9+\-()\s]{6,20}$/.test(applicant_phone)) return alert('電話番号の形式が正しくありません。数字と記号（+-()）のみを使用してください。');
+        if (items.length === 0) return alert('施主名を1件以上ご入力ください。');
+
+        // Date validation rules
+        function parseYMD(s) {
+            if (!s) return null;
+            const [y,m,d] = s.split('-').map(n => parseInt(n, 10));
+            if (!y || !m || !d) return null;
+            return new Date(y, m - 1, d);
+        }
+        const today0 = new Date(); today0.setHours(0,0,0,0);
+        const svcDate = parseYMD(service_date);
+        if (svcDate && svcDate < today0) return alert('ご法要日は本日以降の日付をご指定ください（過去日は指定できません）。');
+        const meinichiDate = parseYMD(deceased_meinichi);
+        if (meinichiDate && meinichiDate > today0) return alert('ご命日は本日以前の日付をご指定ください（未来日は指定できません）。');
+
+        // First submit: show confirmation modal with summary
+        if (!confirmedOnce && modal && modalBody) {
+            const safe = s => (s || '').replace(/</g, '&lt;');
+            const itemsRows = items.map((it, i) => `<tr><td>${i+1}</td><td>${safe(it.name)}</td><td>${safe(it.kana)}</td></tr>`).join('');
+            const servicesText = services.join(', ');
+            modalBody.innerHTML = `
+                <div class="confirm-section">
+                    <h4>檀家名（申込者）</h4>
+                    <table class="simple"><tr><th>氏名</th><td>${safe(applicant_name)}</td></tr>
+                    <tr><th>よみがな</th><td>${safe(applicant_kana)}</td></tr>
+                    <tr><th>電話</th><td>${safe(applicant_phone)}</td></tr>
+                    <tr><th>メール</th><td>${safe(applicant_email)}</td></tr>
+                    <tr><th>住所</th><td>${safe(applicant_address)}</td></tr></table>
+                </div>
+                <div class="confirm-section">
+                    <h4>ご法要（ご希望日時）</h4>
+                    <table class="simple"><tr><th>ご法要日</th><td>${safe(service_date)}</td></tr>
+                    <tr><th>開式時間</th><td>${safe(start_time)}</td></tr>
+                    <tr><th>列席人数（目安）</th><td>${safe(attendees)}</td></tr></table>
+                </div>
+                <div class="confirm-section">
+                    <h4>故人情報</h4>
+                    <table class="simple"><tr><th>俗名</th><td>${safe(deceased_zokumyo)}</td></tr>
+                    <tr><th>戒名</th><td>${safe(deceased_kaimyo)}</td></tr>
+                    <tr><th>ご命日</th><td>${safe(deceased_meinichi)}</td></tr></table>
+                </div>
+                <div class="confirm-section">
+                    <h4>法事内容</h4>
+                    <p>${safe(servicesText)}</p>
+                </div>
+                <div class="confirm-section">
+                    <h4>施主（順番どおり）</h4>
+                    <table class="simple"><thead><tr><th>#</th><th>施主名</th><th>よみがな</th></tr></thead>
+                    <tbody>${itemsRows}</tbody></table>
+                    <p>件数：${items.length}</p>
+                </div>
+                <div class="confirm-section">
+                    <h4>備考</h4>
+                    <p>${safe(message)}</p>
+                </div>
+            `;
+            // Show modal and wire buttons
+            modal.style.display = 'block';
+            // No print button in confirmation modal per request
+            if (modalCancel) modalCancel.onclick = () => { modal.style.display = 'none'; confirmedOnce = false; };
+            if (modalSend) modalSend.onclick = () => { modal.style.display = 'none'; confirmedOnce = true; form.requestSubmit(); };
+            return;
+        }
 
         // EmailJS availability
         if (typeof emailjs === 'undefined') {
@@ -69,25 +360,93 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.disabled = true;
         btn.textContent = '送信中...';
 
+        // Build HTML table for items for easy reading in email
+        const items_html = (function(){
+            if (!items.length) return '';
+            let html = '<table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse">';
+            html += '<thead><tr><th>#</th><th>施主名</th><th>よみがな</th></tr></thead><tbody>';
+            items.forEach((it, i) => {
+                html += `<tr><td>${i+1}</td><td>${(it.name||'').replace(/</g,'&lt;')}</td><td>${(it.kana||'').replace(/</g,'&lt;')}</td></tr>`;
+            });
+            html += '</tbody></table>';
+            return html;
+        })();
+
+        // Generate ticket ID for tracking, e.g., FJ-20250919-8X3K
+        function genTicketId() {
+            const d = new Date();
+            const y = d.getFullYear();
+            const m = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            const pool = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let rand = '';
+            for (let i = 0; i < 4; i++) rand += pool[Math.floor(Math.random() * pool.length)];
+            return `FJ-${y}${m}${day}-${rand}`;
+        }
+        const ticket_id = genTicketId();
+
         const templateParams = {
             form_type: 'toba',
-            subject: 'オンライン塔婆申込',
-            name,
-            email,
-            phone,
-            address,
-            quantity,
-            preferred_date,
-            dedication,
+            subject: `[塔婆申込] ${applicant_name || ''} 様 | ${ticket_id}`,
+            applicant_name,
+            applicant_kana,
+            applicant_phone,
+            applicant_email,
+            applicant_address,
+            service_date,
+            start_time,
+            attendees,
+            deceased_zokumyo,
+            deceased_kaimyo,
+            deceased_meinichi,
+            services: services.join(', '),
+            items_json: JSON.stringify(items),
+            items_html,
+            items_count: items.length,
             message,
-            reply_to: email
+            ticket_id,
+            reply_to: applicant_email
         };
 
         try {
-            await emailjs.send('service_hug4h5d', 'template_pygnzri', templateParams);
-            document.getElementById('toba-success').style.display = 'block';
-            document.getElementById('toba-error').style.display = 'none';
-            form.reset();
+            await emailjs.send('service_hug4h5d', 'template_9oehtxc', templateParams);
+            const ok = document.getElementById('toba-success');
+            const ng = document.getElementById('toba-error');
+            if (ok) {
+                ok.innerHTML = `<p>お申込みありがとうございます。内容を確認のうえ、寺務所よりご連絡いたします。</p>
+                <p style="margin-top:6px;">受付番号：<strong>${ticket_id}</strong></p>
+                <p style="color:var(--text-light); margin-top:4px;">※受付番号はお問い合わせの際にお知らせください。迷惑メールフォルダもご確認ください。</p>
+                <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
+                    <button type="button" class="btn btn-secondary" id="toba-print">今回の申込内容を印刷する</button>
+                    <button type="button" class="btn" id="toba-new">新しい申込を作成</button>
+                </div>`;
+                ok.style.display = 'block';
+                // Attach handlers
+                const btnPrint = document.getElementById('toba-print');
+                const btnNew = document.getElementById('toba-new');
+                if (btnPrint) btnPrint.addEventListener('click', () => openPrintSummary({
+                    ticket_id,
+                    applicant_name,
+                    applicant_kana,
+                    applicant_phone,
+                    applicant_email,
+                    applicant_address,
+                    service_date,
+                    start_time,
+                    attendees,
+                    deceased_zokumyo,
+                    deceased_kaimyo,
+                    deceased_meinichi,
+                    services,
+                    items,
+                    message
+                }));
+                if (btnNew) btnNew.addEventListener('click', clearTobaForm);
+            }
+            if (ng) ng.style.display = 'none';
+            // Do NOT auto-clear inputs; keep entered values for確認/印刷用
+
+            // Summary window disabled by request; on-page success message provides Print/New options.
         } catch (err) {
             console.error('Toba send failed', err);
             document.getElementById('toba-success').style.display = 'none';
@@ -95,6 +454,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } finally {
             btn.disabled = false;
             btn.textContent = old;
+            confirmedOnce = false; // reset confirmation state
         }
     });
 })();

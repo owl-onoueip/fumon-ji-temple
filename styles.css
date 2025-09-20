@@ -1538,6 +1538,147 @@ body {
     box-shadow: 0 5px 20px var(--shadow-light);
 }
 
+/* Toba online form enhancements (scoped) */
+#toba-online .contact-form {
+    border: 2px solid rgba(193,150,83,0.25); /* gold-ish accent */
+    background: linear-gradient(180deg, rgba(212,165,116,0.05), rgba(255,255,255,0.9));
+}
+#toba-online .contact-form h3 {
+    position: relative;
+    margin: 22px 0 12px;
+    font-family: 'Noto Serif JP', serif;
+    color: var(--primary-color);
+}
+#toba-online .contact-form h3::after {
+    content: "";
+    display: block;
+    width: 64px;
+    height: 3px;
+    margin-top: 6px;
+    background: var(--gradient-primary);
+    border-radius: 3px;
+}
+#toba-online #tobaItems .toba-row {
+    border: 1.5px solid rgba(0,0,0,0.08);
+    background: rgba(255,255,255,0.9);
+    border-radius: 10px;
+    padding: 10px 12px;
+    box-shadow: 0 2px 10px var(--shadow-light);
+}
+#toba-online .form-submit .btn.btn-primary {
+    font-size: 1.08rem;
+    font-weight: 700;
+    padding: 16px 46px;
+    border-radius: 999px;
+    box-shadow: 0 8px 18px rgba(193,150,83,0.25);
+}
+#toba-online .form-submit .btn.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(193,150,83,0.32);
+}
+
+/* Contact page form styling to match Toba form */
+#contact-page .contact-form {
+    border: 2px solid rgba(193,150,83,0.25);
+    background: linear-gradient(180deg, rgba(212,165,116,0.05), rgba(255,255,255,0.9));
+}
+#contact-page .contact-form h3,
+#contact-page .section-header h2 {
+    position: relative;
+    font-family: 'Noto Serif JP', serif;
+    color: var(--primary-color);
+}
+#contact-page .section-header h2::after {
+    content: "";
+    display: block;
+    width: 64px;
+    height: 3px;
+    margin-top: 6px;
+    background: var(--gradient-primary);
+    border-radius: 3px;
+}
+#contact-page .form-submit .btn.btn-primary {
+    font-size: 1.08rem;
+    font-weight: 700;
+    padding: 16px 46px;
+    border-radius: 999px;
+    box-shadow: 0 8px 18px rgba(193,150,83,0.25);
+}
+#contact-page .form-submit .btn.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(193,150,83,0.32);
+}
+
+/* Toba confirmation modal */
+#tobaConfirmModal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    display: none; /* toggled by JS */
+    z-index: 9999;
+    padding: 20px;
+    overflow: auto;
+}
+#tobaConfirmModal .modal-content {
+    max-width: 860px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 18px 48px rgba(0,0,0,0.25);
+    padding: 20px 22px;
+}
+#tobaConfirmModal .modal-body {
+    display: grid;
+    gap: 14px;
+}
+#tobaConfirmModal .confirm-section h4 {
+    margin: 8px 0 6px;
+    font-size: 1rem;
+    color: var(--primary-color);
+}
+#tobaConfirmModal .confirm-section table.simple {
+    width: 100%;
+    border-collapse: collapse;
+}
+#tobaConfirmModal .confirm-section table.simple th,
+#tobaConfirmModal .confirm-section table.simple td {
+    border: 1px solid #eee;
+    padding: 8px 10px;
+    text-align: left;
+}
+#tobaConfirmModal .modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 12px;
+}
+@media (max-width: 640px) {
+    #tobaConfirmModal .modal-content { margin: 20px auto; padding: 16px; }
+    #tobaConfirmModal .modal-actions { flex-direction: column; }
+}
+
+/* Success message area (Toba) */
+#toba-success {
+    border: 1px solid rgba(212,165,116,0.35);
+    background: linear-gradient(180deg, rgba(212,165,116,0.08), rgba(255,255,255,0.95));
+    border-radius: 12px;
+    padding: 16px 18px;
+    box-shadow: 0 8px 22px rgba(193,150,83,0.15);
+}
+
+/* Make the print button clearly visible even when it uses btn-secondary */
+#toba-success #toba-print.btn.btn-secondary {
+    background: #fff;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 6px 16px rgba(193,150,83,0.25);
+}
+#toba-success #toba-print.btn.btn-secondary:hover {
+    background: var(--background-light);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(193,150,83,0.32);
+}
+
 .form-group {
     margin-bottom: 20px;
 }

@@ -55,3 +55,11 @@ build/
 
 # History files
 .history/
+
+# Local deploy artifacts and snapshots
+deploy-*/
+live-snapshot/
+local-backup-before-sync/
+temp_website_restore/
+website*.zip
+*.zip

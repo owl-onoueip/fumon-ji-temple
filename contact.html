@@ -30,13 +30,13 @@
                     </div>
                     <nav class="main-nav">
                         <ul>
-                            <li><a href="index.html" class="nav-link">HOME</a></li>
-                            <li><a href="guide.html" class="nav-link">ご案内</a></li>
-                            <li><a href="events.html" class="nav-link">年間行事</a></li>
-                            <li><a href="index.html#services" class="nav-link">護摩祈祷</a></li>
-                            <li><a href="museum.html" class="nav-link">資料館</a></li>
-                            <li><a href="contact.html" class="nav-link active">お問合せ</a></li>
-                            <li><a href="index.html#social" class="nav-link facebook-nav">
+                            <li><a class='nav-link' href='/'>HOME</a></li>
+                            <li><a class='nav-link' href='/guide'>ご案内</a></li>
+                            <li><a class='nav-link' href='/events'>年間行事</a></li>
+                            <li><a class='nav-link' href='/#services'>護摩祈祷</a></li>
+                            <li><a class='nav-link' href='/museum'>資料館</a></li>
+                            <li><a class='nav-link active' href='/contact'>お問合せ</a></li>
+                            <li><a class='nav-link facebook-nav' href='/#social'>
                                 <svg class="nav-facebook-icon" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                                 </svg>
@@ -95,7 +95,7 @@
             </section>
 
             <!-- Contact Form Section -->
-            <section class="contact-form-section">
+            <section class="contact-form-section" id="contact-page">
                 <div class="container">
                     <div class="section-header">
                         <h2>メールでのお問い合わせ</h2>
@@ -143,16 +143,8 @@
                                 <textarea id="message" name="message" rows="6" required placeholder="お問い合わせ内容をご記入ください"></textarea>
                             </div>
                             
-                            <div class="form-privacy">
-                                <label class="privacy-checkbox">
-                                    <input type="checkbox" id="privacy" name="privacy" required>
-                                    <span class="checkmark"></span>
-                                    <a href="#privacy-policy" class="privacy-link">プライバシーポリシー</a>に同意します
-                                </label>
-                            </div>
-                            
-                            <div class="form-submit">
-                                <button type="submit" class="btn btn-primary">送信する</button>
+                            <div class="form-submit" style="text-align:center;">
+                                <button type="submit" class="btn btn-primary" aria-label="お問い合わせを送信">送信する</button>
                             </div>
                         </form>
                         
@@ -168,26 +160,7 @@
                 </div>
             </section>
 
-            <!-- Privacy Policy Section -->
-            <section id="privacy-policy" class="privacy-section">
-                <div class="container">
-                    <div class="privacy-content">
-                        <h3>プライバシーポリシー</h3>
-                        <div class="privacy-text">
-                            <p>普門寺では、お客様の個人情報保護を重要な責務と考え、以下の方針に基づいて個人情報を適切に取り扱います。</p>
-                            
-                            <h4>個人情報の収集について</h4>
-                            <p>お問い合わせフォームにて、お名前、メールアドレス、お電話番号、お問い合わせ内容を収集いたします。</p>
-                            
-                            <h4>個人情報の利用目的</h4>
-                            <p>収集した個人情報は、お問い合わせへの回答、ご連絡のためにのみ利用いたします。</p>
-                            
-                            <h4>個人情報の第三者提供</h4>
-                            <p>法令に基づく場合を除き、お客様の同意なく第三者に個人情報を提供することはありません。</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            
         </main>
 
         <!-- Footer -->
@@ -203,11 +176,12 @@
                     </div>
                     <div class="footer-nav">
                         <ul>
-                            <li><a href="index.html">HOME</a></li>
-                            <li><a href="guide.html">ご案内</a></li>
-                            <li><a href="events.html">年間行事</a></li>
-                            <li><a href="museum.html">資料館</a></li>
-                            <li><a href="contact.html">お問合せ</a></li>
+                            <li><a href='/'>HOME</a></li>
+                            <li><a href='/events'>年間行事</a></li>
+                            <li><a href='/#services'>護摩祈祷</a></li>
+                            <li><a href='/#social'>お知らせ</a></li>
+                            <li><a href='/downloads'>申込書ダウンロード</a></li>
+                            <li><a href='/contact'>お問合せ</a></li>
                         </ul>
                     </div>
                 </div>

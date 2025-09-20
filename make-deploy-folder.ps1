@@ -1,7 +1,8 @@
 param(
     [string]$RootPath = (Get-Location).Path,
-    [string[]]$Files = @('index.html','guide.html','events.html','museum.html','contact.html','styles.css','script.js','netlify.toml'),
+    [string[]]$Files = @('index.html','guide.html','events.html','museum.html','downloads.html','contact.html','styles.css','script.js','netlify.toml'),
     [string]$ImagesDir = 'images',
+    [string]$DocsDir = 'docs',
     [switch]$OpenExplorer
 )
 
@@ -33,6 +34,15 @@ try {
         robocopy $imgSrc $imgDst /E /NFL /NDL /NJH /NJS | Out-Null
     } else {
         Write-Warning "Images directory not found: $imgSrc"
+    }
+
+    # Copy docs folder recursively (e.g., PDFs referenced by downloads.html)
+    $docsSrc = Join-Path $RootPath $DocsDir
+    if (Test-Path $docsSrc) {
+        $docsDst = Join-Path $deployPath $DocsDir
+        robocopy $docsSrc $docsDst /E /NFL /NDL /NJH /NJS | Out-Null
+    } else {
+        Write-Warning "Docs directory not found: $docsSrc"
     }
 
     Write-Host "Created: $deployPath" -ForegroundColor Green
