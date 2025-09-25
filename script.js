@@ -421,6 +421,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     <button type="button" class="btn" id="toba-new">新しい申込を作成</button>
                 </div>`;
                 ok.style.display = 'block';
+                // Accessibility: make success region programmatically focusable and announce status
+                try {
+                    ok.setAttribute('tabindex', '-1');
+                    ok.setAttribute('role', 'status');
+                    ok.setAttribute('aria-live', 'polite');
+                    // Bring into view and focus for visibility
+                    ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    ok.focus({ preventScroll: false });
+                } catch (e) {
+                    // no-op
+                }
                 // Attach handlers
                 const btnPrint = document.getElementById('toba-print');
                 const btnNew = document.getElementById('toba-new');
@@ -442,6 +453,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     message
                 }));
                 if (btnNew) btnNew.addEventListener('click', clearTobaForm);
+                // After rendering buttons, move focus to the primary next action so users don't miss it
+                setTimeout(() => {
+                    if (btnPrint) {
+                        try { btnPrint.focus(); } catch (_) {}
+                    }
+                }, 0);
             }
             if (ng) ng.style.display = 'none';
             // Do NOT auto-clear inputs; keep entered values for確認/印刷用
