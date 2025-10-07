@@ -16,19 +16,32 @@ const mimeTypes = {
 };
 
 const server = http.createServer((req, res) => {
-    let filePath = req.url === '/' ? '/index.html' : req.url;
-    filePath = path.join(__dirname, filePath);
-    
+    // Parse URL and strip query/hash to avoid looking for files like "styles.css?v="
+    const parsed = new URL(req.url, 'http://localhost');
+    let pathname = parsed.pathname;
+
+    // Default to index.html for root
+    if (pathname === '/') pathname = '/index.html';
+
+    // If no extension, try serving corresponding .html (e.g., /guide -> /guide.html)
+    if (!path.extname(pathname)) {
+        const htmlCandidate = path.join(__dirname, pathname + '.html');
+        if (fs.existsSync(htmlCandidate)) {
+            pathname = pathname + '.html';
+        }
+    }
+
+    const filePath = path.join(__dirname, pathname);
     const ext = path.extname(filePath);
     const contentType = mimeTypes[ext] || 'text/plain';
-    
+
     fs.readFile(filePath, (err, data) => {
         if (err) {
             res.writeHead(404);
             res.end('File not found');
             return;
         }
-        
+
         res.writeHead(200, { 'Content-Type': contentType });
         res.end(data);
     });
