@@ -226,16 +226,36 @@ body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.btn-secondary {
+  .btn-secondary {
     background: transparent;
     color: white;
     border-color: white;
+  }
+
+/* Downloads page cards: make secondary buttons visible on white cards */
+  .services-section .service-card .btn-secondary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    background: transparent;
+  }
+
+.services-section .service-card .btn-secondary:hover {
+    background: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 }
 
-.btn-secondary:hover {
-    background: white;
-    color: var(--primary-color);
-    transform: translateY(-2px);
+.services-section .service-card .btn-secondary:focus-visible {
+    outline: 3px solid rgba(212,165,116,0.4);
+    outline-offset: 2px;
+}
+
+/* Improve default visibility of the secondary button on white cards */
+.services-section .service-card .btn-secondary {
+    background: #fffaf2; /* soft cream to stand out */
+    border-color: var(--border-color);
 }
 
 .btn-facebook {
