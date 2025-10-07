@@ -567,6 +567,23 @@ document.addEventListener('DOMContentLoaded', function() {
             const hope_time = document.getElementById('goma_hope_time')?.value.trim();
             const message = document.getElementById('goma_message')?.value.trim();
 
+            // Compose a comprehensive body for contact template's main content
+            const composed = [
+                `【種別】護摩札申込`,
+                `【氏名】${goma_name || ''}`,
+                `【よみがな】${goma_kana || ''}`,
+                `【電話】${goma_phone || ''}`,
+                `【メール】${goma_email || ''}`,
+                `【住所】${goma_address || ''}`,
+                `【祈願内容】${pray.join(', ') || ''}${pray_other_text ? '／' + pray_other_text : ''}`,
+                `【護摩札サイズ】${goma_size || ''}`,
+                `【枚数】${(goma_count||'')}`,
+                `【授与方法】寺務所受取`,
+                `【ご希望日】${hope_date || ''}`,
+                `【時間帯】${hope_time || ''}`,
+                `【備考】${message || ''}`
+            ].join('\n');
+
             // Validation
             const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
             if (!goma_name) return alert('氏名をご入力ください。');
@@ -643,6 +660,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 name: goma_name,
                 email: goma_email,
                 phone: goma_phone,
+                kind: '護摩札申込',
+                content: composed,
                 // Original detailed fields
                 goma_name,
                 goma_kana,
@@ -656,7 +675,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 receive,
                 hope_date,
                 hope_time,
-                message,
+                message: composed,
                 ticket_id,
                 reply_to: goma_email
             };
@@ -1157,7 +1176,10 @@ function handleContactForm(e) {
         name: e.target.name.value,
         email: e.target.email.value,
         phone: e.target.phone.value,
-        inquiry_type: e.target.subject.value, // 'subject' from form is 'inquiry_type' in template
+        // Send both for compatibility
+        inquiry_type: e.target.subject.value, // original
+        kind: e.target.subject.value,         // for {{kind}} in shared template
+        subject: e.target.subject.value,      // to populate template Subject {{subject}}
         message: e.target.message.value,
         submission_date: submissionDate, // Add formatted date
         reply_to: e.target.email.value
