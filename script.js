@@ -637,8 +637,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const prayers = pray.slice();
             const templateParams = {
+                // Generic aliases for contact template compatibility
                 form_type: 'goma',
                 subject: `[護摩札申込] ${goma_name || ''} 様 | ${ticket_id}`,
+                name: goma_name,
+                email: goma_email,
+                phone: goma_phone,
+                // Original detailed fields
                 goma_name,
                 goma_kana,
                 goma_phone,
@@ -657,7 +662,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
 
             try{
-                await emailjs.send('service_hug4h5d','template_goma', templateParams);
+                await emailjs.send('service_hug4h5d','template_pygnzri', templateParams);
                 const ok = document.getElementById('goma-success');
                 const ng = document.getElementById('goma-error');
                 if (ok){
