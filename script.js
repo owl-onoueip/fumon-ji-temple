@@ -476,6 +476,231 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 })();
     
+    // Online Goma-fuda application form handler (independent of Toba)
+    (function initGomaForm(){
+        const form = document.getElementById('gomaForm');
+        if (!form) return;
+        const modal = document.getElementById('gomaConfirmModal');
+        const modalBody = document.getElementById('gomaConfirmBody');
+        const modalCancel = document.getElementById('gomaConfirmCancel');
+        const modalSend = document.getElementById('gomaConfirmSend');
+        let confirmedOnce = false;
+
+        function openGomaPrintSummary({
+            ticket_id,
+            goma_name,
+            goma_kana,
+            goma_phone,
+            goma_email,
+            goma_address,
+            prayers,
+            pray_other_text,
+            goma_size,
+            goma_count,
+            receive,
+            hope_date,
+            hope_time,
+            message
+        }){
+            const safe = s => (s||'').replace(/</g,'&lt;');
+            const html = `<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>護摩札 申込内容の控え</title><style>body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Noto Sans JP','Hiragino Kaku Gothic ProN',Meiryo,sans-serif;color:#222;line-height:1.7;margin:20px}.card{border:1px solid #e2d3b5;border-radius:10px;background:#fffaf2;padding:14px 16px;margin-bottom:16px}h1{font-size:20px;margin:0 0 10px}h2{font-size:16px;margin:18px 0 8px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ddd;padding:8px;text-align:left}th{background:#f7f7f7}.actions{margin-top:14px}.btn{display:inline-block;padding:10px 16px;border:1px solid #c19653;border-radius:999px;color:#593b0b;text-decoration:none}.btn-primary{background:#f5e7cf}@media print{.actions{display:none}}</style></head><body>
+            <div class="card"><h1>お申込みありがとうございます</h1><p>内容を確認のうえ、寺務所よりご連絡いたします。</p><p>受付番号：<strong>${safe(ticket_id)}</strong></p></div>
+            <h2>申込者</h2><table><tr><th>氏名</th><td>${safe(goma_name)}</td></tr><tr><th>よみがな</th><td>${safe(goma_kana)}</td></tr><tr><th>電話</th><td>${safe(goma_phone)}</td></tr><tr><th>メール</th><td>${safe(goma_email)}</td></tr><tr><th>住所</th><td>${safe(goma_address)}</td></tr></table>
+            <h2>祈願</h2><table><tr><th>内容</th><td>${safe(prayers.join(', '))}${pray_other_text? '／'+safe(pray_other_text):''}</td></tr></table>
+            <h2>護摩札</h2><table><tr><th>サイズ</th><td>${safe(goma_size)}</td></tr><tr><th>枚数</th><td>${safe(String(goma_count))}</td></tr><tr><th>授与方法</th><td>${safe(receive)}</td></tr></table>
+            <h2>ご希望日時</h2><table><tr><th>日付</th><td>${safe(hope_date)}</td></tr><tr><th>時間帯</th><td>${safe(hope_time)}</td></tr></table>
+            <h2>備考</h2><p>${safe(message)}</p>
+            <div class="actions"><a href="#" class="btn btn-primary" onclick="window.print();return false;">この内容を印刷</a></div>
+            </body></html>`;
+            try {
+                const w = window.open('', '_blank');
+                if (w && w.document){ w.document.open(); w.document.write(html); w.document.close(); }
+            } catch(e){ console.warn('Goma summary window failed:', e); }
+        }
+
+        form.addEventListener('submit', async function(e){
+            e.preventDefault();
+
+            // Honeypot
+            const hp = form.querySelector('#goma_website');
+            if (hp && hp.value.trim()) return;
+
+            // Rate limit only when sending
+            if (confirmedOnce){
+                try {
+                    const KEY = 'goma_last_submit_ts';
+                    const WINDOW_SEC = 60;
+                    const now = Date.now();
+                    const last = parseInt(localStorage.getItem(KEY) || '0', 10);
+                    if (!isNaN(last) && now - last < WINDOW_SEC*1000){
+                        const remain = Math.ceil((WINDOW_SEC*1000 - (now-last))/1000);
+                        alert(`短時間での連続送信はできません。${remain}秒後にお試しください。`);
+                        return;
+                    }
+                    localStorage.setItem(KEY, String(now));
+                } catch(err){ console.warn('Goma ratelimit storage unavailable:', err); }
+            }
+
+            // Collect fields
+            const goma_name = document.getElementById('goma_name')?.value.trim();
+            const goma_kana = document.getElementById('goma_kana')?.value.trim();
+            const goma_phone = document.getElementById('goma_phone')?.value.trim();
+            const goma_email = document.getElementById('goma_email')?.value.trim();
+            const goma_address = document.getElementById('goma_address')?.value.trim();
+
+            const pray = [];
+            if (document.getElementById('pray_traffic')?.checked) pray.push('交通安全');
+            if (document.getElementById('pray_family')?.checked) pray.push('家内安全');
+            if (document.getElementById('pray_business')?.checked) pray.push('商売繁盛');
+            if (document.getElementById('pray_pass')?.checked) pray.push('合格祈願');
+            if (document.getElementById('pray_yaku')?.checked) pray.push('厄除け');
+            if (document.getElementById('pray_health')?.checked) pray.push('健康長寿');
+            if (document.getElementById('pray_safe_birth')?.checked) pray.push('安産成就');
+            if (document.getElementById('pray_wish')?.checked) pray.push('心願成就');
+            const pray_other_text = document.getElementById('pray_other_text')?.value.trim();
+
+            const goma_size = document.getElementById('goma_size')?.value;
+            const goma_count = parseInt(document.getElementById('goma_count')?.value || '0', 10);
+            const receive = '寺務所受取';
+
+            const hope_date = document.getElementById('goma_hope_date')?.value.trim();
+            const hope_time = document.getElementById('goma_hope_time')?.value.trim();
+            const message = document.getElementById('goma_message')?.value.trim();
+
+            // Validation
+            const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+            if (!goma_name) return alert('氏名をご入力ください。');
+            if (!emailRe.test(goma_email || '')) return alert('メールアドレスの形式が正しくありません。');
+            if (!goma_phone) return alert('電話番号は必須です。');
+            if (!/^[0-9+\-()\s]{6,20}$/.test(goma_phone)) return alert('電話番号の形式が正しくありません。数字と記号（+-()）のみを使用してください。');
+            if (!goma_size) return alert('札のサイズを選択してください。');
+            if (!(goma_count > 0)) return alert('枚数をご入力ください。');
+
+            // Confirmation modal first
+            if (!confirmedOnce && modal && modalBody){
+                const safe = s => (s||'').replace(/</g,'&lt;');
+                const prayersText = pray.join(', ');
+                modalBody.innerHTML = `
+                    <div class="confirm-section">
+                        <h4>申込者</h4>
+                        <table class="simple"><tr><th>氏名</th><td>${safe(goma_name)}</td></tr>
+                        <tr><th>よみがな</th><td>${safe(goma_kana)}</td></tr>
+                        <tr><th>電話</th><td>${safe(goma_phone)}</td></tr>
+                        <tr><th>メール</th><td>${safe(goma_email)}</td></tr>
+                        <tr><th>住所</th><td>${safe(goma_address)}</td></tr></table>
+                    </div>
+                    <div class="confirm-section">
+                        <h4>祈願内容</h4>
+                        <p>${safe(prayersText)}${pray_other_text ? '／'+safe(pray_other_text): ''}</p>
+                    </div>
+                    <div class="confirm-section">
+                        <h4>護摩札</h4>
+                        <table class="simple"><tr><th>サイズ</th><td>${safe(goma_size)}</td></tr>
+                        <tr><th>枚数</th><td>${safe(String(goma_count))}</td></tr>
+                        <tr><th>授与方法</th><td>${safe(receive)}</td></tr></table>
+                    </div>
+                    <div class="confirm-section">
+                        <h4>ご希望日時</h4>
+                        <table class="simple"><tr><th>日付</th><td>${safe(hope_date)}</td></tr>
+                        <tr><th>時間帯</th><td>${safe(hope_time)}</td></tr></table>
+                    </div>
+                    <div class="confirm-section">
+                        <h4>備考</h4>
+                        <p>${safe(message)}</p>
+                    </div>
+                `;
+                modal.style.display = 'block';
+                if (modalCancel) modalCancel.onclick = () => { modal.style.display = 'none'; confirmedOnce = false; };
+                if (modalSend) modalSend.onclick = () => { modal.style.display = 'none'; confirmedOnce = true; form.requestSubmit(); };
+                return;
+            }
+
+            if (typeof emailjs === 'undefined'){
+                alert('送信機能の読み込みに失敗しました。時間をおいて再度お試しください。');
+                return;
+            }
+
+            const btn = form.querySelector('button[type="submit"]');
+            const old = btn.textContent;
+            btn.disabled = true; btn.textContent = '送信中...';
+
+            function genTicketId(){
+                const d = new Date();
+                const y = d.getFullYear();
+                const m = String(d.getMonth()+1).padStart(2,'0');
+                const day = String(d.getDate()).padStart(2,'0');
+                const pool = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+                let rand = ''; for (let i=0;i<4;i++) rand += pool[Math.floor(Math.random()*pool.length)];
+                return `FJ-${y}${m}${day}-${rand}`;
+            }
+            const ticket_id = genTicketId();
+
+            const prayers = pray.slice();
+            const templateParams = {
+                form_type: 'goma',
+                subject: `[護摩札申込] ${goma_name || ''} 様 | ${ticket_id}`,
+                goma_name,
+                goma_kana,
+                goma_phone,
+                goma_email,
+                goma_address,
+                prayers: prayers.join(', '),
+                pray_other_text,
+                goma_size,
+                goma_count,
+                receive,
+                hope_date,
+                hope_time,
+                message,
+                ticket_id,
+                reply_to: goma_email
+            };
+
+            try{
+                await emailjs.send('service_hug4h5d','template_goma', templateParams);
+                const ok = document.getElementById('goma-success');
+                const ng = document.getElementById('goma-error');
+                if (ok){
+                    ok.innerHTML = `<p>お申込みありがとうございます。内容を確認のうえ、寺務所よりご連絡いたします。</p>
+                    <p style="margin-top:6px;">受付番号：<strong>${ticket_id}</strong></p>
+                    <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
+                        <button type="button" class="btn btn-secondary" id="goma-print">今回の申込内容を印刷する</button>
+                        <button type="button" class="btn" id="goma-new">新しい申込を作成</button>
+                    </div>`;
+                    ok.style.display = 'block';
+                    try { ok.setAttribute('tabindex','-1'); ok.setAttribute('role','status'); ok.setAttribute('aria-live','polite'); ok.scrollIntoView({behavior:'smooth', block:'center'}); ok.focus({preventScroll:false}); } catch(_){}
+                    const btnPrint = document.getElementById('goma-print');
+                    const btnNew = document.getElementById('goma-new');
+                    if (btnPrint) btnPrint.addEventListener('click', () => openGomaPrintSummary({
+                        ticket_id,
+                        goma_name,
+                        goma_kana,
+                        goma_phone,
+                        goma_email,
+                        goma_address,
+                        prayers,
+                        pray_other_text,
+                        goma_size,
+                        goma_count,
+                        receive,
+                        hope_date,
+                        hope_time,
+                        message
+                    }));
+                    if (btnNew) btnNew.addEventListener('click', () => { try { form.reset(); } catch(_){}; });
+                    setTimeout(()=>{ if (btnPrint){ try{ btnPrint.focus(); } catch(_){} } }, 0);
+                }
+                if (ng) ng.style.display = 'none';
+            } catch(err){
+                console.error('Goma send failed', err);
+                const ok = document.getElementById('goma-success'); if (ok) ok.style.display='none';
+                const ng = document.getElementById('goma-error'); if (ng) ng.style.display='block';
+            } finally {
+                btn.disabled = false; btn.textContent = old; confirmedOnce = false;
+            }
+        });
+    })();
+    
     // Smooth scrolling for navigation links
     const navLinks = document.querySelectorAll('a[href^="#"]');
     navLinks.forEach(link => {
