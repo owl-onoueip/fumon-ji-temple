@@ -1172,14 +1172,27 @@ function handleContactForm(e) {
     const now = new Date();
     const submissionDate = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日 ${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
 
+    // Normalize subject to a human-readable Japanese label
+    const subjectRaw = e.target.subject.value;
+    const SUBJECT_LABELS = {
+        contact: 'お問い合わせ',
+        inquiry: 'お問い合わせ',
+        prayer: 'ご祈祷',
+        goma: '護摩札申込',
+        memorial: '供養相談',
+        consultation: 'ご相談',
+        other: 'その他'
+    };
+    const subjectLabel = SUBJECT_LABELS[subjectRaw] || subjectRaw;
+
     const templateParams = {
         name: e.target.name.value,
         email: e.target.email.value,
         phone: e.target.phone.value,
         // Send both for compatibility
-        inquiry_type: e.target.subject.value, // original
-        kind: e.target.subject.value,         // for {{kind}} in shared template
-        subject: e.target.subject.value,      // to populate template Subject {{subject}}
+        inquiry_type: subjectLabel, // original placeholder compatibility
+        kind: subjectLabel,         // for {{kind}} in shared template
+        subject: subjectLabel,      // to populate template Subject {{subject}}
         message: e.target.message.value,
         submission_date: submissionDate, // Add formatted date
         reply_to: e.target.email.value
