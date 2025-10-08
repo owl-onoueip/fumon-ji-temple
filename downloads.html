@@ -283,36 +283,7 @@
                             </div>
                         </div>
 
-                        <!-- 祈願内容 -->
-                        <h3>祈願内容</h3>
-                        <div class="form-row" style="display:flex; gap:16px; flex-wrap:wrap; align-items:center;">
-                            <label class="privacy-checkbox"><input type="checkbox" id="pray_traffic"> 交通安全</label>
-                            <label class="privacy-checkbox"><input type="checkbox" id="pray_family"> 家内安全</label>
-                            <label class="privacy-checkbox"><input type="checkbox" id="pray_business"> 商売繁盛</label>
-                            <label class="privacy-checkbox"><input type="checkbox" id="pray_pass"> 合格祈願</label>
-                            <label class="privacy-checkbox"><input type="checkbox" id="pray_yaku"> 厄除け</label>
-                            <label class="privacy-checkbox"><input type="checkbox" id="pray_health"> 健康長寿</label>
-                            <label class="privacy-checkbox"><input type="checkbox" id="pray_safe_birth"> 安産成就</label>
-                            <label class="privacy-checkbox"><input type="checkbox" id="pray_wish"> 心願成就</label>
-                            <label>その他 <input type="text" id="pray_other_text" placeholder="祈願内容"></label>
-                        </div>
-
-                        <!-- 護摩札 -->
-                        <h3>護摩札</h3>
-                        <div class="form-row" style="display:flex; gap:20px; flex-wrap:wrap;">
-                            <div class="form-group" style="flex:1; min-width:180px;">
-                                <label for="goma_size">御祈願料 <span class="required">*</span></label>
-                                <select id="goma_size" required>
-                                    <option value="">選択してください</option>
-                                    <option value="3,000円">3,000円</option>
-                                    <option value="5,000円">5,000円</option>
-                                </select>
-                            </div>
-                            <div class="form-group" style="flex:1; min-width:180px;">
-                                <label for="goma_count">枚数 <span class="required">*</span></label>
-                                <input type="number" id="goma_count" min="1" max="50" value="1" required>
-                            </div>
-                        </div>
+                        <!-- 単一入力の祈願内容・護摩札ブロックは廃止し、下の複数申込欄をご利用ください -->
 
                         <!-- 受け取り方法 -->
                         <h3>授与方法</h3>
@@ -331,6 +302,17 @@
                                 <label for="goma_hope_time">時間帯</label>
                                 <input type="time" id="goma_hope_time">
                             </div>
+                        </div>
+
+                        <!-- 複数申込（最大3件） -->
+                        <h3>申込内容（最大3件）</h3>
+                        <p style="color:var(--text-light); margin-top:-8px;">複数の祈願を同時に申込む場合は、下の「行を追加」を使ってください（最大3件）。</p>
+                        <div id="gomaItems" style="display:flex; flex-direction:column; gap:12px;">
+                            <!-- 行はscript.jsで生成されます -->
+                        </div>
+                        <div style="margin-top:8px; display:flex; gap:8px;">
+                            <button type="button" class="btn btn-secondary" id="gomaAddItem">行を追加</button>
+                            <button type="button" class="btn" id="gomaRemoveItem">最後の行を削除</button>
                         </div>
 
                         <!-- 備考・送信 -->
@@ -393,6 +375,6 @@
         </div>
     </footer>
 
-    <script src="script.js?v=20250918-1447"></script>
+    <script src="script.js?v=20251008-1108"></script>
 </body>
 </html>

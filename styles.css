@@ -258,6 +258,47 @@ body {
     border-color: var(--border-color);
 }
 
+/* Ensure buttons inside forms are visible */
+.contact-form-section .btn {
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+.contact-form-section .btn-secondary {
+  color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  background: #fffaf2 !important;
+}
+.contact-form-section .btn-secondary:hover {
+  background: var(--primary-color) !important;
+  color: #fff !important;
+  border-color: var(--primary-color) !important;
+  transform: translateY(-1px);
+}
+
+/* Explicit styles for Goma multi-item controls */
+#gomaAddItem, #gomaRemoveItem {
+  display: inline-block;
+  min-width: 140px;
+  text-align: center;
+}
+#gomaAddItem {
+  background: var(--primary-color) !important;
+  color: #fff !important;
+  border-color: var(--primary-color) !important;
+}
+#gomaAddItem:hover {
+  filter: brightness(1.05);
+}
+#gomaRemoveItem {
+  background: #fff !important;
+  color: var(--primary-color) !important;
+  border: 2px solid var(--primary-color) !important;
+}
+#gomaRemoveItem:hover {
+  background: #fffaf2 !important;
+}
+
 .btn-facebook {
     background: #1877f2;
     color: white;

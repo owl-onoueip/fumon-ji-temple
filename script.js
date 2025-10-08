@@ -484,7 +484,78 @@ document.addEventListener('DOMContentLoaded', function() {
         const modalBody = document.getElementById('gomaConfirmBody');
         const modalCancel = document.getElementById('gomaConfirmCancel');
         const modalSend = document.getElementById('gomaConfirmSend');
+        const itemsContainer = document.getElementById('gomaItems');
+        const btnAddItem = document.getElementById('gomaAddItem');
+        const btnRemoveItem = document.getElementById('gomaRemoveItem');
         let confirmedOnce = false;
+
+        // --- Multi items (max 3) ---
+        const PRAYER_OPTIONS = [
+            '交通安全','家内安全','商売繁盛','合格祈願','厄除け','健康長寿','安産成就','心願成就','その他'
+        ];
+
+        function createItemRow(idx){
+            const row = document.createElement('div');
+            row.className = 'goma-item-row';
+            row.style.display = 'grid';
+            // 願主 / 祈願種別 / その他 / 御祈願料 / 枚数
+            row.style.gridTemplateColumns = 'minmax(160px,1.2fr) minmax(140px,1fr) 1fr 140px 120px';
+            row.style.gap = '10px';
+            row.style.alignItems = 'center';
+
+            // 願主
+            const inpPerson = document.createElement('input');
+            inpPerson.type = 'text';
+            inpPerson.placeholder = '願主（お札に書くお名前）';
+            inpPerson.className = 'goma-item-person';
+
+            // 祈願種別
+            const selPrayer = document.createElement('select');
+            selPrayer.className = 'goma-item-prayer';
+            const opt0 = document.createElement('option'); opt0.value = ''; opt0.textContent = '祈願種別を選択';
+            selPrayer.appendChild(opt0);
+            PRAYER_OPTIONS.forEach(v=>{ const o=document.createElement('option'); o.value=v; o.textContent=v; selPrayer.appendChild(o); });
+
+            // その他テキスト
+            const txtOther = document.createElement('input');
+            txtOther.type = 'text';
+            txtOther.placeholder = '（その他の内容）';
+            txtOther.className = 'goma-item-other';
+
+            // 御祈願料
+            const selFee = document.createElement('select');
+            selFee.className = 'goma-item-fee';
+            selFee.innerHTML = '<option value="">御祈願料</option><option value="3000">3,000円</option><option value="5000">5,000円</option>';
+
+            // 枚数
+            const inpCount = document.createElement('input');
+            inpCount.type = 'number'; inpCount.min = '1'; inpCount.max = '50'; inpCount.value = '1';
+            inpCount.className = 'goma-item-count';
+
+            row.appendChild(inpPerson);
+            row.appendChild(selPrayer);
+            row.appendChild(txtOther);
+            row.appendChild(selFee);
+            row.appendChild(inpCount);
+            return row;
+        }
+
+        function addItem(){
+            if (!itemsContainer) return;
+            const n = itemsContainer.querySelectorAll('.goma-item-row').length;
+            if (n >= 3){ alert('同時申込は最大3件までです。'); return; }
+            itemsContainer.appendChild(createItemRow(n+1));
+        }
+        function removeItem(){
+            if (!itemsContainer) return;
+            const rows = itemsContainer.querySelectorAll('.goma-item-row');
+            if (rows.length>0) itemsContainer.removeChild(rows[rows.length-1]);
+        }
+
+        // Initialize with 1 item row by default
+        if (itemsContainer && itemsContainer.children.length===0){ addItem(); }
+        if (btnAddItem) btnAddItem.addEventListener('click', addItem);
+        if (btnRemoveItem) btnRemoveItem.addEventListener('click', removeItem);
 
         function openGomaPrintSummary({
             ticket_id,
@@ -507,7 +578,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="card"><h1>お申込みありがとうございます</h1><p>内容を確認のうえ、寺務所よりご連絡いたします。</p><p>受付番号：<strong>${safe(ticket_id)}</strong></p></div>
             <h2>申込者</h2><table><tr><th>氏名</th><td>${safe(goma_name)}</td></tr><tr><th>よみがな</th><td>${safe(goma_kana)}</td></tr><tr><th>電話</th><td>${safe(goma_phone)}</td></tr><tr><th>メール</th><td>${safe(goma_email)}</td></tr><tr><th>住所</th><td>${safe(goma_address)}</td></tr></table>
             <h2>祈願</h2><table><tr><th>内容</th><td>${safe(prayers.join(', '))}${pray_other_text? '／'+safe(pray_other_text):''}</td></tr></table>
-            <h2>護摩札</h2><table><tr><th>サイズ</th><td>${safe(goma_size)}</td></tr><tr><th>枚数</th><td>${safe(String(goma_count))}</td></tr><tr><th>授与方法</th><td>${safe(receive)}</td></tr></table>
+            <h2>護摩札</h2><table><tr><th>御祈願料</th><td>${safe(goma_size)}</td></tr><tr><th>枚数</th><td>${safe(String(goma_count))}</td></tr><tr><th>授与方法</th><td>${safe(receive)}</td></tr></table>
             <h2>ご希望日時</h2><table><tr><th>日付</th><td>${safe(hope_date)}</td></tr><tr><th>時間帯</th><td>${safe(hope_time)}</td></tr></table>
             <h2>備考</h2><p>${safe(message)}</p>
             <div class="actions"><a href="#" class="btn btn-primary" onclick="window.print();return false;">この内容を印刷</a></div>
@@ -548,7 +619,27 @@ document.addEventListener('DOMContentLoaded', function() {
             const goma_email = document.getElementById('goma_email')?.value.trim();
             const goma_address = document.getElementById('goma_address')?.value.trim();
 
-            const pray = [];
+            // Build items from rows (preferred)
+            function collectItems(){
+                if (!itemsContainer) return [];
+                const rows = Array.from(itemsContainer.querySelectorAll('.goma-item-row'));
+                return rows.map(r=>{
+                    const person = r.querySelector('.goma-item-person')?.value.trim() || '';
+                    const prayer = r.querySelector('.goma-item-prayer')?.value || '';
+                    const other = r.querySelector('.goma-item-other')?.value.trim() || '';
+                    const feeStr = r.querySelector('.goma-item-fee')?.value || '';
+                    const fee = parseInt(feeStr || '0',10);
+                    const count = parseInt(r.querySelector('.goma-item-count')?.value || '0',10);
+                    return { person, prayer, other, fee, count };
+                }).filter(it=> it.prayer && it.count>0 && it.fee>0);
+            }
+            const items = collectItems();
+
+            // Fallback to single inputs if no item rows are valid (legacy)
+            let goma_size = document.getElementById('goma_size')?.value;
+            let goma_count = parseInt(document.getElementById('goma_count')?.value || '0', 10);
+            let pray_other_text = document.getElementById('pray_other_text')?.value.trim();
+            const pray = []; // legacy checkboxes (kept for compatibility)
             if (document.getElementById('pray_traffic')?.checked) pray.push('交通安全');
             if (document.getElementById('pray_family')?.checked) pray.push('家内安全');
             if (document.getElementById('pray_business')?.checked) pray.push('商売繁盛');
@@ -557,10 +648,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (document.getElementById('pray_health')?.checked) pray.push('健康長寿');
             if (document.getElementById('pray_safe_birth')?.checked) pray.push('安産成就');
             if (document.getElementById('pray_wish')?.checked) pray.push('心願成就');
-            const pray_other_text = document.getElementById('pray_other_text')?.value.trim();
-
-            const goma_size = document.getElementById('goma_size')?.value;
-            const goma_count = parseInt(document.getElementById('goma_count')?.value || '0', 10);
             const receive = '寺務所受取';
 
             const hope_date = document.getElementById('goma_hope_date')?.value.trim();
@@ -576,7 +663,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 `【メール】${goma_email || ''}`,
                 `【住所】${goma_address || ''}`,
                 `【祈願内容】${pray.join(', ') || ''}${pray_other_text ? '／' + pray_other_text : ''}`,
-                `【護摩札サイズ】${goma_size || ''}`,
+                `【御祈願料】${goma_size || ''}`,
                 `【枚数】${(goma_count||'')}`,
                 `【授与方法】寺務所受取`,
                 `【ご希望日】${hope_date || ''}`,
@@ -590,13 +677,45 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!emailRe.test(goma_email || '')) return alert('メールアドレスの形式が正しくありません。');
             if (!goma_phone) return alert('電話番号は必須です。');
             if (!/^[0-9+\-()\s]{6,20}$/.test(goma_phone)) return alert('電話番号の形式が正しくありません。数字と記号（+-()）のみを使用してください。');
-            if (!goma_size) return alert('札のサイズを選択してください。');
-            if (!(goma_count > 0)) return alert('枚数をご入力ください。');
+            // Validation for items
+            if (items.length === 0){
+                // fallback validation for legacy single inputs
+                if (!goma_size) return alert('御祈願料を選択してください。');
+                if (!(goma_count > 0)) return alert('枚数をご入力ください。');
+            } else {
+                if (items.length > 3) return alert('同時申込は最大3件までです。');
+                // 重複祈願の禁止
+                const set = new Set();
+                for (const it of items){
+                    if (!it.person) return alert('各行の「願主（お札に書くお名前）」を入力してください。');
+                    const key = it.prayer + (it.prayer==='その他'? ':'+(it.other||''): '') + '|' + it.person;
+                    if (set.has(key)) return alert('同じ祈願内容が重複しています。内容を見直してください。');
+                    set.add(key);
+                    if (it.prayer==='その他' && !it.other) return alert('「その他」の内容を入力してください。');
+                    if (!(it.count>0)) return alert('枚数は1以上をご指定ください。');
+                }
+            }
 
             // Confirmation modal first
             if (!confirmedOnce && modal && modalBody){
                 const safe = s => (s||'').replace(/</g,'&lt;');
-                const prayersText = pray.join(', ');
+                // Build items HTML and totals for preview
+                function formatYen(n){ return n.toLocaleString('ja-JP',{style:'currency', currency:'JPY'}).replace('￥','¥'); }
+                let itemsHtml = '';
+                let totalCount = 0; let totalAmount = 0;
+                if (items.length){
+                    itemsHtml = '<table class="simple"><thead><tr><th>#</th><th>祈願内容</th><th>御祈願料</th><th>枚数</th><th>小計</th></tr></thead><tbody>';
+                    items.forEach((it,i)=>{
+                        const name = it.prayer + (it.prayer==='その他' && it.other? '（'+it.other+'）':'');
+                        const subtotal = it.fee * it.count; totalCount += it.count; totalAmount += subtotal;
+                        itemsHtml += `<tr><td>${i+1}</td><td>${name}</td><td>${formatYen(it.fee)}</td><td>${it.count}</td><td>${formatYen(subtotal)}</td></tr>`;
+                    });
+                    itemsHtml += `</tbody></table><p style="margin-top:8px;">合計枚数：${totalCount} 枚　／　概算合計：${formatYen(totalAmount)}</p>`;
+                }
+
+                const prayersText = items.length
+                    ? items.map(it => it.prayer + (it.prayer==='その他' && it.other? '（'+it.other+'）':'' )).join(', ')
+                    : pray.join(', ');
                 modalBody.innerHTML = `
                     <div class="confirm-section">
                         <h4>申込者</h4>
@@ -608,11 +727,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                     <div class="confirm-section">
                         <h4>祈願内容</h4>
-                        <p>${safe(prayersText)}${pray_other_text ? '／'+safe(pray_other_text): ''}</p>
+                        ${items.length ? itemsHtml : `<p>${safe(prayersText)}${pray_other_text ? '／'+safe(pray_other_text): ''}</p>`}
                     </div>
                     <div class="confirm-section">
                         <h4>護摩札</h4>
-                        <table class="simple"><tr><th>サイズ</th><td>${safe(goma_size)}</td></tr>
+                        <table class="simple"><tr><th>御祈願料</th><td>${safe(goma_size)}</td></tr>
                         <tr><th>枚数</th><td>${safe(String(goma_count))}</td></tr>
                         <tr><th>授与方法</th><td>${safe(receive)}</td></tr></table>
                     </div>
@@ -652,7 +771,24 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             const ticket_id = genTicketId();
 
-            const prayers = pray.slice();
+            const prayers = items.length
+                ? items.map(it => it.prayer + (it.prayer==='その他' && it.other? '（'+it.other+'）':'' ))
+                : pray.slice();
+
+            // Build items table/html for email
+            function formatYen(n){ return n.toLocaleString('ja-JP',{style:'currency', currency:'JPY'}).replace('￥','¥'); }
+            let items_html = '';
+            let items_total_count = 0; let items_total_amount = 0;
+            if (items.length){
+                items_html = '<table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse">';
+                items_html += '<thead><tr><th>#</th><th>願主</th><th>祈願内容</th><th>御祈願料</th><th>枚数</th><th>小計</th></tr></thead><tbody>';
+                items.forEach((it,i)=>{
+                    const name = it.prayer + (it.prayer==='その他' && it.other? '（'+it.other+'）':'');
+                    const subtotal = it.fee * it.count; items_total_count += it.count; items_total_amount += subtotal;
+                    items_html += `<tr><td>${i+1}</td><td>${it.person}</td><td>${name}</td><td>${formatYen(it.fee)}</td><td>${it.count}</td><td>${formatYen(subtotal)}</td></tr>`;
+                });
+                items_html += '</tbody></table>';
+            }
             const templateParams = {
                 // Generic aliases for contact template compatibility
                 form_type: 'goma',
@@ -670,13 +806,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 goma_address,
                 prayers: prayers.join(', '),
                 pray_other_text,
-                goma_size,
-                goma_count,
+                // Backward compatibility: represent first fee and total count when multiple items present
+                goma_size: items.length ? (items[0].fee===5000 ? '5,000円' : items[0].fee===3000 ? '3,000円' : '') : goma_size,
+                goma_count: items.length ? items_total_count : goma_count,
                 receive,
                 hope_date,
                 hope_time,
-                message: composed,
+                message: composed, // legacy: full composed content
+                remarks: message || '', // NEW: 備考のみ
+                remarks_html: (message || '').replace(/\n/g,'<br>'),
+                message_plain: message || '', // alias
+                goma_message: message || '', // alias
                 ticket_id,
+                // Multi-items payload for template rendering
+                items_html,
+                items_json: JSON.stringify(items),
+                items_total_count,
+                items_total_amount: items_total_amount ? formatYen(items_total_amount) : '',
                 reply_to: goma_email
             };
 
@@ -1194,6 +1340,8 @@ function handleContactForm(e) {
         kind: subjectLabel,         // for {{kind}} in shared template
         subject: subjectLabel,      // to populate template Subject {{subject}}
         message: e.target.message.value,
+        remarks: e.target.message.value, // add: plain remarks for template
+        remarks_html: (e.target.message.value || '').replace(/\n/g,'<br>'), // add: HTML with line breaks
         submission_date: submissionDate, // Add formatted date
         reply_to: e.target.email.value
     };
