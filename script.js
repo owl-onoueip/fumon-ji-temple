@@ -807,7 +807,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 prayers: prayers.join(', '),
                 pray_other_text,
                 // Backward compatibility: represent first fee and total count when multiple items present
-                goma_size: items.length ? (items[0].fee===5000 ? '5,000円' : items[0].fee===3000 ? '3,000円' : '') : goma_size,
+                goma_size: items.length ? (items[0].fee===5000 ? '5,000円' : items[0].fee===7000 ? '7,000円' : '') : goma_size,
                 goma_count: items.length ? items_total_count : goma_count,
                 receive,
                 hope_date,

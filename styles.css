@@ -1915,3 +1915,23 @@ body {
         font-size: 2rem;
     }
 }
+/* Mobile layout fixes for Goma multi-item rows */
+@media (max-width: 640px) {
+    /* Stack fields vertically and avoid horizontal scroll */
+    .goma-item-row {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+    }
+    .goma-item-row input,
+    .goma-item-row select,
+    .goma-item-row textarea {
+        width: 100% !important;
+    }
+    /* Action buttons under the rows should not overflow */
+    #gomaAddItem,
+    #gomaRemoveItem {
+        width: 100%;
+        max-width: 100%;
+    }
+}
