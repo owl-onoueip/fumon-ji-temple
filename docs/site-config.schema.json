@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/site-config.schema.json",
+  "title": "Temple Site Config",
+  "type": "object",
+  "properties": {
+    "name": {"type": "string"},
+    "sect": {"type": "string"},
+    "address": {"type": "string"},
+    "phone": {"type": "string"},
+    "email": {"type": "string", "format": "email"},
+    "navigation": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {"type": "string"},
+          "path": {"type": "string"}
+        },
+        "required": ["label", "path"]
+      }
+    },
+    "theme": {
+      "type": "object",
+      "properties": {
+        "primaryColor": {"type": "string"},
+        "accentColor": {"type": "string"}
+      }
+    },
+    "images": {
+      "type": "object",
+      "properties": {
+        "logo": {"type": "string"},
+        "hero": {"type": "string"}
+      }
+    },
+    "emailjs": {
+      "type": "object",
+      "properties": {
+        "publicKey": {"type": "string"},
+        "serviceId": {"type": "string"},
+        "templateIdGoma": {"type": "string"},
+        "templateIdContact": {"type": "string"}
+      }
+    }
+  },
+  "required": ["name", "address", "navigation"],
+  "additionalProperties": true
+}

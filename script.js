@@ -525,7 +525,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // 御祈願料
             const selFee = document.createElement('select');
             selFee.className = 'goma-item-fee';
-            selFee.innerHTML = '<option value="">御祈願料</option><option value="3000">3,000円</option><option value="5000">5,000円</option>';
+            selFee.innerHTML = '<option value="">御祈願料</option><option value="5000">5,000円（36cm）</option><option value="7000">7,000円（39cm）</option>';
 
             // 枚数
             const inpCount = document.createElement('input');
