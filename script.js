@@ -1443,7 +1443,7 @@ function initEventAnnouncements() {
         relevantEvents.push(
             {
                 name: '護摩祈祷',
-                description: '毎月第1・第3日曜日に護摩祈祷を行っています',
+                description: '18日に護摩祈祷を厳修しております',
                 type: 'general',
                 date: '毎月'
             },
