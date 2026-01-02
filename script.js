@@ -1442,14 +1442,14 @@ function initEventAnnouncements() {
     if (relevantEvents.length === 0) {
         relevantEvents.push(
             {
-                name: '護摩祈祷',
-                description: '18日に護摩祈祷を厳修しております',
+                name: '18日に護摩祈祷を厳修しております',
+                description: '',
                 type: 'general',
                 date: '毎月'
             },
             {
                 name: '永代供養相談',
-                description: '永代供養・墓地のご相談を随時承っております',
+                description: '永代供養・墓地のご相談を承っております',
                 type: 'general',
                 date: '随時'
             },
