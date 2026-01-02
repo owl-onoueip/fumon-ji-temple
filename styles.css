@@ -1877,8 +1877,26 @@ body {
         font-size: 1rem;
     }
     .hero-buttons {
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        width: 100%;
+        max-width: 400px;
+    }
+    .hero-buttons .btn {
+        width: 100%;
+        padding: 12px 10px;
+        font-size: 0.95rem;
+        display: flex;
         align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+    /* Make the first button (Application) span full width */
+    .hero-buttons .btn:first-child {
+        grid-column: 1 / -1;
+        font-size: 1.1rem;
+        padding: 15px;
     }
     .about-grid,
     .kannon-grid,
