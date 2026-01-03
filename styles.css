@@ -1882,6 +1882,7 @@ body {
         gap: 15px;
         width: 100%;
         max-width: 400px;
+        margin: 40px auto 0;
     }
     .hero-buttons .btn {
         width: 100%;
