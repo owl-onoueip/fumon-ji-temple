@@ -73,27 +73,23 @@
 
 ---
 
-## 4. デプロイ手順（Netlify）
+## 4. デプロイ手順（GitHub自動連携）
 
-1) PowerShell で日時付きフォルダ作成
+1) ローカルで編集・確認
+   - `index.html` 等を編集
+   - ブラウザで表示確認
+
+2) GitHubへプッシュ
+   - 変更をコミットしてプッシュすると、Netlifyが自動的に検知してビルド・公開します。
 ```powershell
-Set-Location 'c:\WINSURF\普門寺'
-.\u006d
+git add .
+git commit -m "変更内容のコメント"
+git push origin main
 ```
-もしくは:
-```powershell
-.\u006d -OpenExplorer
-```
-- スクリプト: `make-deploy-folder.ps1`
-- 生成例: `deploy-20250907-0911/`
-- 内容: `index.html`, `guide.html`, `events.html`, `museum.html`, `contact.html`, `styles.css`, `script.js`, `netlify.toml`, `images/`
 
-2) Netlify の Deploys 画面へ、生成フォルダをドラッグ＆ドロップ
-
-3) 反映確認（Ctrl+F5）
-- `events.html?v=YYYYMMDD-HHmm`
-- `museum.html?v=YYYYMMDD-HHmm`
-- `guide.html?v=YYYYMMDD-HHmm`
+3) 反映確認
+   - Netlifyの管理画面で "Building" -> "Published" になるのを確認
+   - サイトを確認（Ctrl+F5 でキャッシュクリア）
 
 ---
 
@@ -150,7 +146,7 @@ Set-Location 'c:\WINSURF\普門寺'
 ## 9. 連絡先・運用メモ
 
 - デプロイ前後は各ページで `?v=` の更新状況を必ず確認。
-- PowerShell スクリプト: `make-deploy-folder.ps1` を最優先で使用（日時付きフォルダ運用）。
+- 修正は必ず `git` 経由で行い、手動アップロードは行わないこと。
 
 ---
 

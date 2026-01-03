@@ -63,3 +63,4 @@ local-backup-before-sync/
 temp_website_restore/
 website*.zip
 *.zip
+_archive/
