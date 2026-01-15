@@ -54,6 +54,7 @@ body {
     display: flex;
     align-items: center;
     gap: 15px;
+    flex-shrink: 0;
 }
 
 .temple-crest {
@@ -67,6 +68,12 @@ body {
     height: 100%;
     object-fit: contain;
 }
+
+.temple-name {
+    white-space: nowrap;
+}
+
+/* .logo definition removed, rules moved to line 53 */
 
 .temple-name h1 {
     font-family: 'Noto Serif JP', serif;
@@ -94,17 +101,19 @@ body {
 .main-nav ul {
     display: flex;
     list-style: none;
-    gap: 30px;
+    gap: 15px;
 }
 
 .nav-link {
     text-decoration: none;
     color: var(--text-dark);
     font-weight: 500;
-    padding: 8px 12px;
+    padding: 8px 8px;
+    font-size: 0.9rem;
     border-bottom: 2px solid transparent;
     transition: all 0.3s ease;
     position: relative;
+    white-space: nowrap;
 }
 
 .nav-link:hover,
@@ -226,18 +235,18 @@ body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-  .btn-secondary {
+.btn-secondary {
     background: transparent;
     color: white;
     border-color: white;
-  }
+}
 
 /* Downloads page cards: make secondary buttons visible on white cards */
-  .services-section .service-card .btn-secondary {
+.services-section .service-card .btn-secondary {
     color: var(--primary-color);
     border-color: var(--primary-color);
     background: transparent;
-  }
+}
 
 .services-section .service-card .btn-secondary:hover {
     background: var(--primary-color);
@@ -248,55 +257,63 @@ body {
 }
 
 .services-section .service-card .btn-secondary:focus-visible {
-    outline: 3px solid rgba(212,165,116,0.4);
+    outline: 3px solid rgba(212, 165, 116, 0.4);
     outline-offset: 2px;
 }
 
 /* Improve default visibility of the secondary button on white cards */
 .services-section .service-card .btn-secondary {
-    background: #fffaf2; /* soft cream to stand out */
+    background: #fffaf2;
+    /* soft cream to stand out */
     border-color: var(--border-color);
 }
 
 /* Ensure buttons inside forms are visible */
 .contact-form-section .btn {
-  padding: 10px 16px;
-  border-radius: 999px;
-  font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-weight: 600;
 }
+
 .contact-form-section .btn-secondary {
-  color: var(--primary-color) !important;
-  border-color: var(--primary-color) !important;
-  background: #fffaf2 !important;
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    background: #fffaf2 !important;
 }
+
 .contact-form-section .btn-secondary:hover {
-  background: var(--primary-color) !important;
-  color: #fff !important;
-  border-color: var(--primary-color) !important;
-  transform: translateY(-1px);
+    background: var(--primary-color) !important;
+    color: #fff !important;
+    border-color: var(--primary-color) !important;
+    transform: translateY(-1px);
 }
 
 /* Explicit styles for Goma multi-item controls */
-#gomaAddItem, #gomaRemoveItem {
-  display: inline-block;
-  min-width: 140px;
-  text-align: center;
-}
-#gomaAddItem {
-  background: var(--primary-color) !important;
-  color: #fff !important;
-  border-color: var(--primary-color) !important;
-}
-#gomaAddItem:hover {
-  filter: brightness(1.05);
-}
+#gomaAddItem,
 #gomaRemoveItem {
-  background: #fff !important;
-  color: var(--primary-color) !important;
-  border: 2px solid var(--primary-color) !important;
+    display: inline-block;
+    min-width: 140px;
+    text-align: center;
 }
+
+#gomaAddItem {
+    background: var(--primary-color) !important;
+    color: #fff !important;
+    border-color: var(--primary-color) !important;
+}
+
+#gomaAddItem:hover {
+    filter: brightness(1.05);
+}
+
+#gomaRemoveItem {
+    background: #fff !important;
+    color: var(--primary-color) !important;
+    border: 2px solid var(--primary-color) !important;
+}
+
 #gomaRemoveItem:hover {
-  background: #fffaf2 !important;
+    background: #fffaf2 !important;
 }
 
 .btn-facebook {
@@ -363,6 +380,7 @@ body {
     text-decoration: none;
     font-weight: 600;
 }
+
 .btn-link.blue:hover {
     color: #166fe5;
     text-decoration: underline;
@@ -370,7 +388,8 @@ body {
 
 /* Main Content */
 .main-content {
-    margin-top: 80px; /* Adjust for fixed header */
+    margin-top: 80px;
+    /* Adjust for fixed header */
 }
 
 /* Section Headers */
@@ -788,11 +807,13 @@ body {
     position: relative;
     min-height: 360px;
 }
+
 .kannon-section .slideshow-image {
     position: absolute;
     inset: 0;
     display: block;
 }
+
 .kannon-section .slideshow-image img {
     display: block;
     width: 100%;
@@ -838,25 +859,31 @@ body {
     color: white;
     text-align: center;
     /* Standardized height and centering */
-    height: 240px; /* fixed height to unify across pages */
+    height: 240px;
+    /* fixed height to unify across pages */
     display: flex;
     align-items: center;
-    margin-top: 80px; /* avoid overlap with fixed header */
-    overflow: hidden; /* cut extra lines from bottom to match height */
+    margin-top: 80px;
+    /* avoid overlap with fixed header */
+    overflow: hidden;
+    /* cut extra lines from bottom to match height */
 }
 
 .page-hero .page-hero-content {
     width: 100%;
-    padding: 40px 0; /* reduced to keep content within fixed height */
+    padding: 40px 0;
+    /* reduced to keep content within fixed height */
 }
 
 /* Guide page: center memorial section headings */
 .memorial-tower-section .memorial-details h3 {
     text-align: center;
 }
+
 .memorial-tower-section .feature-item h4 {
     text-align: center;
 }
+
 /* Guide page: center '永代供養について' heading */
 .memorial-tower-section .memorial-purpose h3 {
     text-align: center;
@@ -871,14 +898,15 @@ body {
 .museum-page-body .segaki-records-section .year-record {
     background: #ffffff;
     border-radius: 14px;
-    border: 1px solid rgba(0,0,0,0.06);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
     padding: 24px;
     margin: 28px 0;
 }
 
 .museum-page-body .segaki-records-section .year-record:nth-child(even) {
-    background: #fff9f3; /* subtle tint for alternating blocks */
+    background: #fff9f3;
+    /* subtle tint for alternating blocks */
 }
 
 .museum-page-body .segaki-records-section .year-header {
@@ -890,8 +918,8 @@ body {
     display: inline-block;
     padding: 8px 16px;
     border-radius: 999px;
-    background: linear-gradient(135deg, rgba(212,165,116,0.15), rgba(193,150,83,0.15));
-    border: 1px solid rgba(212,165,116,0.35);
+    background: linear-gradient(135deg, rgba(212, 165, 116, 0.15), rgba(193, 150, 83, 0.15));
+    border: 1px solid rgba(212, 165, 116, 0.35);
 }
 
 .museum-page-body .segaki-records-section .year-description {
@@ -907,7 +935,8 @@ body {
     font-size: 0.8rem;
     font-weight: 700;
     color: #fff;
-    background: #e53935; /* red */
+    background: #e53935;
+    /* red */
     border-radius: 999px;
     vertical-align: middle;
 }
@@ -943,11 +972,14 @@ body {
 }
 
 /* Consistent spacing from hero to the first content section (robust even if <main> is in between) */
-.page-hero + * {
-    padding-top: 48px; /* apply to the next element (usually <main>) */
+.page-hero+* {
+    padding-top: 48px;
+    /* apply to the next element (usually <main>) */
 }
-.page-hero + * > *:first-child {
-    margin-top: 0; /* reset the first child (usually first <section>) margin-top */
+
+.page-hero+*>*:first-child {
+    margin-top: 0;
+    /* reset the first child (usually first <section>) margin-top */
 }
 
 .breadcrumb a:hover {
@@ -1009,7 +1041,8 @@ body {
 }
 
 .memorial-tower-slideshow-detailed {
-    height: 350px !important; /* compact horizontal size (increased by ~1/3) */
+    height: 350px !important;
+    /* compact horizontal size (increased by ~1/3) */
     max-width: 480px !important;
     width: 100%;
     margin: 0 auto 16px auto;
@@ -1021,10 +1054,12 @@ body {
 .memorial-image {
     align-self: stretch;
 }
+
 .memorial-image .slideshow-container {
     display: block;
     height: 100% !important;
 }
+
 /* Fallback: show first slide if JS doesn't toggle */
 .memorial-tower-slideshow-detailed .slideshow-image:first-child {
     opacity: 1;
@@ -1039,31 +1074,32 @@ body {
 
 /* Responsive tweak for small screens */
 @media (max-width: 768px) {
-  .memorial-tower-slideshow-detailed {
-      height: 300px;
-      max-width: 100% !important;
-  }
+    .memorial-tower-slideshow-detailed {
+        height: 300px;
+        max-width: 100% !important;
+    }
 }
 
 /* Keep description width aligned under the compact slideshow */
 .memorial-image .slideshow-description {
-  max-width: 480px;
-  margin: 0 auto 20px auto;
+    max-width: 480px;
+    margin: 0 auto 20px auto;
 }
 
 /* Increase specificity to ensure compact size is applied in GUIDE */
 .memorial-content .memorial-image .slideshow-container.memorial-tower-slideshow-detailed {
-  height: 350px !important;
-  max-width: 480px !important;
-  width: 100% !important;
-  margin: 0 auto 16px auto !important;
-  border-radius: 12px;
-  overflow: hidden;
+    height: 350px !important;
+    max-width: 480px !important;
+    width: 100% !important;
+    margin: 0 auto 16px auto !important;
+    border-radius: 12px;
+    overflow: hidden;
 }
+
 .memorial-content .memorial-image .slideshow-container.memorial-tower-slideshow-detailed .slideshow-image img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
 }
 
 /* Dots under memorial detailed slideshow */
@@ -1076,13 +1112,15 @@ body {
     gap: 8px;
     z-index: 5;
 }
+
 .memorial-tower-slideshow-detailed .slideshow-dots .dot {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.6);
-    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.1);
 }
+
 .memorial-tower-slideshow-detailed .slideshow-dots .dot.active {
     background: var(--primary-color);
 }
@@ -1245,18 +1283,23 @@ body {
 .events-page-body .events-grid,
 .events-section .events-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2列レイアウト */
+    grid-template-columns: repeat(2, 1fr);
+    /* 2列レイアウト */
     gap: 2.5rem;
-    align-items: start; /* 伸びずに上揃えにする（隣カラムが引っ張られない） */
+    align-items: start;
+    /* 伸びずに上揃えにする（隣カラムが引っ張られない） */
 }
 
 /* 年間行事ページのカードスタイル */
 .events-page-body .event-gallery-card,
 .events-section .event-gallery-card {
     display: grid;
-    grid-template-columns: 1fr; /* カード内の画像を上、テキストを下に配置 */
-    align-items: stretch; /* カード内のレイアウトは維持 */
-    align-self: start; /* グリッド行の高さに合わせて伸びないようにする */
+    grid-template-columns: 1fr;
+    /* カード内の画像を上、テキストを下に配置 */
+    align-items: stretch;
+    /* カード内のレイアウトは維持 */
+    align-self: start;
+    /* グリッド行の高さに合わせて伸びないようにする */
     background: var(--background-white);
     border-radius: 15px;
     overflow: hidden;
@@ -1277,13 +1320,15 @@ body {
 /* カード内の画像コンテナのスタイル */
 .events-page-body .event-slideshow {
     position: relative;
-    height: 300px; /* 画像の高さを固定 */
+    height: 300px;
+    /* 画像の高さを固定 */
     overflow: hidden;
     border-radius: 15px 15px 0 0;
 }
 
 /* レスポンシブ対応: 画面幅が992px以下の場合は1列に戻す */
 @media (max-width: 992px) {
+
     .events-page-body .events-grid,
     .events-section .events-grid {
         grid-template-columns: 1fr;
@@ -1299,10 +1344,12 @@ body {
 
 /* Museum page slideshow sizing (explicit height) */
 .museum-slideshow .slideshow-container {
-    height: 300px; /* desktop default */
-    border-radius: 12px; /* ensure rounded corners remain */
+    height: 300px;
+    /* desktop default */
+    border-radius: 12px;
+    /* ensure rounded corners remain */
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 /* Museum yearly record layout: video left, photos right (desktop) */
@@ -1314,40 +1361,46 @@ body {
 }
 
 @media (max-width: 992px) {
-  .segaki-records-section .media-gallery {
-      grid-template-columns: 1fr; /* stack on small screens */
-      gap: 24px;
-  }
+    .segaki-records-section .media-gallery {
+        grid-template-columns: 1fr;
+        /* stack on small screens */
+        gap: 24px;
+    }
 }
 
 @media (max-width: 768px) {
-  .museum-slideshow .slideshow-container {
-      height: 240px; /* mobile compact */
-  }
+    .museum-slideshow .slideshow-container {
+        height: 240px;
+        /* mobile compact */
+    }
 }
 
 /* Match heights between video and photo sections on museum page */
 .segaki-records-section .video-section .video-container {
-    height: 300px; /* match photo slideshow */
+    height: 300px;
+    /* match photo slideshow */
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    margin: 0 !important; /* remove extra blank line under video */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin: 0 !important;
+    /* remove extra blank line under video */
 }
-.segaki-records-section .video-section .video-container > div {
+
+.segaki-records-section .video-section .video-container>div {
     /* override embedded 56.25% padding box */
     padding: 0 !important;
     height: 100% !important;
 }
+
 .segaki-records-section .video-section .video-container iframe {
     width: 100% !important;
     height: 100% !important;
 }
 
 @media (max-width: 768px) {
-  .segaki-records-section .video-section .video-container {
-      height: 240px;
-  }
+    .segaki-records-section .video-section .video-container {
+        height: 240px;
+    }
 }
 
 .slide {
@@ -1482,7 +1535,8 @@ body {
     color: var(--text-light);
     line-height: 1.7;
     margin: 1rem 0;
-    flex-grow: 1; /* Allows this element to grow and push the button down */
+    flex-grow: 1;
+    /* Allows this element to grow and push the button down */
 }
 
 .event-quick-info {
@@ -1501,7 +1555,8 @@ body {
 }
 
 .details-toggle {
-    background: #1877f2; /* unify to blue */
+    background: #1877f2;
+    /* unify to blue */
     color: white;
     border: none;
     padding: 0.75rem 1.2rem;
@@ -1527,7 +1582,8 @@ body {
 }
 
 .event-details-expanded.show {
-    max-height: 1000px; /* Adjust as needed */
+    max-height: 1000px;
+    /* Adjust as needed */
 }
 
 .event-details-expanded p {
@@ -1567,8 +1623,10 @@ body {
 /* Responsive styles for events */
 @media (max-width: 992px) {
     .event-gallery-card {
-        grid-template-columns: 1fr; /* Stack on smaller screens */
+        grid-template-columns: 1fr;
+        /* Stack on smaller screens */
     }
+
     .event-slideshow {
         min-height: 300px;
         border-radius: 15px 15px 0 0;
@@ -1601,15 +1659,18 @@ body {
 
 /* Toba online form enhancements (scoped) */
 #toba-online .contact-form {
-    border: 2px solid rgba(193,150,83,0.25); /* gold-ish accent */
-    background: linear-gradient(180deg, rgba(212,165,116,0.05), rgba(255,255,255,0.9));
+    border: 2px solid rgba(193, 150, 83, 0.25);
+    /* gold-ish accent */
+    background: linear-gradient(180deg, rgba(212, 165, 116, 0.05), rgba(255, 255, 255, 0.9));
 }
+
 #toba-online .contact-form h3 {
     position: relative;
     margin: 22px 0 12px;
     font-family: 'Noto Serif JP', serif;
     color: var(--primary-color);
 }
+
 #toba-online .contact-form h3::after {
     content: "";
     display: block;
@@ -1619,36 +1680,41 @@ body {
     background: var(--gradient-primary);
     border-radius: 3px;
 }
+
 #toba-online #tobaItems .toba-row {
-    border: 1.5px solid rgba(0,0,0,0.08);
-    background: rgba(255,255,255,0.9);
+    border: 1.5px solid rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
     padding: 10px 12px;
     box-shadow: 0 2px 10px var(--shadow-light);
 }
+
 #toba-online .form-submit .btn.btn-primary {
     font-size: 1.08rem;
     font-weight: 700;
     padding: 16px 46px;
     border-radius: 999px;
-    box-shadow: 0 8px 18px rgba(193,150,83,0.25);
+    box-shadow: 0 8px 18px rgba(193, 150, 83, 0.25);
 }
+
 #toba-online .form-submit .btn.btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 24px rgba(193,150,83,0.32);
+    box-shadow: 0 12px 24px rgba(193, 150, 83, 0.32);
 }
 
 /* Contact page form styling to match Toba form */
 #contact-page .contact-form {
-    border: 2px solid rgba(193,150,83,0.25);
-    background: linear-gradient(180deg, rgba(212,165,116,0.05), rgba(255,255,255,0.9));
+    border: 2px solid rgba(193, 150, 83, 0.25);
+    background: linear-gradient(180deg, rgba(212, 165, 116, 0.05), rgba(255, 255, 255, 0.9));
 }
+
 #contact-page .contact-form h3,
 #contact-page .section-header h2 {
     position: relative;
     font-family: 'Noto Serif JP', serif;
     color: var(--primary-color);
 }
+
 #contact-page .section-header h2::after {
     content: "";
     display: block;
@@ -1658,73 +1724,89 @@ body {
     background: var(--gradient-primary);
     border-radius: 3px;
 }
+
 #contact-page .form-submit .btn.btn-primary {
     font-size: 1.08rem;
     font-weight: 700;
     padding: 16px 46px;
     border-radius: 999px;
-    box-shadow: 0 8px 18px rgba(193,150,83,0.25);
+    box-shadow: 0 8px 18px rgba(193, 150, 83, 0.25);
 }
+
 #contact-page .form-submit .btn.btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 24px rgba(193,150,83,0.32);
+    box-shadow: 0 12px 24px rgba(193, 150, 83, 0.32);
 }
 
 /* Toba confirmation modal */
 #tobaConfirmModal {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.45);
-    display: none; /* toggled by JS */
+    background: rgba(0, 0, 0, 0.45);
+    display: none;
+    /* toggled by JS */
     z-index: 9999;
     padding: 20px;
     overflow: auto;
 }
+
 #tobaConfirmModal .modal-content {
     max-width: 860px;
     margin: 40px auto;
     background: #fff;
     border-radius: 12px;
-    box-shadow: 0 18px 48px rgba(0,0,0,0.25);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.25);
     padding: 20px 22px;
 }
+
 #tobaConfirmModal .modal-body {
     display: grid;
     gap: 14px;
 }
+
 #tobaConfirmModal .confirm-section h4 {
     margin: 8px 0 6px;
     font-size: 1rem;
     color: var(--primary-color);
 }
+
 #tobaConfirmModal .confirm-section table.simple {
     width: 100%;
     border-collapse: collapse;
 }
+
 #tobaConfirmModal .confirm-section table.simple th,
 #tobaConfirmModal .confirm-section table.simple td {
     border: 1px solid #eee;
     padding: 8px 10px;
     text-align: left;
 }
+
 #tobaConfirmModal .modal-actions {
     display: flex;
     gap: 10px;
     justify-content: flex-end;
     margin-top: 12px;
 }
+
 @media (max-width: 640px) {
-    #tobaConfirmModal .modal-content { margin: 20px auto; padding: 16px; }
-    #tobaConfirmModal .modal-actions { flex-direction: column; }
+    #tobaConfirmModal .modal-content {
+        margin: 20px auto;
+        padding: 16px;
+    }
+
+    #tobaConfirmModal .modal-actions {
+        flex-direction: column;
+    }
 }
 
 /* Success message area (Toba) */
 #toba-success {
-    border: 1px solid rgba(212,165,116,0.35);
-    background: linear-gradient(180deg, rgba(212,165,116,0.08), rgba(255,255,255,0.95));
+    border: 1px solid rgba(212, 165, 116, 0.35);
+    background: linear-gradient(180deg, rgba(212, 165, 116, 0.08), rgba(255, 255, 255, 0.95));
     border-radius: 12px;
     padding: 16px 18px;
-    box-shadow: 0 8px 22px rgba(193,150,83,0.15);
+    box-shadow: 0 8px 22px rgba(193, 150, 83, 0.15);
 }
 
 /* Make the print button clearly visible even when it uses btn-secondary */
@@ -1732,12 +1814,13 @@ body {
     background: #fff;
     color: var(--primary-color);
     border-color: var(--primary-color);
-    box-shadow: 0 6px 16px rgba(193,150,83,0.25);
+    box-shadow: 0 6px 16px rgba(193, 150, 83, 0.25);
 }
+
 #toba-success #toba-print.btn.btn-secondary:hover {
     background: var(--background-light);
     transform: translateY(-2px);
-    box-shadow: 0 10px 22px rgba(193,150,83,0.32);
+    box-shadow: 0 10px 22px rgba(193, 150, 83, 0.32);
 }
 
 .form-group {
@@ -1810,6 +1893,7 @@ body {
     .header-content {
         padding: 10px 0;
     }
+
     .main-nav {
         display: none;
         position: absolute;
@@ -1821,19 +1905,23 @@ body {
         padding: 12px 16px;
         z-index: 1001;
     }
+
     /* show when toggled */
     .main-nav.active {
         display: block;
     }
+
     .main-nav ul {
         flex-direction: column;
         gap: 10px;
     }
+
     .main-nav a {
         display: block;
         padding: 10px 12px;
         border-radius: 8px;
     }
+
     .mobile-menu-toggle {
         display: flex;
         width: 42px;
@@ -1843,10 +1931,11 @@ body {
         flex-direction: column;
         gap: 5px;
         background: transparent;
-        border: 2px solid rgba(0,0,0,0.08);
+        border: 2px solid rgba(0, 0, 0, 0.08);
         border-radius: 8px;
         cursor: pointer;
     }
+
     .mobile-menu-toggle span {
         display: block;
         width: 22px;
@@ -1854,28 +1943,35 @@ body {
         background: var(--text-dark);
         transition: transform 0.25s ease, opacity 0.25s ease;
     }
+
     /* animated state */
     .mobile-menu-toggle.active span:nth-child(1) {
         transform: translateY(7px) rotate(45deg);
     }
+
     .mobile-menu-toggle.active span:nth-child(2) {
         opacity: 0;
     }
+
     .mobile-menu-toggle.active span:nth-child(3) {
         transform: translateY(-7px) rotate(-45deg);
     }
+
     .hero-title {
         font-size: 2.2rem;
     }
+
     /* Smaller height for slideshows on mobile */
     .image-slideshow,
     .kannon-section .image-slideshow {
         height: 260px;
         min-height: 260px;
     }
+
     .hero-subtitle {
         font-size: 1rem;
     }
+
     .hero-buttons {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -1884,6 +1980,7 @@ body {
         max-width: 400px;
         margin: 40px auto 0;
     }
+
     .hero-buttons .btn {
         width: 100%;
         padding: 12px 10px;
@@ -1893,12 +1990,14 @@ body {
         justify-content: center;
         height: 100%;
     }
+
     /* Make the first button (Application) span full width */
     .hero-buttons .btn:first-child {
         grid-column: 1 / -1;
         font-size: 1.1rem;
         padding: 15px;
     }
+
     .about-grid,
     .kannon-grid,
     .access-content,
@@ -1908,6 +2007,7 @@ body {
         grid-template-columns: 1fr;
         gap: 40px;
     }
+
     .services-grid,
     .heritage-grid,
     .footer-content,
@@ -1917,36 +2017,45 @@ body {
     .info-grid {
         grid-template-columns: 1fr;
     }
+
     .footer-content {
         text-align: center;
     }
+
     .section-header h2 {
         font-size: 2rem;
     }
+
     .timeline-item {
         grid-template-columns: 1fr;
         gap: 15px;
     }
+
     .timeline-year {
         text-align: left;
     }
+
     .page-hero-content h1 {
         font-size: 2rem;
     }
 }
+
 /* Mobile layout fixes for Goma multi-item rows */
 @media (max-width: 640px) {
+
     /* Stack fields vertically and avoid horizontal scroll */
     .goma-item-row {
         display: grid !important;
         grid-template-columns: 1fr !important;
         gap: 8px !important;
     }
+
     .goma-item-row input,
     .goma-item-row select,
     .goma-item-row textarea {
         width: 100% !important;
     }
+
     /* Action buttons under the rows should not overflow */
     #gomaAddItem,
     #gomaRemoveItem {
