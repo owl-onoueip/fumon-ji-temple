@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +9,11 @@
     <link rel="stylesheet" href="styles.css?v=20260103-0920">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
     <!-- Header -->
     <header class="header">
@@ -17,14 +21,18 @@
             <div class="header-content">
                 <div class="logo">
                     <div class="temple-crest">
-                        <img src="images/2025-09-03 14-09-31.gif" alt="普門寺 家紋" class="crest-image">
+                        <img src="images/temple-crest.gif" alt="普門寺 家紋" class="crest-image">
                     </div>
-                    <div class="temple-name">
-                        <h1>
-                            <span class="mountain-name">熊野山</span>
+                    <div class="temple-name" style="display: flex; align-items: center;">
+                        <div
+                            style="display: flex; flex-direction: column; margin-right: 12px; text-align: left; justify-content: center;">
+                            <p class="temple-subtitle" style="margin: 0; line-height: 1.4;">真言宗智山派</p>
+                            <span class="mountain-name"
+                                style="line-height: 1.2; display: block; font-size: 1.4rem; font-family: 'Noto Serif JP', serif; color: #8B4513;">熊野山</span>
+                        </div>
+                        <h1 style="margin: 0; line-height: 1;">
                             <span class="temple-main-name">普門寺</span>
                         </h1>
-                        <p class="temple-subtitle">真言宗智山派</p>
                     </div>
                 </div>
                 <nav class="main-nav">
@@ -37,11 +45,12 @@
                         <li><a class='nav-link' href='/downloads'>お申込み</a></li>
                         <li><a class='nav-link' href='/contact'>お問合せ</a></li>
                         <li><a href="#social" class="nav-link facebook-nav">
-                            <svg class="nav-facebook-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                            </svg>
-                            Facebook
-                        </a></li>
+                                <svg class="nav-facebook-icon" viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                                </svg>
+                                Facebook
+                            </a></li>
                     </ul>
                 </nav>
                 <button class="mobile-menu-toggle" aria-label="メニュー">
@@ -67,13 +76,16 @@
                     <p>埼玉県川口市に佇む真言宗智山派の寺院です</p>
                 </div>
                 <div class="hero-buttons">
-                    <a href="/downloads" class="btn btn-primary" style="background-color: #c0392b; color: #fff; border: 1px solid #c0392b; font-weight:bold;">護摩札・塔婆のお申込み</a>
-                    <a href="#announcements" class="btn btn-primary" style="background-color: #fff; color: #8b5e3c; border: 1px solid #fff;">寺院からのお知らせ</a>
+                    <a href="/downloads" class="btn btn-primary"
+                        style="background-color: #c0392b; color: #fff; border: 1px solid #c0392b; font-weight:bold;">護摩札・塔婆のお申込み</a>
+                    <a href="#announcements" class="btn btn-primary"
+                        style="background-color: #fff; color: #8b5e3c; border: 1px solid #fff;">寺院からのお知らせ</a>
                     <a href="#about" class="btn btn-primary">寺院のご案内</a>
                     <a href="#services" class="btn btn-secondary">護摩祈祷について</a>
                     <a href="#social" class="btn btn-facebook">
                         <svg class="btn-facebook-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            <path
+                                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                         </svg>
                         普門寺の日々の様子
                     </a>
@@ -105,7 +117,8 @@
                 <div class="about-grid">
                     <div class="about-text">
                         <h3>歴史と由緒</h3>
-                        <p>真言宗智山派の普門寺は、正式名称を熊野山（ゆやさん）観音院普門寺といい、安行原密藏院の末寺です。正確な開山時期は明らかではありませんが、文永4年（1267年）の板碑があることから、740年以上の歴史を持つ古刹であると推測されます。</p>
+                        <p>真言宗智山派の普門寺は、正式名称を熊野山（ゆやさん）観音院普門寺といい、安行原密藏院の末寺です。正確な開山時期は明らかではありませんが、文永4年（1267年）の板碑があることから、740年以上の歴史を持つ古刹であると推測されます。
+                        </p>
                         <p>御本尊は、県内でも珍しい胎蔵界大日如来で、平成20年（2008年）の本堂新築事業の際に修復されました。</p>
                     </div>
                     <div class="about-image">
@@ -165,18 +178,25 @@
                         <div class="service-icon">🔥</div>
                         <h3>護摩祈祷</h3>
                         <div class="video-container">
-                            <iframe src="https://player.vimeo.com/video/659634055?h=0&title=0&byline=0&portrait=0&badge=0" width="100%" height="200" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="普門寺 護摩祈祷厳修"></iframe>
+                            <iframe
+                                src="https://player.vimeo.com/video/659634055?h=0&title=0&byline=0&portrait=0&badge=0"
+                                width="100%" height="200" frameborder="0"
+                                allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
+                                title="普門寺 護摩祈祷厳修"></iframe>
                         </div>
                         <p>毎月18日10時より、ご縁日護摩祈祷を厳修しております。どなたでも参列できます。</p>
-                        
+
                         <div class="traffic-safety-section">
                             <h4>🚗 自動車交通安全祈願</h4>
                             <div class="traffic-safety-image">
-                                <img src="images/traffic-safety-prayer.jpg" alt="交通安全祈願の様子" style="width: 100%; height: 150px; object-fit: cover; border-radius: 6px; margin: 0.5rem 0;">
+                                <img src="images/traffic-safety-prayer.jpg" alt="交通安全祈願の様子"
+                                    style="width: 100%; height: 150px; object-fit: cover; border-radius: 6px; margin: 0.5rem 0;">
                             </div>
-                            <p style="font-size: 0.9em; margin: 0.5rem 0;">当山では自動車交通安全祈願を随時受け付けております。ご本尊さまのご加護をいただき、穏やかな心でハンドルをにぎり、その心を持ち続けられますよう、毎年1回のご祈願をおすすめいたします。また、バイクや大型車のご祈祷も随時行っておりますのでお気軽にお申し付けください。</p>
+                            <p style="font-size: 0.9em; margin: 0.5rem 0;">
+                                当山では自動車交通安全祈願を随時受け付けております。ご本尊さまのご加護をいただき、穏やかな心でハンドルをにぎり、その心を持ち続けられますよう、毎年1回のご祈願をおすすめいたします。また、バイクや大型車のご祈祷も随時行っておりますのでお気軽にお申し付けください。
+                            </p>
                         </div>
-                        
+
                         <div class="service-details">
                             <strong>護摩祈祷日時：</strong> 毎月18日 10:00〜<br>
                             <strong>交通安全祈願：</strong> 随時受付
@@ -257,15 +277,15 @@
                     <div class="access-info">
                         <h3>所在地</h3>
                         <p>〒334-0076 埼玉県川口市本蓮1-12-27<br>
-                        TEL: 048-281-2210 / FAX: 048-281-3310</p>
-                        
+                            TEL: 048-281-2210 / FAX: 048-281-3310</p>
+
                         <h3>宗派</h3>
                         <p>真言宗智山派</p>
-                        
+
                         <h3>霊場</h3>
                         <p>武蔵国三十三ヶ所霊場 第24番<br>
-                        武蔵国八十八ヶ所霊場 第79番</p>
-                        
+                            武蔵国八十八ヶ所霊場 第79番</p>
+
                         <h3>交通アクセス</h3>
                         <div class="access-methods">
                             <h4>🚃 電車・バスでお越しの場合</h4>
@@ -274,7 +294,7 @@
                                 <li><strong>川口駅・草加駅から</strong><br>バス川12系統「本蓮三丁目」下車 徒歩約5分</li>
                                 <li><strong>鳩ケ谷駅から</strong><br>バス鳩06系統「東中学校南」下車 徒歩約15分</li>
                             </ul>
-                            
+
                             <h4>🚗 お車でお越しの場合</h4>
                             <ul>
                                 <li><strong>首都高速川口線 新郷出口より3分</strong></li>
@@ -284,19 +304,17 @@
                     </div>
                     <div class="map-area">
                         <div class="map-container">
-                            <iframe 
+                            <iframe
                                 src="https://www.google.com/maps?q=%E5%9F%BC%E7%8E%89%E7%9C%8C%E5%B7%9D%E5%8F%A3%E5%B8%82%E6%9C%AC%E8%93%AE1-12-27%20%E6%99%AE%E9%96%80%E5%AF%BA&output=embed"
-                                width="100%" 
-                                height="100%" 
-                                style="border:0;"
-                                allowfullscreen 
-                                loading="lazy" 
+                                width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"
                                 referrerpolicy="no-referrer-when-downgrade">
                             </iframe>
                         </div>
                         <div class="map-text">
                             <p>川口市本蓮1-12-27<br>首都高速新郷出口より3分<br>駐車場をご利用ください</p>
-                            <p style="margin-top:8px;"><a href="https://www.google.com/maps/search/?api=1&query=%E5%9F%BC%E7%8E%89%E7%9C%8C%E5%B7%9D%E5%8F%A3%E5%B8%82%E6%9C%AC%E8%93%AE1-12-27+%E6%99%AE%E9%96%80%E5%AF%BA" target="_blank" rel="noopener">Googleマップで開く →</a></p>
+                            <p style="margin-top:8px;"><a
+                                    href="https://www.google.com/maps/search/?api=1&query=%E5%9F%BC%E7%8E%89%E7%9C%8C%E5%B7%9D%E5%8F%A3%E5%B8%82%E6%9C%AC%E8%93%AE1-12-27+%E6%99%AE%E9%96%80%E5%AF%BA"
+                                    target="_blank" rel="noopener">Googleマップで開く →</a></p>
                         </div>
                     </div>
                 </div>
@@ -316,21 +334,29 @@
                         <p>Facebookページでは、寺院の日常や季節の行事、法要の様子などを随時お伝えしています。ぜひフォローして、普門寺の最新情報をご覧ください。</p>
                         <div class="recent-updates" id="announcements">
                             <h4>寺院からのお知らせ</h4>
-                            
+
                             <!-- 住職挨拶エリア -->
-                            <div class="abbot-greeting" style="background: #fffaf0; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border: 1px solid #e2d3b5; box-shadow: 0 2px 8px rgba(193, 150, 83, 0.1);">
-                                <h5 style="margin: 0 0 1rem 0; font-size: 1.1rem; color: #593b0b; border-bottom: 1px dashed #c19653; padding-bottom: 0.8rem; font-family: 'Noto Serif JP', serif;">新年のご挨拶</h5>
+                            <div class="abbot-greeting"
+                                style="background: #fffaf0; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border: 1px solid #e2d3b5; box-shadow: 0 2px 8px rgba(193, 150, 83, 0.1);">
+                                <h5
+                                    style="margin: 0 0 1rem 0; font-size: 1.1rem; color: #593b0b; border-bottom: 1px dashed #c19653; padding-bottom: 0.8rem; font-family: 'Noto Serif JP', serif;">
+                                    新年のご挨拶</h5>
                                 <p style="margin: 0; font-size: 0.95rem; line-height: 2.0; text-align: justify;">
                                     新年を迎え、皆様におかれましては、すこやかに新春を迎えられたこととお慶び申し上げます。<br>
                                     旧年中は普門寺の護持・発展にご理解とご協力を賜り、心より御礼申し上げます。<br><br>
-                                    
-                                    本年も1月1日から3日までの間、早朝より当山の観音堂において<strong>新春護摩祈祷</strong>を行い、檀信徒皆様の“家内安全”“身体健全”をはじめ、安心して暮らせる世界となることを願い “世界平和”を祈念いたします。<br><br>
-                                    
-                                    今年は丙午（ひのえうま）年にあたり、観音堂に於いて<span style="color: #d35400; font-weight: bold; border-bottom: 2px solid rgba(211, 84, 0, 0.2);">12年に1度の大開帳</span>が行われます。是非お参りください。<br>
-                                    <strong style="color: #c0392b; font-size: 1.05em;">開帳期間は4月10日（金）～20日（月）までです。</strong><br><br>
-                                    
+
+                                    本年も1月1日から3日までの間、早朝より当山の観音堂において<strong>新春護摩祈祷</strong>を行い、檀信徒皆様の“家内安全”“身体健全”をはじめ、安心して暮らせる世界となることを願い
+                                    “世界平和”を祈念いたします。<br><br>
+
+                                    今年は丙午（ひのえうま）年にあたり、観音堂に於いて<span
+                                        style="color: #d35400; font-weight: bold; border-bottom: 2px solid rgba(211, 84, 0, 0.2);">12年に1度の大開帳</span>が行われます。是非お参りください。<br>
+                                    <strong
+                                        style="color: #c0392b; font-size: 1.05em;">開帳期間は4月10日（金）～20日（月）までです。</strong><br><br>
+
                                     本年も皆様にとりまして、良い一年となりますことを心より祈念申し上げます。
-                                    <span style="display:block; text-align:right; margin-top:1rem; font-family: 'Noto Serif JP', serif;">普門寺 住職</span>
+                                    <span
+                                        style="display:block; text-align:right; margin-top:1rem; font-family: 'Noto Serif JP', serif;">普門寺
+                                        住職</span>
                                 </p>
                             </div>
 
@@ -340,14 +366,10 @@
                         </div>
                     </div>
                     <div class="facebook-embed">
-                        <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fyuyasan.fumonji%2F&tabs=timeline&width=500&height=600&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=true&appId" 
-                                width="100%" 
-                                height="600" 
-                                style="border:none;overflow:hidden;" 
-                                scrolling="no" 
-                                frameborder="0" 
-                                allowTransparency="true" 
-                                allow="encrypted-media">
+                        <iframe
+                            src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fyuyasan.fumonji%2F&tabs=timeline&width=500&height=600&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=true&appId"
+                            width="100%" height="600" style="border:none;overflow:hidden;" scrolling="no"
+                            frameborder="0" allowTransparency="true" allow="encrypted-media">
                         </iframe>
                     </div>
                 </div>
@@ -385,4 +407,5 @@
 
     <script src="script.js?v=20260103-0920"></script>
 </body>
+
 </html>

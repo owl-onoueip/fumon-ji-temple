@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,13 @@
     <meta name="description" content="普門寺の各種資料ダウンロードとオンライン申込フォーム（塔婆）をご利用いただけます。">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css?v=20260103-0920">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
+
 <body>
     <!-- Header -->
     <header class="header">
@@ -18,14 +22,18 @@
             <div class="header-content">
                 <div class="logo">
                     <div class="temple-crest">
-                        <img src="images/2025-09-03 14-09-31.gif" alt="普門寺 家紋" class="crest-image">
+                        <img src="images/temple-crest.gif" alt="普門寺 家紋" class="crest-image">
                     </div>
-                    <div class="temple-name">
-                        <h1>
-                            <span class="mountain-name">熊野山</span>
+                    <div class="temple-name" style="display: flex; align-items: center;">
+                        <div
+                            style="display: flex; flex-direction: column; margin-right: 12px; text-align: left; justify-content: center;">
+                            <p class="temple-subtitle" style="margin: 0; line-height: 1.4;">真言宗智山派</p>
+                            <span class="mountain-name"
+                                style="line-height: 1.2; display: block; font-size: 1.4rem; font-family: 'Noto Serif JP', serif; color: #8B4513;">熊野山</span>
+                        </div>
+                        <h1 style="margin: 0; line-height: 1;">
                             <span class="temple-main-name">普門寺</span>
                         </h1>
-                        <p class="temple-subtitle">真言宗智山派</p>
                     </div>
                 </div>
                 <nav class="main-nav">
@@ -38,11 +46,12 @@
                         <li><a class='nav-link active' href='/downloads'>資料</a></li>
                         <li><a class='nav-link' href='/contact'>お問合せ</a></li>
                         <li><a class='nav-link facebook-nav' href='/#social'>
-                            <svg class="nav-facebook-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                            </svg>
-                            Facebook
-                        </a></li>
+                                <svg class="nav-facebook-icon" viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                                </svg>
+                                Facebook
+                            </a></li>
                     </ul>
                 </nav>
                 <button class="mobile-menu-toggle" aria-label="メニュー">
@@ -83,8 +92,10 @@
                         <div class="service-details">
                             <strong>提出先：</strong> メール・FAX・寺務所窓口<br>
                         </div>
-                        <div class="service-actions" style="margin-top: 12px; display:flex; flex-direction:column; gap:8px; align-items:center;">
-                            <a class="btn btn-primary" href="docs/塔婆 申込用紙.pdf" target="_blank" rel="noopener" download>ダウンロード</a>
+                        <div class="service-actions"
+                            style="margin-top: 12px; display:flex; flex-direction:column; gap:8px; align-items:center;">
+                            <a class="btn btn-primary" href="docs/塔婆 申込用紙.pdf" target="_blank" rel="noopener"
+                                download>ダウンロード</a>
                             <a class="btn btn-secondary" href="#toba-online" aria-label="塔婆のオンライン申込はこちら">
                                 オンライン申込はこちら →
                             </a>
@@ -97,8 +108,10 @@
                         <div class="service-details">
                             <strong>提出先：</strong> メール・FAX・寺務所窓口<br>
                         </div>
-                        <div class="service-actions" style="margin-top: 12px; display:flex; flex-direction:column; gap:8px; align-items:center;">
-                            <a class="btn btn-primary" href="docs/護摩札申込用紙.pdf?v=20251014-1909" target="_blank" rel="noopener" download>ダウンロード</a>
+                        <div class="service-actions"
+                            style="margin-top: 12px; display:flex; flex-direction:column; gap:8px; align-items:center;">
+                            <a class="btn btn-primary" href="docs/護摩札申込用紙.pdf?v=20251014-1909" target="_blank"
+                                rel="noopener" download>ダウンロード</a>
                             <a class="btn btn-secondary" href="#goma-online" aria-label="護摩札のオンライン申込はこちら">
                                 オンライン申込はこちら →
                             </a>
@@ -206,7 +219,7 @@
                                     <option value="70">70</option>
                                     <option value="100">100</option>
                                 </select>
-                            ）回忌</label>
+                                ）回忌</label>
                             <label class="privacy-checkbox"><input type="checkbox" id="svc_sekito"> 石塔開眼</label>
                             <label class="privacy-checkbox"><input type="checkbox" id="svc_noukotsu"> 納骨供養</label>
                             <label class="privacy-checkbox"><input type="checkbox" id="svc_tsuizen"> 追善回向</label>
@@ -254,7 +267,7 @@
                         </div>
                     </div>
                 </div>
-            </section>
+        </section>
         </section>
 
         <!-- Goma size compare (placed just above #goma-online) -->
@@ -266,7 +279,7 @@
                 </div>
                 <figure class="goma-size-figure" style="text-align:center;">
                     <img src="/images/goma-size-compare1.jpg?v=20251014-1906" alt="護摩札サイズ比較（36cmと39cmの並び）"
-                         style="display:block;width:100%;max-width:150px;height:auto;margin:0 auto;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.12);" />
+                        style="display:block;width:100%;max-width:150px;height:auto;margin:0 auto;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.12);" />
                     <figcaption style="margin-top:10px;color:var(--text-light);">
                         左: 36cm（5,000円）／ 右: 39cm（7,000円）
                     </figcaption>
@@ -321,7 +334,8 @@
                         <!-- 受け取り方法 -->
                         <h3>授与方法</h3>
                         <div class="form-row" style="display:flex; gap:16px; flex-wrap:wrap; align-items:center;">
-                            <label class="privacy-checkbox"><input type="radio" name="goma_receive" id="goma_receive_pickup" value="寺務所受取" checked> 寺務所受取</label>
+                            <label class="privacy-checkbox"><input type="radio" name="goma_receive"
+                                    id="goma_receive_pickup" value="寺務所受取" checked> 寺務所受取</label>
                         </div>
 
                         <!-- 希望日時（任意） -->
@@ -410,4 +424,5 @@
 
     <script src="script.js?v=20260103-0920"></script>
 </body>
+
 </html>
